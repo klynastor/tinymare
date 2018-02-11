@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# MARE Startup File  - updated May 18 2003  Gandalf
+
+echo "NetMARE Starting up..."
+cd ../run || exit 1
+rm -rf logs.bak
+if [ -e logs ]; then
+  mv -f logs logs.bak
+fi
+mkdir logs
+
+if [ -n "`uname -s | grep -i cygwin`" ]; then
+  PATH=../bin:$PATH
+else
+  PATH=../bin
+fi
+netmare $* && echo "Online!"

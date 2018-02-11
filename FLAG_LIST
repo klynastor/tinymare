@@ -1,0 +1,93 @@
+Object Database Flag List.  Last updated April 10, 2004.  - Gandalf
+_______________________________________________________________________________
+
+Terms:
+  Bit = Least significant bit from the right.
+	Ex. 0=0x1, 1=0x2, 2=0x4, 3=0x8, 4=0x10, ..., 31=0x8000_0000
+
+ Type = One or 'Any' of 8 object types (listed below).
+
+	A bit can hold multiple flags if each flag corresponds to a different
+	object type. The object type must also be checked to know if the flag
+	is really set. This allows more than 32 flags in a 32-bit area.
+
+ Name = The name of the flag.
+
+	Each flag has a unique, case-sensitive letter used for matching. This
+	allots for 52 flags: A-Z and a-z. By tradition, only two flag names
+	begin with the same letter of the alphabet.
+	
+	In our representation, flags that begin with an uppercase letter refer
+	to the A-Z list, and those that begin with a lowercase refer to a-z.
+
+_______________________________________________________________________________
+
+Object Types:  Object types take up the first 3 bits of the flag list, and can
+-------------  hold values from 0 to 7:
+
+  0   Room		A room containing players, things, and exits.
+  1   Thing		Things can be taken, dropped, or moved between rooms.
+  2   Exit		Links rooms together so that players can walk around.
+  3   Player		Those who play the game and interact with the objects.
+  4   Zone		Contains a group of rooms that belong to the same area.
+  5   (Reserved)	Reserved for future use.
+  6   (Reserved)	Reserved for future use.
+  7   Garbage		A destroyed database object waiting to be recycled.
+
+Flag List:
+_______________________________________________________________________________
+
+Key: C - Combat-specific flag
+     U - Currently unimplemented
+     X - Scheduled for removal
+_______________________________________________________________________________
+
+Bit	Type	Name		Description
+-------------------------------------------------------------------------------
+0-2	Any	[Type Mask]	Combination of bits 0-2: Object Type
+  3	Room	X-Zone		Objects in room cannot interact with each other
+  3 CU	Thing	mount		See object contents while looking in the room
+  3	Exit	Transparent	See room descriptions through locked exits
+  4 C	Room	Oceanic		Flooded room, must swim; items 'sink' over time
+X 4 CU	Exit	door		Common locked door that can be picked open
+  4	Player	Builder		Unrestricted ability to create objects
+  4	Zone	Universal	A zone whose commands can be used in any room
+  5	Any	Chown_ok	Player can @chown this object, if carried
+  6	Any	Dark		Object does not appear in contents list
+  7	Thing	unsaved		Object is destroyed at startup when not carried
+  7	Player	slaved		Account disabled; player cannot log in
+  7	Zone	restricted	Cannot @link exits across zone perimeter
+  8	Any	Verbose		Relays to its owner all commands executed
+  9	Room	Jump_ok		Builders may @teleport into this room by dbref#
+  9	Thing	destroy_ok	Player can @destroy this object, if carried
+  9	Player	Connected	Player is currently logged into the game
+ 10	Any	haven		Object cannot be @forced to execute commands
+ 11 C	Room	Healing		Player gradually heals faster here
+ 11	Thing	wander		Automatically wanders around every few minutes
+ 11	Player	inactive_ok	Account saved during inactivity purges
+ 12	Room	Floating	Suppress "Disconnected Room" message
+ 13 C	Room	Illness		Increased chance of players getting sick here
+ 14	Any	Going		Object is scheduled for destruction
+ 15 C	Room	Nest		Lair of the evil dungeon master; can't escape
+ 15	Thing	enter_ok	Object may be entered by players
+ 16	Room	fog		Room is enshrouded in a haze of fog
+ 17	Any	puppet		Relays to its owner everything it hears 
+ 18	Room	Link_ok		Anyone can @link exits and objects to this room
+ 19 C	Room	arena		Player-killing can be done here without loss
+ 20	Any	visual		Anyone can 'examine' this object's code
+ 21 C	Room	Sanctuary (Y)	Fighting is not allowed in this room
+ 22 C	Room	Shaft		Crawlspace too low to fight in physically
+ 22 C	Thing	Monster		Auto-generated enemy object (mobile)
+ 22	Player	terse		Suppress room descriptions during 'move'
+ 23	Any	opaque		Can't see the contents of this object
+ 24	Any	quiet		Suppress feel-good messages like "Flag set."
+ 25	Room	Abode		Players may 'save' their starting location here
+ 25	Thing	grab_ok		Anyone can 'grab' objects from this container
+ 25	Player	notice		All commands executed by player are logged
+ 26	Any	light		Object can be seen in a dark room
+ 27	Any	bearing		Players can @addparent things to this object
+
+Internal database management flags
+----------------------------------
+ 31	Room	(marked)	Used during autocheck for disconnected rooms
+

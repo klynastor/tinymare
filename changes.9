@@ -1,0 +1,136 @@
+Backlog of Hardcode Changes in TinyMARE v1.0.10215-v1.0.10316, Winds Year 0013.
+
+----June 11, 2004
+ 1. Fixed a parser problem when the [ character is part of an escape sequence.
+ 2. Spaces are now allowed between commas in an $event or @event command.
+----June 12, 2004
+ 1. Fixed a bug where increasing Maximum HP/MP/EN did not reduce the current
+     HP/MP/EN to 100% when the timer ran out.
+ 2. @hlock'd players now announce levelups to other players in their location
+     regardless.
+ 3. For races or guilds with spaces in their name, you can now use the +com
+     system by substiuting those spaces with _ characters for the channel name.
+     Channel names are still limited to 15 letters total, including the $ or %.
+ 4. Combat skills Leftwield, Barefist, and Ambidexterity no longer increase in
+     level if the attack did not deliver any damage.
+ 5. Renamed $techbase to $train, which contains the # points needed for 1%
+     Skill or SPLV 1 when TRAIN_SPELLS is turned on.
+ 6. Removed the $techraise attribute.
+ 7. The $techlevel attribute can now parse functions like $cost and $chantrate.
+ 8. Looking at a combat item no longer strips ANSI color from its $desc.
+ 9. Setting EXP_SYSTEM to 2 now removes the 'For Next' entry in the status and
+     replaces the Next field in the +sbar with Impact %.
+10. The @treasure attribute now allows a "Parent=#dbref" field which sets a new
+     treasure parent on a per-enemy basis.
+11. Added attributes @fsearch and @ofsearch to display user-defined messages
+     for a room or object when 'search' fails (due to @lsearch being set or no
+     treasure was found in the room).
+12. The @comtitle attribute now parses %0 as the current channel name.
+13. When specifying a time format string with @destroy or time(), months or
+     days must now be specified using their full name or 3-letter abbreviation.
+14. Installed the new TinyMare v3.0 Food Timer System. It is enabled only if
+     FOOD_TIMER is set to 1. With this change, a new column is added to the
+     etc/sector.db file called Food, which determines the rate of consumption
+     per minute and per room moved. Players may idle or chat in town areas
+     without worry of losing food as long as they don't move through rooms.
+15. Implemented the Sunlight condition for races, such as Ents, who can produce
+     their own food outdoors.
+16. Added new spell attributes $eat and $oeat, which display custom messages
+     when players eat food items.
+----June 13, 2004
+ 1. The current spell level while parsing attributes or executing spells can
+     now be retrieved using v(splv). Note that this is the only special
+     variable that works like this.
+ 2. Commands $cost, $chantrate, and $techlevel no longer parse %0 as the
+     current spell level. Use [v(splv)] instead.
+ 3. $desc and $caption now parse %0 as the spell number being examined, instead
+     of the current spell level.
+ 4. Added the @comlock command to restrict channels to specific player
+     characters in the game. Also added accompanying '@list comlocks' entry.
+----June 15, 2004
+ 1. The @treasure attribute now allows a "Rate=<Value>", where <Value> is from
+     0 to 1000. This value provides a fixed percentage treasure rate, which
+     would otherwise depend on a player's vs. enemy's level.
+ 2. Fixed treasure rates now appear in an enemy's status screen.
+ 3. Removed the TreasureRate combat bitmap, since it is now unnecessary.
+----June 17, 2004
+ 1. @init now sets a player's @pennies to START_BONUS, or an object's @pennies
+     to 0.
+----June 21, 2004
+ 1. Fixed a goof-up in @encounters where Rate= accidentally set the number of
+     groups instead of the actual rate.
+----June 23, 2004
+ 1. When displaying a "%U has defeated %N!" message, listeners now see %# as
+     the correct killer.
+----June 27, 2004
+ 1. Added additional #-1 checks when matching if an object can locate another
+     using the loc() function.
+----August 31, 2004
+ 1. Fixed a crash bug in selecting a combat target when using an item that
+     checks for only-living or only-wounded enemies and you're currently not
+     fighting anything.
+----September 19, 2004
+ 1. Fixed some warning messages about unsigned/signed types in db/convert.c.
+----September 23, 2004
+ 1. Added a second argument to the cond() function, which enables someone with
+     POW_COMBAT to list all conditions of a particular type: cond(player,type).
+     Types are the basic Condition types, currently: Status, Protect, Attack,
+     Remedy, Element, Reflect, and Fatal. Note that while the default is
+     "Status", specifying the type lists all Status conditions including Wish,
+     Racial, and temporary battle changes.
+ 2. Added a new game configuration variable, FOOD_EFFECTS, which allows for
+     several effects if FOOD_TIMER is nonzero. Add +1 to FOOD_EFFECTS to enable
+     changes to physical attack damage if food is too low or too high. Add +2
+     to FOOD_EFFECTS to enable changes to regeneration rate if too low or high
+     (-1 or +1 respectively).
+ 3. The Flying condition can no longer avoid attacks when an enemy is indoors,
+     even if still shown as (Flying). Flying still allows enemies to avoid
+     being hindered by deep water when indoors.
+----November 10, 2004
+ 1. Added new function localize(arg), which parses an argument much like s(),
+     except that all environment variables that were modified during the
+     parsing are restored to their original values when localize() finishes.
+ 2. Added function localize_as(arg,cause,executor), which operates identical to
+     s_as(), except that all environment variables are restored like with
+     localize().
+----January 8, 2005
+ 1. Added game configuration variables MAXHP_REGEN_DISIVOR, MAXMP_REGEN_DIVISOR
+     and MAXEN_REGEN_DIVISOR, to control the rate of regeneration of lost
+     HP/MP/EN. These values default to 0.
+ 2. Renamed $uncurse to $transmute and changed its syntax. $transmute set to
+     -1 will destroy the object when an effect occurs, and 0 will now preserve
+     the object.
+ 3. Added Helptext for Draw Points and associated events and attributes.
+ 4. Renamed $minmana to $manasurge and $manafloor to $minmana.
+ 5. Implemented auto-regeneration ($manaregen) for touchstones and draw-point
+     rooms.
+ 6. Implemented spoilage for food items over time.
+ 7. Changed the default rates of food spoilage across the different sectors.
+ 8. Added the Drawpoint room condition, to keep track of a room's current mana
+     level.
+----January 9, 2005
+ 1. Added game configuration variables DRAW_SYSTEM and DRAW_DAMAGE to facilite
+     the new Draw Points system.
+ 2. Added the 'draw' command.
+ 3. Developed the base code to implement actions other than Fight in the
+     combat queue. This can later be used to allow equipping of items during
+     battles, watch enemies, or block and parry attacks.
+ 4. Added the 'Touchstone' item $type. Touchstones have the added benefit of
+     allowing players to draw magic from them while in one's inventory, rather
+     than requiring it to be equipped.
+----February 1, 2005
+ 1. Added new combat item variable $forgeinfo, which is a strictly user-
+     defined string that can be set on any item.
+----April 3, 2005
+ 1. Fixed a bug where being killed indirectly (such as being Poisoned) by an
+     enemy set Boss crashed the game.
+----May 26, 2005
+ 1. Function waittime(player,id) now returns "#-1 No such ID." if <id> does not
+     exist in <player>'s wait queue (even if it exists in the command queue).
+ 2. Added +config Metric for switching between kilograms and pounds in weight
+     measurements.
+----May 28, 2005
+ 1. Fixed a crash bug while copying techniques if the destination object had no
+     prior technique slots filled.
+ 2. Fixed a bug with remove_conditions() and remove_stat_mods() zeroing out
+     techniques on players when the game is compiled using GCC 4.0.

@@ -1,0 +1,38 @@
+
+  TinyMare Vim Syntax Files
+
+The .vim files in this directory can replace the syntax-hiliting files 'vim'
+uses for your system. The files are documented as follows:
+
+  c.vim:
+
+A replacement version of the C syntax hiliting file by Bram Moolenaar. This
+version fixes the possible %-substitution formats in printf-style strings and
+adds several of the widely used constants (NOTHING, GOD, HOME, etc.) and type
+specifications (DESC, ATRDEF, hash, etc.) that are in use in this code
+distribution.
+
+For installation, simply copy this c.vim file into the correct syntax/
+directory in vim's shared directory tree. For instance, with Vim 6.0, type the
+following:
+
+# cp c.vim /usr/share/vim/vim60/syntax/c.vim
+
+
+  mare.vim:
+
+This file contains the correct syntax hiliting for the 'helptext.txt' file in
+the run/msgs directory of TinyMare. This syntax file will allow you to edit the
+helptext with the same color scheme as it would appear if the player typed
+'help' in the game.
+
+For installation, simply copy this mare.vim file into the correct syntax/
+directory in vim's shared directory tree. For instance, with Vim 6.0, type the
+following:
+
+# cp mare.vim /usr/share/vim/vim60/syntax/mare.vim
+
+
+The files in this TinyMare archive are best viewed under an 80-column screen.
+
+	-Gandalf <gandalf@winds.org>		September 28, 2001

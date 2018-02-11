@@ -1,0 +1,148 @@
+TinyMARE v1.0 (c) 1993-2017 by Byron Stanoszek.
+
+Installation procedures. Any questions or bug reports can be directed
+through the email address below:
+
+  gandalf@winds.org
+
+---------------------
+
+To install under any account, cd to the src directory and type './configure'.
+After you have specified both system configuration settings and TinyMARE
+environment, compile the program using 'make' and then copy it into the bin
+directory provided by typing 'make install' in the src directory.
+
+To operate the server, change to the src directory and run the shell script
+called 'bootmare'. If you are upgrading an existing database, be sure to have
+your database located in the file 'run/db/mdb' before starting. All error logs
+will be reported in the 'run/logs' directory. If you wish to start up the
+netmare program without the use of the 'bootmare' script, you may do the
+following steps:
+
+1.   Cd to the run directory. Apart from all compiling and when not using the
+     'bootmare' script, this is the directory you'll want to be when you run
+     TinyMARE programs.
+2.   If you would like to use the watchdog 'wd' program, cd to the 'src/util'
+     directory and type 'make wd'. Copy wd to the 'bin' directory. Then cd to
+     the run directory (as in #1 above) and type '../bin/wd' instead of
+     '../bin/netmare'. Arguments are the same for both programs.
+
+Usage: netmare [-frsv] [-d|-t file] [port]
+
+Arguments:
+      -f  Forces database loading even when there are combat settings stored
+          in the database. This is required only when TinyMARE has been
+          compiled without Combat System support.
+      -r  Loads the database in read-only mode. Database saves will not occur
+          and using the @dump command will result in an error message.
+      -s  Disables @startups from being executed when the game begins. Useful
+          for running old archive databases without actually turning on the
+          softcode. The program must be restarted without the -s flag to
+          turn startups back on, instead of using @reboot.
+      -v  Displays version of TinyMARE and exits. If this reports that the
+          version is unknown, you are executing this program from the wrong
+          runtime directory.
+      -d file
+          Specifies the database file to use to load and save the objects
+          created on the MARE. Normally, this defaults to 'run/db/mdb'.
+      -t file
+          Test-loads a database file. This option will not actually run the
+          game server, but it will instead just load the database and print
+          its contents to standard-output.
+      port
+          A port other than the one compiled at configuration time can also
+          be specified, useful if you are running more than one server at
+          once.
+
+Netmare only uses the data found in the current 'run' directory to operate
+the server. If you wish to run more than one server at a time, you must
+execute '../bin/netmare' from a separate runtime directory. The simplest
+way to start a new Mare is to copy the contents of the 'run' directory
+to another name perhaps symbolic of the name of the new game, and run
+'../bin/netmare' from there.
+
+To clean up all unnecessary files when finished, type 'make clean' in the
+src directory.
+
+---------------------
+
+Starting a new Mare: Setup/Administration Procedures.
+
+---------------------
+
+1. The Initial Test Database
+
+  Running TinyMARE the first time without a database file in place, the game
+will automatically initialize a new database with one object: Limbo(#0R).
+The first person to log into the game and create a new character will
+automatically become the God of the realm with a database reference number
+of #1, indicating full Wizard status above all other players in the game.
+
+  Please note: this version of TinyMARE requires you to log in through
+"localhost" to create the first character. You will be denied access if you
+telnet in from another site or if you specify the hostname of your computer
+instead of "localhost".
+
+2. Softcoding TinyMARE
+
+  The new online helptext (in HTML format) comes equipped with various
+topics on programming and administrating your MARE. For a list of technical
+softcoding commands, type 'help wizard' once you connect fully to the game.
+'help topics' also displays some key information on various parts of the
+game. Wizards may use the @config command to change environment variables
+while the game is actively running.
+
+---------------------
+
+Upgrading from a Previous Version of TinyMare:
+
+---------------------
+
+1. Preserving the Database
+
+  TinyMARE databases are backward compatible since its first public release,
+v1.0.6812. However, since the initial version, the index numbers of a few key
+environment configuration variables may have changed to make room for new
+variables that give more features or greater functionality. To ensure that
+your @config variables are correctly set, log the output of the '@list config'
+command before and after the upgrade, and set the values of those variables
+that have unexpectedly changed.
+
+2. @Rebooting from a Previous Version
+
+  It is likely that the save-state files that one version of TinyMare creates
+is completely incompatible with the newer version. This results in @reboots
+that completely knock everyone off of the game, rather than keep everyone
+online. If this is the case, the game forces a hard reset and boots up normally
+as if turned on for the first time. No damage occurs to the game or players
+online during this phase, and players can relog freely back into the game.
+
+3. Switching between Combat and Non-Combat Versions of TinyMare
+
+  Beginning with TinyMARE v1.0.7860, combat structures are only stored in the
+database if TinyMare was compiled with Combat System support. Loading such a
+database without Combat support will result in the loss of all combat settings,
+player bitmaps, spells and equipment, town/chapter configurations, and all
+other status variables related to combat.
+
+  The game will not permit a non-combat server to load a combat database by
+default. A message will be printed to log_main indicating that the -f flag
+must be used to override the protection and continue loading the database.
+
+  When switching to the Combat version of TinyMare with a non-combat database
+for the first time, TinyMare will automatically create the default technique
+'Fight' as spell #0 and initialize all other combat structures for each player.
+No further configuration options are required.
+
+---------------------
+
+The latest release can be found here:
+
+     http://www.tinymare.org/
+      ftp://ftp.tinymare.org/pub/tinymare/
+
+Or on these mirror sites:
+
+     http://www.musenet.org/~gandalf/tinymare/
+     http://www.winds.org/pub/tinymare/
+

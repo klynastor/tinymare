@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Increments the version number in mare/version.c at compile time
+#
+# Updated August 28 1999  Gandalf
+
+grep -v mud_compile_date mare/version.c | grep -v mud_version > mare/version.c~
+echo 'char *mud_compile_date="'`date +%m/%d/%Y`'";' >> mare/version.c~
+echo 'char *mud_version="'`grep mud_version mare/version.c | cut -d '"' -f 2 |\
+  awk -F. '{ OFS="."; print $1, $2, $3, $4+1 }'`'";' >> mare/version.c~
+mv -f mare/version.c~ mare/version.c

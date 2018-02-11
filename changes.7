@@ -1,0 +1,872 @@
+A Backlog of Hardcode Changes in TinyMARE v1.0.8816-v1.0.9557, Winds Year 0011.
+
+----June 22, 2002
+ 1. Message Id while reading +mail now shows your specific message number
+     instead of the system-wide message number.
+----June 26, 2002
+ 1. The weather almanac now has better checking for record dates that occur
+     before BEGINTIME.
+ 2. Using @init on an NPC with a combat status will reset its HP/MP/EN to
+     maximum values, clear conditions, and send the NPC home (if it's inside
+     itself) as if it had just died. The "Dead" condition will not be set.
+ 3. Death now clears all temporary conditions, not just Normal and Duration.
+ 4. Fixed seeing double EXP messages when you're a member of a +party of at
+     least 2 players and you're in a room by yourself.
+----June 27, 2002
+ 1. Disconnected players that die now correctly get sent home.
+ 2. Fixed several bugs dealing with deaths of players that do not have a combat
+     status set. @akill on Game Driver now gets triggered regardless if the
+     player is connected or not.
+----July 3, 2002
+ 1. Optimized the internal UFC Crypt library and the BITCOUNT algorithm for all
+     64-bit architectures.
+ 2. Reordered the makefiles so that -j >= 2 can be used for faster compilation
+     when multiple CPUs are present.
+ 3. Password encryption now uses a MD5 hashing algorithm for all new accounts.
+     Passwords now can be longer than 8 characters and contain spaces in them.
+----July 4, 2002
+ 1. Fixed a major bug where @destroying a zone object set with the Universal
+     flag did not remove itself from the list of UZO's for $ and ! events.
+----July 5, 2002
+ 1. Added an optimization for BITCOUNT for Alpha EV67 and newer processors.
+----July 7, 2002
+ 1. Added a second argument to the @wipeout command to specify the type of
+     objects to destroy on a player.
+----July 8, 2002
+ 1. Added a different message to '@link here' if the dropto was already unset.
+----July 9, 2002
+ 1. Established a new algorithm for matching combat items through the normal
+     #dbref object matching procedure.
+ 2. Recoded the 'look' command to use this new procedure for items.
+----July 10, 2002
+ 1. Added a new type field to races to specify hidden entries in @list races to
+     those without POW_COMBAT.
+ 2. Rewrote the class.db parser to allow keywords with spaces to be read
+     correctly. This is useful for guildnames with spaces in them.
+----July 31, 2002
+ 1. Stopped the coalescing of items from multiple planes in the room list.
+ 2. Event keys now get sent the template number for items 10000 and greater.
+ 3. Recoded the 'take' and 'drop' commands to use the new combat item matching
+     procedure.
+----August 1, 2002
+ 1. Replaced internal references to delete_equipment with del_tech, as this
+     properly removes user-defined spells 10000 and above.
+ 2. Recoded 'use' using the new item matching procedure.
+ 3. Deleting a container index now removes the value from the correct container
+     item held by the player.
+ 4. Added variable % mastery for individual spells, skills, and techniques.
+ 5. Added 'Kills' as a @dbtop entry.
+----August 2, 2002
+ 1. Added the 'weapons' command to list Weapon Proficiencies.
+----August 6, 2002
+ 1. Added @treasure display to the enemy 'status' screen.
+----August 7, 2002
+ 1. Implemented automatic technique-point accumulation for spells being studied
+     via the Study skill.
+----August 8, 2002
+ 1. Implemented all 4 versions of the new Treasure System.
+ 2. Enemy familiars and NPCs now drop carried items when defeated.
+----August 12, 2002
+ 1. Fixed a memory leak in treasure object creation.
+----August 15, 2002
+ 1. Once again separated the 'give' and 'put' commands so that 'give' scans
+     objects in the room and 'put' scans recipients in your inventory. You
+     also can no longer give money into objects in your inventory.
+----August 19, 2002
+ 1. Coded the 'give' and 'put' commands to use the new combat item matching
+     procedure. This also lets you put items into combat containers now!
+ 2. Dropping or giving containers with legendary items in them will now send
+     those items to the player's inventory so they cannot be discarded.
+ 3. Added functions spname(), spcon(), items(), techlist(), spmatch(), and
+     hasitem().
+----August 20, 2002
+ 1. Coded in the 'unequip' command.
+ 2. Items found in a container when dropped or given to a NPC that has an
+     @eventkey set now have those items returned to the player's inventory.
+----August 21, 2002
+ 1. Added hooks for match_thing() to match only inventory items for equipment.
+ 2. Fixed a bug in comparing two item templates if both item numbers are 10000
+     or higher and both have no template set.
+ 3. Coded the 'grab' command to use the new item matching procedure.
+ 4. 'inv' screen shows full amount of kilograms carried without encumbrance
+     reductions (due to containers) factoring in now.
+ 5. Added a small dictionary of words to the pluralize() function that do not
+     follow normal grammar rules when making the word plural.
+----August 22, 2002
+ 1. Looking at containers will now show their percentage capacity full.
+ 2. Improved the message shown to others when you look at an item inside a
+     container.
+ 3. Redefined combat-item matching to match distinctly a player's inventory,
+     equip slots, key items, and location, for objects.
+ 4. @delteching a container item now moves its contents into the parent
+     container of a player's inventory.
+ 5. Fixed the bug where putting containers into containers checked the
+     container's reduced weight instead of the total weight.
+ 6. 'give' and 'grab' commands can now give and take items from containers in
+     the room.
+ 7. Prevented normal objects from using the take/drop/give/grab commands on
+     combat items. Objects must have either a combat status or POW_COMBAT.
+ 8. Fixed @deleq to match objects in different planes in rooms.
+----August 23, 2002
+ 1. Clothes equipped no longer reduce encumbrance by 1/2.
+----August 25, 2002
+ 1. Mare will now correctly display @decompile data for items 10000 and above.
+----August 28, 2002
+ 1. Monster familiars will now drop items carried when killed using 'slay'.
+----August 30, 2002
+ 1. Rewrote the tech_entry() function as an inline macro.
+ 2. Players can now take/drop/give/grab combat items regardless if they have a
+     combat status. Carry-weight checking is also turned off in this case.
+ 3. @text now only reports 'Binary file' if a null byte is found in the first
+     1024 characters.
+ 4. Added item types Petfood and Money to @list types.
+ 5. Added $itemtype1 and $itemtype2 to restrict the types of items that can be
+     put inside a container.
+----August 31, 2002
+ 1. Fixed a bug during initialization of the 'levels' array when etc/class.db
+     cannot be loaded.
+----September 2, 2002
+ 1. Equipment effects on a combat item's template are now displayed during an
+     examine.
+ 2. Coded EQFX Regen.
+ 3. Added new death type 'Cursed' for cursed armor that kills a player due to
+     negative regeneration.
+----September 3, 2002
+ 1. Added a new spell attribute $unused, which is just a wizard-utility that
+     darkens a line in '@list spells'. It is meant as a note to coders to
+     designate an item as 'unused' in the game thus far--nobody uses or can get
+     this item yet. It is expected that the builder who uses this item on a
+     monster or treasure chest will unset $unused after adding it in. Set to 1
+     to enable feature.
+ 2. Added spell attribute $eqfail to display a message to a player when he
+     can't equip something due to EQFX Restrict.
+ 3. Added the weapon() function to get a player's right- or left-hand weapon.
+ 4. Changed the article for some item names from 'a' to 'a pair of'. Works with
+     Warp Boots, Knuckles, etc.
+----September 4, 2002
+ 1. Coded in the 'equip' command!
+ 2. Corrected Attack Power for weapons and shields equipped in hand slots.
+----September 5, 2002
+ 1. Added a new command, @spfail, which can set the result of a spell inside an
+     $action attribute (returns Success otherwise). @spfail must be called on
+     the top-level of $action and not inside a queued @force or @trigger.
+----September 6, 2002
+ 1. Allowed a second argument to @addeq to specify the quantity of an item to
+     give to the player.
+----September 13, 2002
+ 1. Added a new item type Lamp, used for torches and lanterns.
+ 2. Added a NoDrop condition to keep monsters from dropping items carried.
+ 3. Fixed a bug in awarding treasure chests if only equipment was available.
+ 4. Added spell attribute $damp to hold a seconds count until the item becomes
+     dry again. Used for clothes and torches.
+ 5. Recoded the 1-second timer used for Torches, Clothes-drying, and Swamp
+     poison.
+ 6. Added the 'douse' command to extinguish a light source.
+ 7. Added the ability to light equipped torches and oil lamps with 'use'.
+ 8. Fixed a bug where Aggressive enemy familiars try to attack in a room set
+     X-Zone.
+----September 14, 2002
+ 1. Corrected an issue where an item wrongly disappeared like a torch if
+     $lightsrc has the Lit flag and $lighttotal is 0 or lower.
+ 2. Players are now forced to 'look' in a room when torches are lit or doused
+     and the room's lighting changes.
+ 3. Torches are now given a 20-second penalty when doused, to prevent players
+     from repeatedly lighting them without spending any fuel.
+----September 17, 2002
+ 1. Optimized loops on string arrays using a new macro NELEM() which returns
+     the number of elements in an array.
+ 2. Fixed giving things to *playernames with POW_REMOTE.
+ 3. Split conditions/languages/bitmaps in the race array and cleaned up reading
+     attributes from class.db.
+ 4. Fixed a crash bug in the weapon() function.
+ 5. Added miscellaneous condition Lavawalk.
+----September 18, 2002
+ 1. @list types can now be given a <type> argument.
+ 2. $attribute commands can now take a spell name/number beginning with $.
+ 3. Players can now equip/unequip items on belts. Belts must be preconfigured
+     with $itemlimit and $capacity just like a container.
+----September 19, 2002
+ 1. The location of user-defined spells (10000 and up) is now shown during
+     'examine'.
+----September 20, 2002
+ 1. The condition of equipment and torches is shown during a 'look' now.
+ 2. Fixed an uninitialized-pointer bug when lighting a torch.
+ 3. Added configuration variable RANDOM_ENEMY_HP to define the randomness of an
+     enemy's HP when created. HP is anywhere from MAXHP to MAXHP - 1/x.
+----September 21, 2002
+ 1. Added the $cname spell attribute.
+----September 24, 2002
+ 1. Added an itemtype() function to determine the name of a type in @list
+     types.
+----September 26, 2002
+ 1. Fixed an error with Dance and Chance Dice events when no arguments are
+     specified.
+ 2. Corrected the use of items when $action is specified but $event1 is not.
+ 3. Fixed a bug in take/drop/give/grab that prohibited objects from moving
+     non-combat items.
+----September 27, 2002
+ 1. Equipping items that lower Maximum HP/MP/EN now lower your Current HP/MP/EN
+     if it's higher than the maximum.
+ 2. Removed Amulet and added Skill and Ability to the list of item types.
+ 3. Fixed a display error in @decompile when listing events and EQFX on user-
+     defined items.
+----September 28, 2002
+ 1. Gave more lenience to what symbols could appear in spell names.
+----September 30, 2002
+ 1. Added skills to the combat system.
+ 2. Gave skills the ability to be enabled or disabled using the command:
+     'skill <name>=<on|off>'.
+ 3. Added the sklvl(player,skill) function to get the Mastery% of a hardcoded
+     skill category.
+ 4. Cleaned up some code by introducing a isnumber() macro to determine if a
+     string consists solely of digits.
+ 5. Looking at game-created Treasure Chests no longer says it is "dead".
+----October 1, 2002
+ 1. The 'ex me=tech' command is now replaced with 'ex me/tech[=optional slot]',
+     'ex me/techbits[=slot]', and 'ex me/tactics' for individual displays.
+ 2. Moved around the technique types Money and Levelup to other slot numbers in
+     @list techniques.
+----October 3, 2002
+ 1. Added more variance to Item Name column widths when 'look'ing in the room
+     and at players.
+ 2. Increased the <quantity> field maximum for Items, Equip, Shop, and Storage
+     from 255 to 65535, and 999 for a player's inventory.
+----October 5, 2002
+ 1. Messages passed through @relay no longer have their ANSI codes stripped.
+----October 7, 2002
+ 1. Fixed an environment-substitution error in several functions when @cname
+     and @caption were parsed containing a setq() or setr().
+----October 8, 2002
+ 1. Fixed recording %0 through %9 in wildcard matching.
+ 2. Wildcard matching no longer strips leading spaces or ANSI escape codes in
+     %0 through %9 during a @relay.
+ 3. @switch comparison with < or > is now numeric only if the right-hand-side
+     is all digits.
+ 4. HTML 'who' list is now up-to-date when Combat is turned on.
+ 5. Applied $cname coloring to -< Combat >- technique announcements for spells.
+ 6. Added new feature: Explore %. @list Explore shows the rooms manually set
+     for Explore data, and @addexplore <room#> or @delexplore <room#> can add
+     or remove a room from the list. The game automatically decides on a bit
+     number to set for each room added.
+----October 9, 2002
+ 1. Added the @explore command to individually modify Explore % bits on a
+     player.
+ 2. Added a @dbtop Explored entry listing the number of checkpoints explored.
+ 3. Added functions explore(player) and numexplore() for determining the
+     percentage of rooms explored for a player.
+ 4. Fixed a crash bug when '+last me' is run by a non-player.
+ 5. Plane() function now correctly returns #-1 when used on rooms or zones.
+ 6. Fixed skipping over Tactics and Explore data when loading from the mdb file
+     and compiled without Combat support.
+ 7. Removed the remaining instances where a room's Plane was checked when it
+     shouldn't have been.
+ 8. The 'examine' command can now be used to examine distinct inventory items,
+     equipment, and items found in the room.
+ 9. Coded EQFX Ability.
+10. Added a new Junction bitmap attribute that acts like EQFX Ability and reads
+     all EQFX from the specified spell number as if the item was equipped.
+11. Fixed secure_string when displaying %0 through %9 to not strip ;'s in ANSI
+     escape codes.
+12. Wildcard matching in @relay no longer strips leading ANSI escape codes.
+13. @addeq will now add items to rooms based on what @plane the player is in.
+14. Coded EQFX Teach.
+----October 10, 2002
+ 1. Players can now 'search' to uncover hidden money and items in rooms. Either
+     the room or the room's zone must have a @treasure attribute set.
+ 2. Added a new command to instantly execute a spell: @attack <spell>=<target>.
+ 3. Treasure Chests can now be armed with traps.
+ 4. Added new functions maxweight() and itemweight().
+ 5. Function spattr() now takes spell names instead of just numbers.
+ 6. Rewrote spell messages to prioritize user-defined message attributes (such
+     as 'c290' or 'c+') on players, and make them override $o* and $t* message
+     alternatives. Parsing is now only done once per message.
+----October 11, 2002
+ 1. Fixed a bug that allowed giving items to auto-created Treasure Chests.
+ 2. Added a new environment variable MONEY_COLOR to change the color of coins
+     in the room items list.
+ 3. Fixed a bug that mistakingly swapped Money and Rare treasure types in the
+     'status' screen.
+ 4. Allow for large quantities of items in the Treasure column in 'status'.
+ 5. Auto-created Treasure Chests now support multiple quantities of items.
+ 6. Added a new function pluralize() to return the plural form of nouns.
+----October 17, 2002
+ 1. Race weapon-type vigor bonuses are now applicable.
+ 2. Added the function art() to return the correct "a" or "an" article for a
+     noun.
+ 3. @deleq now accepts a quantity of items to remove, and it now uses the plane
+     of the invoker when targetting rooms.
+ 4. Treasure chests now check the adventurer's carry-weight before giving the
+     item (only works with system 0 and 2).
+ 5. Added missing function ipaddr() to return the IP Address of a connected
+     player.
+----October 18, 2002
+ 1. Added configuration variable COMBAT_WHOLIST to choose between 'normal' and
+     'combat' whoflags as default when Combat is turned on.
+----October 21, 2002
+ 1. Added functions isdbref(), isnum(), and isword().
+----October 27, 2002
+ 1. Constrained @remit to send only to the contents of <thing>.
+ 2. Optimized the could_doit() lock-checking macro for blank locks.
+ 3. Internal functions notify_except() and notify_room() now check @vlock for
+     sending move/battle messages to all players in the room.
+----October 28, 2002
+ 1. Swimming skill is coded, and swimming checks are once again turned on.
+ 2. @damage for cliff-style exits is once again operational.
+----October 29, 2002
+ 1. Corrected a problem in setting the $skill attribute to a hardcoded index.
+ 2. Fixed a bug in checking the wrong object's attribute during an @input.
+ 3. Combat commands that modify attributes on other players can now be used if
+     the invoker has Builder permissions.
+----November 4, 2002
+ 1. Added the attribute @lfight (Fight-lock).
+ 2. Coded the @moveeq command.
+----November 5, 2002
+ 1. Fixed a bug in wildcard matching attribute text with 'examine'.
+ 2. Fixed a bug that allowed players to get combat configuration settings with
+     config().
+ 3. Fixed an error while saving the database that stored the Explore % info per
+     player with 8-bit longs instead of 4-bit ints.
+ 4. Fixed an error with @tactics that allowed item numbers > 9999 to be stored.
+ 5. Added a @config limit to the number of queued commands for both players and
+     wizards.
+ 6. get() and v() can once again be used to match #num.attr attribute formats.
+ 7. Wizards can now view the items inventory of other players even if they are
+     set Opaque.
+----November 6, 2002
+ 1. Defined new Area Attack flags to be used for the new targetting subsystem
+     in combat.
+ 2. @list Explore now accepts a Lo-Hi range.
+ 3. @atime now triggers with the correct time interval on databases with less
+     than 60 objects.
+----November 9, 2002
+ 1. Rewrote Area Attack and automatic targetting for the new combat core.
+ 2. Implemented a grace time of 1.5 seconds to the start of each combat round
+     for players to type their next turn's commands in without penalty.
+----November 11, 2002
+ 1. Fixed a bug with aggressive wounded or dead enemies engaging in battle.
+ 2. Rewrote the random_enemy() method using bitflags for code clarity.
+ 3. Added a method to prioritize enemy attacks against living players rather
+     than wounded ones.
+----November 12, 2002
+ 1. Players can now target inventory items as an Area Attack.
+ 2. Spells/techniques as well as 'fight' now log attempted player-killing.
+ 3. Fixed auto-attack when secondary +party members enter the room with
+     existing enemies.
+ 4. The +finger page now parses a player's @idle attribute for viewing.
+ 5. Added a new behavior, "Conquest", which is aggressive towards players as
+     well as enemy familiars. Special skill required to select this option.
+ 6. Fixed auto-attack when players connect to the game. Both sides are taken
+     off-guard for 4 seconds.
+ 7. The 'cast' and 'use' commands now correctly check Mute/Paralyze conditions.
+ 8. Added Battle-rings as a type of equippable weapon.
+----November 17, 2002
+ 1. Added 'stop <player>' and 'stop All' as Wizard-only commands to force-stop
+     battles in the player's current room.
+----November 18, 2002
+ 1. Hostnames that match dotted-decimal IP addresses are now checked before
+     calling DNS routines to look up the hostname. This results in much faster
+     processing, especially on Windows.
+----November 20, 2002
+ 1. Fixed many problems with 'run'. It now correctly checks for enemies
+     attacking before determining if escape passages are blocked. It also now
+     tallies up enemies' Agility scores correctly and makes you take longer to
+     run if their Agility is relatively high.
+ 2. Fixed checks with 'enter' and 'leave' while fighting.
+ 3. Implemented Rebound and On-Death tactics in instantaneous-attacking mode.
+ 4. Explore # on rooms is now shown during an 'examine' if you have POW_COMBAT.
+----November 22, 2002
+ 1. Recoded Slow and Haste conditions to accept a range from 1 to 7.
+----November 25, 2002
+ 1. Weapon status or condition changes that are applicable to only the weapon
+     being used in an attack (right vs. left hand) are now supported.
+ 2. Spells/Techniques that do not consist of multiple attacks now have Fumble
+     checking done for the entire technique instead of splitting up targets
+     between two events in a technique.
+ 3. MP and EN cost are now charged before the first event of the technique
+     executes. Items are still consumed after the technique finishes (due to
+     user-defined items disappearing when used).
+----November 26, 2002
+ 1. notify_room() can now send messages to objects in remote rooms whose planes
+     match the sender's.
+----November 27, 2002
+ 1. Fixed a bug in @addeq/@forge searching for the next empty user-defined item
+     slot 10000 and above.
+ 2. User-defined items now search for events on the template if none are
+     specified on the item itself.
+ 3. Combat equations can now support functions with more than 1 argument.
+----November 28, 2002
+ 1. Spell messages can now be called directly from @event functions with a
+     spell number of -1.
+----December 1, 2002
+ 1. Fixed the problem with individual elements not properly reflecting spells.
+ 2. Monster levelups now increase stats by average values.
+----December 8, 2002
+ 1. Added itemloc() function to find the location of a user-defined equipment.
+ 2. Fixed yet another bug in displaying an enemy's shape based on HP% during a
+     'look'.
+----December 9, 2002
+ 1. Players can now turn weapon proficiencies on and off.
+ 2. Added a new spell-entry flag 'Forgotten', for a combat event that makes its
+     targets forget spells and techniques.
+----December 10, 2002
+ 1. Added sptext() to return a textual version of a numeric spell attribute.
+ 2. Drain element without the Limit flag no longer drains more HP than the
+     target has remaining. The Limit flag corresponds to caster's own HP.
+----December 11, 2002
+ 1. Light sources can once again be used. Unusable items once again mention the
+     fact that you can't use them.
+ 2. Fixed a buffer reuse when parsing spell attributes for players in the room.
+ 3. On-Death attacks no longer check the caster's conditions, except for Stone.
+ 4. Tactics now check event usage using the EV_TEST command when selecting a
+     potential technique to use.
+ 5. Added new tactics flag "Leader" and corresponding Combat Bitmap "Leader" to
+     denote targetting the leader of an enemy group with tactics. This way,
+     special tactics can be used by henchmen to aid their boss in a multi-enemy
+     battle.
+ 6. Objects using 'give' with POW_MONEY no longer make their owners lose money.
+ 7. Fixed the problem where the 'You turn your attention' message wouldn't show
+     when you fight something immediately after a cast or use command.
+ 8. Renamed all occurrences of 'Mineral' to 'Material' in the combat system.
+ 9. HP Scanning in enemy captions now only prints HP instead of HP/MaxHP if the
+     enemy is wounded.
+----December 16, 2002
+ 1. Enemies will no longer attack other enemies when one fumbles and hits
+     another of its group.
+ 2. Added a new RAND_COMBAT flag to randomly target only those opponents
+     currently engaged in combat.
+----December 17, 2002
+ 1. Added @succverb, @osuccverb, and @odropverb to facilitate illusionatory
+     exit event messages. Exit @succ/@osucc/@odrops can reference this verb
+     using the %0 pronoun. Only @succverb needs to be used on most objects,
+     since @osuccverb and @odropverb will reference it if missing.
+ 2. Typing 'stop all' in the room should now correctly halt other enemies'
+     combat moves rather than re-engage in battle.
+ 3. Players will now instantly engage in battle when entering a room with
+     aggressive enemies.
+ 4. Changed the variance on the Attack damage equation to 50-100% using the
+     Pyramid function instead of the original 75-100%.
+----December 18, 2002
+ 1. On-Death attacks now announce the caster summoning up all of his energy.
+ 2. Fixed rebound attacks to do a standard attack if no Tactics entry matches.
+ 3. Reprisals actually check target's Reprisal Rate now.
+ 4. Treasure Rate for Rare, Award, Trap, etc. now uses values 'n' out of 1000
+     instead of 1 in 'n'.
+ 5. Added Usage information for @forge and @enemy when called with no args.
+ 6. Added combat variables HitRate, EvadeRate, and FumbleRate (1 in 0-100) as
+     base values before equipment modifiers.
+ 7. Added combat variable TreasureRate (1 in 0-1000), which overrides the
+     natural level-based treasure rate and race/guild attributes.
+ 8. Item 0 can now be used in treasure to randomly drop empty treasure chests.
+----December 26, 2002
+ 1. Fixed an error in the @decompile output for Tactics commands when a
+     function was present but no flags were set.
+ 2. Fixed an error in @enemy where the code doesn't check to see if the auto-
+     target specified is in the correct room/plane.
+----December 27, 2002
+ 1. @deleqfx now deletes EQFX indexes by moving higher-numbered indexes to fill
+     in the empty place. Deleting index 3 will make 4 become 3, 5 become 4, and
+     so on. Be careful when deleting multiple EQFX indexes.
+ 2. New added 'slot' argument in '@addeqfx spell/slot=eqfx,args' to insert a
+     EQFX into <spell>'s list above index number <slot>.
+----December 30, 2002
+ 1. Added new function sort(<word list>,<type>,<input delim>,<output delim>),
+     where type can be one of a, i, n, f, d, which sorts words alphabetically,
+     case-insensitive-alphabetically, numerically, floating-point, and #dbref.
+----January 2, 2003
+ 1. Changed the DB v2 format to easily skip over any kind of combat structure
+     stored on objects when loaded without combat support. This also shrinks
+     the overall DB size by several kilobytes.
+----January 8, 2003
+ 1. EQFX Status now supports Vigor modifications.
+----January 9, 2003
+ 1. Implemented a new random number generator based on the "Mersenne Twister".
+     It is faster than the one included in GNU Libc and ensures randomness
+     across the lower bits on all architectures.
+ 2. Added new function shuffle(<word list>,<input delim>,<output delim>) to
+     scramble items by word in a list, similar to scramble().
+----January 10, 2003
+ 1. Added a new function srand(<number>,<seed>,<index>,<count>). See helptext
+     for details.
+----January 11, 2003
+ 1. Players can no longer 'look' while Asleep.
+ 2. Fixed an infinite-loop problem when flushing a player's current input.
+ 3. Fixed a bug that consumed MP or EN for each event listed on a spell.
+ 4. Corrected the target in the message of a 'use <key item>' command.
+ 5. Fixed the problem non-builders had when @linking exits within zones or
+     @digging rooms when Restrict_Teleport is enabled.
+ 6. Objects can once again 'leave' other objects when RESTRICT_TELEPORT is not
+     set or the object's owner is a Builder.
+ 7. Money can no longer be stored in a technique list for Plane 0. Use @pennies
+     instead.
+----January 13, 2003
+ 1. Selecting items for use during a round no longer resets your battle timer.
+----January 14, 2003
+ 1. The "Weapon" flag now correctly works in EQFX Status and Condition rules.
+ 2. @dig now automatically sets an explore bit on the created room if the
+     player owns the origin room, the player has POW_COMBAT, and the room is
+     not inside a restricted zone. The builder is notified of the explore #.
+----January 16, 2003
+ 1. Fixed a possible infinite-loop when reading a reply from the DNS socket.
+----January 17, 2003
+ 1. Added $maxcost and $maxchant for scaling MP/EN Costs and Chant Rates as the
+     spell or technique approaches Level 10.
+ 2. Implemented the $command attribute for skills, spells, and techniques.
+ 3. Removed the hardcoded shops, as they will no longer be supported.
+ 4. Added a 3rd argument to the hasitem() function which allows one or more of
+     the flagwords to be specified: Items, Equipment, Events, Shop, Storage,
+     and Containers. If none are specified, it defaults to all flags enabled
+     except Storage.
+ 5. Added the "Virtue=<Value>:<Percent>" format as a damage modifier option in
+     the Attack Event.
+ 6. Fixed 2 crash bugs when item 10000 is non-existant and other items > 10000
+     still exist.
+ 7. Fixed several problems with awarding random treasure, items, and traps.
+ 8. Improved the security of secure_string() in environment variables %0-%9.
+     Multiple bad characters are now outputted as one space instead of several.
+----January 20, 2003
+ 1. Weapon-specific element types (Bludgeon, Pierce, Slash) are now applied to
+     an attack when the "Weapon" event flag is given.
+ 2. Implemented the concept of Long-Range weapons and Flying monsters that can
+     avoid melee attacks.
+----January 23, 2003
+ 1. Rewrote Element/Reflect Damage% calculations.
+ 2. Enemies now counterattack if they were hit with a damaging Cure spell and
+     refrain from attacking when absorbing HP from a non-Cure spell.
+ 3. Implemented the PhysAtk and MagicAtk elemental conditions.
+ 4. Fixed a bug in forgetting to update 'speaker' in the do_minute() loop.
+ 5. Fixed a @listen object=* error in that it did not restore %0 through %9
+     after processing notify relays.
+ 6. Slight speedups to code in various files to use the stack rather than
+     malloc() to save temporary environment variables %0 through %9.
+ 7. Weapons can now be set with the condition "MagicAtk Element" to inflict
+     magical attacks.
+ 8. Players/enemies can no longer retaliate with physical attacks inside a
+     Shaft (crawlspace). Also fixed several bugs that hung the fight queue
+     entry for such players.
+----January 24, 2003
+ 1. Added an item type 'Bait' for distracting monsters. Renamed the old Bait
+     type (for fishing) to 'Lure'.
+ 2. Monsters can now gain a configurable set of stat modifications on levelup.
+     Use the "Levelup Modifiers" techlist to store the maximum value for each
+     stat multiplied by 10. The game will automatically pick a random amount
+     between 25% and 100% for each stat.
+ 3. Renamed the bitmap "TechPts" to "TechValue" to be more consistent with Gold
+     and EXP.
+----January 27, 2003
+ 1. Fixed @weight so that negative values won't show up with odd results on the
+     'inv' command.
+----January 28, 2003
+ 1. Implemented the Fuel event for refueling oil lamps.
+----January 30, 2003
+ 1. Fixed a bug with the Opaque flag in that objects inside opaque items could
+     still be seen when players can see in the dark.
+----January 31, 2003
+ 1. Added the option to move items/equipment between two different technique
+     slots with @moveeq.
+----February 11, 2003
+ 1. Fixed minor color anomalies in -< Battle >- Messages.
+----February 19, 2003
+ 1. A hardcoded 'light' or 'douse' now only works on valid light source items,
+     and is an unrecognizable command if an item doesn't match. This is done to
+     allow softcode objects to continue to match $light and $douse events.
+ 2. Rewrote the Semaphore Queue system and added several semaphore types.
+ 3. Rewrote the Restore event to use console I/O semaphores during an Inn stay.
+ 4. Changed the syntax of the @event command, since <target> is rarely used.
+----February 20, 2003
+ 1. Fixed a bug where no check was done for events that don't expect either
+     combat items or living creatures as targets.
+ 2. The targetting system now allows an $areaatk with "All Exit" or "All Thing"
+     for matching inanimate objects.
+ 3. Battle targets will no longer lock onto @vlocked objects.
+ 4. Caption variables for spell events are now documented and recorded from %1
+     to %9 for each event set on the spell.
+----February 27, 2003
+ 1. Rewrote the spell_message() internal procedure to facilitate more detailed
+     combat messages.
+ 2. @pennies can now change the carried GP of things with a combat status set.
+ 3. Exits and rooms that defeat players are no longer awarded Gold Pieces--the
+     Gold is instead lost forever.
+ 4. Added a new passthru system to skip non-important events when checking if a
+     spell can be cast on <target>.
+ 5. Implemented the Message event (using aforementioned Passthru mode).
+----February 28, 2003
+ 1. New internal event flag, EVT_SINGLE, which limits specific events to
+     execute only for single targets.
+ 2. Restricted #dbref.attr matching for user-defined attributes and improved
+     zoneattr() to return the first zone attribute with a nonzero string.
+ 3. Added new sector type Arctic.
+ 4. Fixed a major bug in immediate-queue commands not checking TYPE_GARBAGE for
+     destroyed objects, and rewrote the @atime loop to still do status updates
+     on GOING or HAVEN objects.
+ 5. Rewrote atr_str() to use stack-based recursion for looking up attributes on
+     object parents.
+----March 1, 2003
+ 1. Added new bitmap attribute HomePlane to store the players' plane whenever
+     they use the 'save' command.
+ 2. @relay now performs pronoun substitution, and each destination now supports
+     <dbref#>:<plane> if the object's owner has POW_PLANE.
+ 3. @relay messages are now only sent to the plane the original speaker is in.
+ 4. Fixed a bug with parsing delimiters in a string (such as ; commands) that
+     occur right after an ANSI escape sequence.
+ 5. '@#dbref.attr object=value' format can now again be used to set a specific
+     user-defined attribute when attribute names are ambiguous across different
+     parents.
+ 6. You can now examine an attribute using the 'object/#dbref.attr' format.
+ 7. @teleport now supports <dbref#>:<plane> destinations.
+ 8. TinyMARE Version 1.0.9355 released.
+----March 2, 2003
+ 1. Ansi codes are now stripped when determining if a player can spoof a
+     message to the room using @emit.
+----March 4, 2003
+ 1. Stationary, aggressive enemies who are @vlocked against players will no
+     longer fight them as they enter the room.
+ 2. Exits can no longer get set Wounded during battle.
+ 3. The Restore event now distinguishes between a levelup and an Inn stay, in
+     that only ailments are removed with a levelup and all conditions are
+     removed during an Inn stay.
+ 4. @event command no longer requires its target to have a combat status.
+----March 5, 2003
+ 1. @aclone and @oclone now store the object that did the @clone command in %#.
+ 2. The @ps command takes a snapshot of the queue before printing its results.
+     This protects against an infinite loop that could occur if an object uses
+     @ps and it has a @listen and @ahear set.
+----March 6, 2003
+ 1. Area attacks no longer target objects who are @vlocked against the caster.
+ 2. Spell messages are corrected so that if $osucc or $tsucc are not specified,
+     then $succ will prevail for all listeners in the room.
+ 3. Fixed lcon/lexits(room,plane) such that (plane == -1) works correctly, and
+     that specified without a plane will always match the plane of the object
+     using the function.
+ 4. Added the party(player) function to print the name of the party that a
+     player belongs to.
+ 5. Fixed an internal error when trying to 'leave' from an object held by
+     another player.
+ 6. Added the lparty() function, which lists all parties in the game separated
+     by semicolons.
+ 7. Added the partyinfo(partyname,variable) function. Valid variables are:
+     Name, Create, Members, Exp, Level, Formation, and Roster. Formation and
+     Roster are restricted to being in the party or having POW_COMBAT.
+ 8. Objects held by players can no longer 'drop' players inside them such that
+     players are inside each other.
+ 9. Fixed a bug in the Restore event where HP/MP/EN got reset to the real
+     values instead of to +/- values modified by equipment.
+----March 9, 2003
+ 1. Introduced the +config command.
+ 2. Added descriptions to the options on the +term listing.
+----March 10, 2003
+ 1. Minor speedups in command- and function-parsing and in a number of other
+     procedures.
+ 2. Fixed the bug in player death messages not displaying in odd circumstances.
+ 3. Fixed a major bug in @enemy where user-defined items stored in technique
+     lists were not copied to new item numbers.
+ 4. Rewrote the @deleq and @moveeq commands to accept item abbreviations.
+ 5. Fixed a "Nothing Happens" problem when enemies flee via Wimpy.
+ 6. Coded EQFX Technique.
+ 7. Added the 'limits' command to list your Limit Attacks.
+----March 11, 2003
+ 1. Players can no longer see messages in the room while Asleep.
+ 2. Added the Master and Unique spell $flags.
+ 3. Carry-locks (@lock exit=#num or +#num) now search in all objects carried by
+     the player, and their contents recursively.
+----March 12, 2003
+ 1. 'search' can now take an argument: a database object in the room.
+----March 13, 2003
+ 1. Fixed a bug in some targets not retaliating when struck by a multi-target
+     spell event.
+ 2. PhysAtk/MagicAtk now applies multipliers to attacks correctly and allows
+     curatives to supercede.
+----March 17, 2003
+ 1. Added a @sitelock command for administrators to edit the list of site
+     lockouts on the fly.
+ 2. Added a new power, POW_SITELOCK.
+----March 18, 2003
+ 1. Fixed an infinite-loop bug when you try to take objects/items while inside
+     yourself.
+ 2. Fixed an error that displayed the wrong room name in the default @odrop
+     message.
+----March 20, 2003
+ 1. @pemit can now send messages to any object in a room owned by the invoker.
+ 2. Coded the Nightvision condition.
+ 3. Added soul attributes Regen and RegenDelay for managing regeneration
+     amounts and intervals during combat.
+ 4. Fixed auto-targetting based on Behavior level after defeating an enemy to
+     correctly engage in battle between another monster in the room.
+ 5. @akill set on the GAME_DRIVER now overrides sending the player Home when
+     killed in battle.
+----March 21, 2003
+ 1. Coded the Divine condition.
+----March 22, 2003
+ 1. Fixed a major bug in the select() loop which could knock everyone offline
+     if getting an EINTR error code.
+----March 24, 2003
+ 1. The @cycle command now works again, after a long hiatus.
+ 2. Changed the message displayed with the 'say' command to insert a comma
+     after the "says".
+ 3. The 'search' command now executes @asearch instantly instead of using the
+     command queue.
+----March 25, 2003
+ 1. Fixed a bug in several if/truth() softcode functions that returned false
+     for dbref#s.
+ 2. Added softcode functions setdiff(), setinter(), and setunion() for dealing
+     with word sets.
+----March 26, 2003
+ 1. Corrected the Hit/Miss equations during combat.
+----March 28, 2003
+ 1. land() and lor() can now take more than 2 arguments.
+ 2. Added softcode functions iscombat(), fighting() and target().
+     iscombat(<player>) returns 1 if <player> has a combat status, 0 if not.
+     fighting(<player>) returns 1 if <player> is attacking or being attacked.
+     target(<player>) returns the fight queue target of <player>, or #-1 if
+     none is listed.
+ 3. Added ctext(<string>,<color codes>) to color <string>, just like @cname.
+ 4. Added a '@copytech dest=src' command to copy the full technique list for
+     things like propagating conditions to monster familiars. The previous
+     technique list on <dest> is removed.
+----March 29, 2003
+ 1. Fixed a bug in selecting targets when you escape from a room and enemies
+     instantly fight you.
+----March 30, 2003
+ 1. Fixed several compile errors/warnings when compiling on FreeBSD on a Sparc
+     computer.
+----March 31, 2003
+ 1. Enemies no longer escape when fighting a Wounded player.
+ 2. The fight_que() routine now sets the appropriate Area Attack when called
+     without one.
+ 3. @clone and @enemy now trigger @aenter on the room, @aoenter on objects and
+     exits in the room, and @oclone shows after the '* has arrived.' message.
+ 4. +party formation now only shows the players in the current room, and it
+     hilites your location in Yellow (instead of the leader's).
+----April 1, 2003
+ 1. Defeated enemies once again emit "X has died." when they leave the room.
+ 2. A zone's inzone() is now stored in a linked list for fast access. This
+     change also constitutes a DB format change.
+ 3. The has_a() function now accepts a zone# as its first argument to search
+     for children in all rooms of the zone.
+ 4. The 'sector' command can now take a room# as an argument (requires
+     POW_REMOTE).
+ 5. Fixed a bug that skipped zeroing the Explore% bitmap on players without a
+     combat status when loading the database.
+ 6. Item locations of user-defined spells (10000 and up) are now stored in
+     the spell database for fast access.
+ 7. Fixed a problem with the @deleq command when used on user-def equipment.
+----April 2, 2003
+ 1. Players can no longer randomly find money while swimming, wounded, or dead.
+ 2. Changed the semantics of @oemit/@oremit. @oemit will send a message to
+     everyone in <player>'s room except <player>. @oremit will do the same,
+     except it will also exclude the room as a recipient. The message only gets
+     sent to those in <player>'s plane.
+ 3. Added function spparse(player,spell#,attr) for correctly parsing $desc and
+     $caption using <player>'s stats.
+ 4. Added functions sunset() and sunrise() to give the number of RL seconds
+     until the next event.
+ 5. Added the function gameage() to return the number of RL seconds since the
+     game was first opened. Essentially xtime() - config(BEGINTIME).
+ 6. The controls() function can now be used to determine if owned objects can
+     control others, even if RESTRICT_HASPOW is set to 1.
+ 7. Added the techvalue(player,techtype,name[,value]) function for retrieving
+     the base technique value stored on <player> (as opposed to mglvl/sklvl()
+     which factors in EQ modifications). <value> is an optional keyword that is
+     one of Quantity, Flags, Value, Level, Mastery, Kills, and Arg, depending
+     on the type of technique. If <value> is omitted, the most prominent entry
+     is shown (i.e. Level for spells and Value for everything else).
+----April 3, 2003
+ 1. Added function can_equip(player,item#) to determine if a player can equip
+     an item.
+ 2. +party join/leave now prints the messages in color on the party channel.
+----April 4, 2003
+ 1. Fixed a bug that prevented @pemit from allowing you to send messages to any
+     object you owned.
+ 2. @cname color:length now takes * as <length> to denote rest-of-string.
+ 3. randword() now correctly strips extraneous spaces away from beginning and
+     end of word list.
+ 4. The @atime loop now processes objects by time-slice every 0.1 seconds to
+     spread out work more evenly.
+----April 6, 2003
+ 1. The 'run' command now works on exits with random @locks, as it no longer
+     checks the exit's lock twice.
+----April 8, 2003
+ 1. Two new verbs, 'run' and 'flee' are used in place of @succverb when players
+     and monsters run from battle.
+----April 9, 2003
+ 1. @delparent once again checks for the Bearing flag set for you to delete
+     from parents you do not own.
+----April 11, 2003
+ 1. The @damage attribute set on exits can now parse functions.
+ 2. The justify() function now strips ansi codes before justifying strings.
+----April 26, 2003
+ 1. Corrected a problem with duplicate @atime calls when the time-slice is
+     overrun.
+ 2. Overrun queue commands now have higher priority than @atime at the
+     beginning of a time-slice.
+----April 27, 2003
+ 1. Enemies now wander properly through exits with [rand()] in @locks.
+----May 8, 2003
+ 1. Rewrote the is-carrying code to not hang the game if objects are inside
+     each other.
+----May 9, 2003
+ 1. @listen now correctly removes unprintable characters.
+ 2. @relay now includes the object it is relaying to, instead of just its
+     contents. Further, relay targets can be prefixed with a = or + like in
+     lock code. =#xxx means only the target, and +#xxx means only its contents.
+----May 10, 2003
+ 1. Item descriptions no longer strip out %R characters.
+ 2. ! Events now match all messages sent to the object, like @listen. The
+     speaker must still pass @ulock, though.
+ 3. @alevel now executes on room zones & universal zone objects as well as on
+     the player/enemy who leveled.
+ 4. Players/enemies with a ExpRate of 0% no longer get any Experience Points.
+ 5. Fixed the bug where @akill would not trigger on a Boss set Monster.
+----May 11, 2003
+ 1. Added and coded in the Minion condition, which destroys the monster when
+     its Master (@leader bitmap) dies.
+----May 12, 2003
+ 1. Recoded how @succ/@osucc/@odrop messages are filled in automatically.
+ 2. Coded in the 'Restrict' Area Attack flag and updated the helptext.
+ 3. Averaged out the Wander Interval duration over the list of things set
+     Wander or Monster rather than over all database objects. This stops CPU
+     Usage spikes that occur once per minute when most of the wandering objects
+     are clumped near the end of the database.
+ 4. New environment configuration variable WANDER_INTERVAL, suggesting the time
+     (in seconds) between any one object's moves.
+ 5. Added new variable WANDER_RATE, which denotes the number of loops through
+     the Database from object #0 to #dbtop per WANDER_INTERVAL. Only objects
+     whose modulus matches the current loop number will be triggered.
+----May 13, 2003
+ 1. @encounters on rooms now invokes random enemy encounters if set with a list
+     of #dbref's. The term "Always=#dbref" always invokes an encounter even if
+     the player has entered the room recently.
+ 2. @aclone is now triggered for @enemy and random encounters with %# as the
+     player who instigated the encounter.
+ 3. Added the option "Followers" to the partyinfo() function.
+ 4. Fixed a bug in @iter that relied on the Puppet flag set to process certain
+     commands.
+ 5. Fixed a bug in @oemit and @oremit allowing spoofing in the room.
+----May 14, 2003
+ 1. Added $+ entries in the "helptext.txt" file for Combat-specific help pages.
+ 2. Altered the helptext syntax highlighting to not bold standalone " or '
+     characters and to make | characters cyan in the command/function lists.
+----May 15, 2003
+ 1. Enemies set with the Minion condition no longer wander on their own.
+ 2. The immediate_que() function now restores the Speaker variable, fixing
+     listeners such as @iter.
+ 3. Fixed the union structure in mare/config.c to not give a warning when
+     compiled with GCC 3.3.
+ 4. Added a new combat function enabled(player,type), which returns 1 if
+     <player> can perform <type>. Type is one of: General, Move, Fight, Items,
+     Techs, Speech, Hands, and Chase.
+----May 18, 2003
+ 1. Added the concept of semaphores to TinyMARE. '@wait <seconds>/<id>=<cmds>'
+     will store a @wait entry with a mutually-exclusive ID phrase for that
+     object. Repeated @waits will replace any existing command in the queue
+     that matches the ID.
+ 2. '@cancel <obj>=<id>' was added to cancel all queued commands with that ID.
+ 3. '@semaphore <id>=<cmds>' (or @sema for short) places <cmds> into the queue
+     with a mutually-exclusive ID, similar to what @wait 0/ID=<cmds> would do.
+ 4. Added the function waittime(<object>,<id>) to view the number of seconds
+     remaining on a @waited semaphore.
+ 5. Added the function lsema(<object>) to list all active mutually-exclusive
+     IDs in either the Command or @wait queue for <object>.
+ 6. Fixed a bug that didn't call flush_queue() with the correct arguments while
+     loading a database.
+----May 19, 2003
+ 1. Spell messages that target combat items now use %#=Caster instead of #-1.

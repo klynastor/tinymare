@@ -1,0 +1,29 @@
+#
+# run/etc/services - Supported Services
+#
+# This file holds a list of passwords used by several services that you wish
+# to allow access to your site. Currently supported are three services:
+#
+#  conc - Concentrator service for binding multiple character logins through
+#         a remote host/port using only one file descriptor, allowing TinyMare
+#         to support more users online than the maximum number of files that
+#         can be open at once (shown using +info cpu).
+#
+#  rwho - TinyMare's own Remote-Who service, which idles in the background
+#         waiting for players to type in commands that accept user@mudname as
+#         an argument. This gives players the ability to send pages, mail, or
+#         wholist requests to any other Mare site running on the internet.
+#
+#  smtp - Simple Mail Telnet Protocol support allows TinyMare to act as an
+#         E-mail delivering agent to players' accounts from the internet.
+#         Localhost must have an appropriate configuration file set in
+#         /etc/sendmail.cf for redirection (see lib/smtp/Readme for details).
+#
+# Each uncommented line contains three words separated by whitespace indicating
+# the service, origin ip address, and password respectively. With this setup,
+# each individual service and remote host can have a different password for
+# maximum security. A password need not be supplied.  Example of an entry:
+#
+# conc	127.0.0.1		password
+
+# End of services.

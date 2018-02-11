@@ -1,0 +1,80 @@
+TinyMARE v1.0 Compatibility Issues - Last update 2000-09-29
+
+
+This alpha release version of TinyMare v1.0 is intended as a drop-in bugfix
+replacement/enhancement of TinyMuse. Since the entire source code distribution
+has been rewritten from scratch, there are several compatibility issues between
+the two servers that might result in strange behavior of softcoded objects.
+This file attempts to list the problems during old database conversion.
+
+
+This version of TinyMARE can load the following database formats:
+
+ TinyMush v10
+ TinyMuse v1-v3
+ TinyMuse Zoned v3-v15
+ TinyMare Compressed RAM v1
+ TinyMush-3 v1
+
+
+Conversion notes specific to database type:
+
+TinyMUSE:
+---------
+Several hardcoded functions used in MUSE have been renamed to fit a standard.
+While most can be rewritten using @defattr functions, players are urged to
+recode their objects to instead use those provided by the system.
+
+The following is a list of MUSE functions that are no longer supported
+internally by TinyMare, each with replacement softcode for a Universal Zone:
+
+   string(): [repeat(v(0),v(1))]
+  wchange(): [replace(v(0),v(1),v(2))]
+
+The @aahear and @amhear attributes were removed. @ahear now acts like @aahear,
+which might cause infinite queue loops on some objects set Listen:* unless it
+is also set Quiet.
+
+The @force and @trigger commands now preserve the %# environment variable as
+the cause of the original object who instantiated the command. This enables the
+following code to work properly:
+
+  @va object=$menu:@pemit %#=You look at the menu.;@wait 3=@tr me/vb
+  @vb object=@pemit %#=Much to your misfortune, you find no items available.
+
+The @switch command instantly executes commands without entering them into
+the queue. In MUSE, @switch cannot be used in softcode that carries a large
+time constraint with other queue commands ready for execution.
+
+Forcing an object via use of the # symbol completely bypasses the queue system.
+This is also a good way to execute immediate single commands on Haven objects,
+since the original object is the one queueing the command. Example:
+
+  > @create Puppet
+    Puppet(#58) created.
+  > #58 say Hey there!
+
+Ansi colors using the || pattern in attributes are prefixed with a % to retain
+compatibility with the function parser. Some versions of MUSE handle color
+codes differently. Mare tries to auto-detect this and compensates for the
+differences by altering what's inside the ||'s. Anything it cannot detect is
+left untouched.
+
+The zone() function prints the same output as lzone() in MUSE.
+
+
+TinyMUSH:
+---------
+- Vector functions are not implemented.
+- @waited semaphores are not implemented.
+- There is no @dolist command.
+- @iter and @foreach do not recognize the ## token.
+
+
+Known Bugs:
+-----------
+- Building restrictions for RESTRICT_TELEPORT do not yet follow the rules
+  outlined in the Helptext documentation. The Helptext is correct, and the code
+  will be fixed in a future version of TinyMARE.
+- Automatic database backups using @config DB_BACKUP and DB_EPOCH are not yet
+  implemented.

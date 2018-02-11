@@ -1,0 +1,2 @@
+cd ../run
+gdb --dir=../src/comm --dir=../src/db --dir=../src/io --dir=../src/fight --dir=../src/world --dir=../src/prog --dir=../src/game --dir=../src/mare ../bin/netmare core

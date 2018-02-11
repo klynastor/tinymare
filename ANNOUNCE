@@ -1,0 +1,25 @@
+Annoucement for TinyMARE v1.0:
+------------------------------
+
+TinyMARE (Multi-user Adventure Roleplaying Epic) is a text-based MUD server
+completely rewritten for efficiency using TinyMUSH and TinyMUSE as a basis for
+its game engine. The server is designed for creating an extensive, novelistic
+role-playing atmosphere supporting real-time combat, night/day, seasons, and
+global weather. Using your favorite telnet client, it lets players log on to
+explore your virtual world, find helpful items, learn skills and techniques,
+and form parties with others to defeat obstacles you create in your own epic
+adventure.
+
+In terms of administratability, MARE utilizes the latest features in the C
+Library for background hostname lookup and user authentication. It supports a
+built-in HTML server, multiple telnet ports, concentrator service for up to
+65,000 simuletaneous connections, and scalability for interfacing with other
+MAREs on the internet. Still at a developmental stage, MARE is considered to be
+one of the most efficient game servers, clocked at handling over 1,250 users
+online without lag using a 133MHz Pentium.
+
+The current version includes routines for starting a new database or converting
+from a previous existing TinyMUSE database. Online coding supports nearly all
+of the functionality of MUSH and MUSE combined, plus new programming styles and
+features unique to this server. Tested to compile successfully on Linux, SunOS,
+SysV, and OSF1 UNIX workstations. Also compiles cleanly on Windows 95/98/NT.

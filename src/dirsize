@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Displays executable size and size of source code for TinyMARE
+#
+# Updated February 12 2006  Gandalf
+
+if [ -f ../bin/netmare.exe ]; then
+  exe=../bin/netmare.exe
+elif [ -f ../bin/netmare ]; then
+  exe=../bin/netmare
+else
+  exe=""
+fi
+
+echo
+if [ -n "$exe" ]; then
+size $exe | awk '
+  { if($4 != "+") { total = $4; } else { total = $7; }};
+  END { printf "System Size: %08x (hexadecimal)\n", total }'
+fi
+
+wc -lc [a-np-tv-z]*/*.[ch] | awk '
+  { if($3 == "total") { lines = $1; bytes = $2 }}; END {
+  printf "Source Size: %08x (hexadecimal)\n\n %d Lines of code, %d Bytes.\n", bytes, lines, bytes }'
+echo

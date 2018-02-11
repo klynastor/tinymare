@@ -1,0 +1,129 @@
+Changelog:
+
+ X. Environment variables altered via [setq()] and [setr()] are no longer
+     carried over between different attributes in a group (e.g. @succ/@osucc/
+     @asucc). This also puts an end to side-effects and possible security
+     problems associated with them.
+
+
+diff -ur mare/src/game/predicates.c mare/src/game/predicates.c
+--- mare/src/game/predicates.c	2003-11-21 23:21:14.000000000 -0500
++++ mare/src/game/predicates.c	2003-11-21 11:02:26.000000000 -0500
+@@ -771,7 +771,7 @@
+ void pronoun_substitute(char *buf, dbref privs, dbref player, char *str)
+ {
+   char temp[8192], c, *p, *r, *s;
+-  int var, pos=0, color=default_color;
++  int a, var, pos=0, color=default_color;
+ 
+ #ifdef DEBUG
+   /* Catch invalid calls to the pronoun parser */
+@@ -782,6 +782,8 @@
+   }
+ #endif
+ 
++  pronoun_depth++;
++
+   for(s=str;*s && pos < 8000;s++) {
+     /* Function Substitution */
+     if(*s == '[') {
+@@ -937,6 +939,18 @@
+       strcat(buf, temp);
+     default_color=color;
+   }
++
++  /* Restore environment altered by setq() and setr() */
++  if(!--pronoun_depth && saved_env) {
++    for(a=0,var=saved_env;a < 10;a++) {
++      if(var & 1) {
++        free(env[a]);
++        env[a]=global_env[a];
++      }
++      var >>= 1;
++    }
++    saved_env=0;
++  }
+ }
+ 
+ 
+diff -ur mare/src/hdrs/db.h mare/src/hdrs/db.h
+--- mare/src/hdrs/db.h	2003-11-21 23:18:28.000000000 -0500
++++ mare/src/hdrs/db.h	2003-11-21 11:03:23.000000000 -0500
+@@ -30,7 +30,10 @@
+ 
+ extern int disp_hidden;
+ 
+-extern char env[10][8192];
++extern char global_env[10][8192];
++extern int  saved_env;
++extern int  pronoun_depth;
++extern char *env[10];
+ extern char log_text[8192];
+ extern dbref log_dbref;
+ 
+diff -ur mare/src/io/net.c mare/src/io/net.c
+--- mare/src/io/net.c	2003-11-21 23:22:09.000000000 -0500
++++ mare/src/io/net.c	2003-11-21 11:03:14.000000000 -0500
+@@ -42,7 +42,10 @@
+ int  system_cpu_mhz;
+ 
+ char global_buff[16384];
+-char env[10][8192];
++char global_env[10][8192];
++int  saved_env;
++int  pronoun_depth;
++char *env[10];
+ char log_text[8192];
+ dbref log_dbref=NOTHING;
+ 
+@@ -299,9 +302,14 @@
+ void init_game()
+ {
+   FILE *f;
++  int a;
+ 
+   init_compress();
+ 
++  /* Initialize environment pointers */
++  for(a=0;a < 10;a++)
++    env[a]=global_env[a];
++
+   /* Initialize command counters */
+   cmdav[0]=nstat[NS_NPCMDS];
+   cmdav[1]=nstat[NS_NQCMDS];
+@@ -968,6 +976,10 @@
+ 
+   /* Reset globals */
+   match_quiet=0;
++  for(i=0;i < 10;i++)
++    env[i]=global_env[i];
++  saved_env=0;
++  pronoun_depth=0;
+ 
+ #ifdef COMBAT_SYS
+   current_level=MIN_SPELL_LEVEL;
+diff -ur mare/src/prog/eval.c mare/src/prog/eval.c
+--- mare/src/prog/eval.c	2003-11-21 23:20:45.000000000 -0500
++++ mare/src/prog/eval.c	2003-11-21 10:58:45.000000000 -0500
+@@ -1645,6 +1645,10 @@
+   if(a < 0 || a > 9)
+     strcpy(buff, ERR_ENV);
+   else {
++    if(!(saved_env & (1 << a))) {
++      saved_env |= (1 << a);
++      env[a]=malloc(8192);
++    }
+     strcpy(env[a], args[1]);
+     *buff='\0';
+   }
+@@ -1656,6 +1660,10 @@
+   if(a < 0 || a > 9)
+     strcpy(buff, ERR_ENV);
+   else {
++    if(!(saved_env & (1 << a))) {
++      saved_env |= (1 << a);
++      env[a]=malloc(8192);
++    }
+     strcpy(env[a], args[1]);
+     strcpy(buff, args[1]);
+   }

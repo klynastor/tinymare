@@ -1,0 +1,57 @@
+Server messages, updated October 1, 2000.
+
+& Slaved
+
+  -.___.'  Your character has been [1;31mdisabled[m.
+   (O.o)   Please write to the administrator for access at
+   .(_)    the following address: [1madmin@winds.org[m
+
+& Create Character
+Welcome Adventurer, to the Land of the Wind.
+
+For thousands of years, your heavy-laden soul drifted aimlessly through
+the ether, until, by the slightest of odds, it came upon the Gates of
+Destiny. It is now time to choose a name, one appropriate to roleplay
+in a fantasy world full of dragons and faeries, knights and wizards.
+
+If this is your first time on the game, we recommend you login as a Guest
+to get a feel for the game first. At any time during this creation process,
+you can type RECONNECT all in caps to return to the login screen.
+
+& Invalid Name
+Whoa! Either that playername already exists, or you've entered something so
+inconspicuously obnoxious that the game just really doesn't like it.
+So try again, keeping the name between 3 and 16 letters, no spaces, and no
+other symbol besides the . ' and _ keys. And in the meager chance that you've
+forgotten your password, you can email admin@winds.org for help.
+
+& Set Password
+Now enter a password for your character! This password must be at least
+3 characters long and can contain any mixture of symbols, numbers, or spaces.
+
+& Change Password
+Your new password must be at least 3 characters long and can contain any
+mixture of symbols, numbers, or spaces. Pressing Enter without typing
+anything will leave your password unchanged.
+
+& Edit Rlname
+Before we create your character, we want to know your Real Name and Email
+Address. This allows the game's administration to protect your rights and
+preserve your character, especially if you forget your password. You have a
+choice to let other players see the information that you provide below.
+In other words, what you give us can only serve to help you later.
+
+Please answer the following to the best of your ability. If you make a
+mistake, pressing Enter without typing anything will let you start over.
+
+& Edit Email
+Now enter your Email Address. If you have no Email Address, type None
+at the prompt below.
+
+& Config Terminal
+WindsMARE has the ability to display color and graphics on your screen.
+If the following word "[1;31;5mANSI[m" appears bold, red, or blinking, then
+you support ANSI and you should say Yes to the following question.
+If none of those traits are visible, or there was garbage surrounding
+the word ANSI, then you do not support it, and you should say No.
+

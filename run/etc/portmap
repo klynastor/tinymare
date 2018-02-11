@@ -1,0 +1,28 @@
+#
+# run/etc/portmap - Available Ports
+#
+# This file holds a list of ports that are automatically turned on when the
+# program finds and loads the database. Currently supported are the following:
+#
+#   game - Default login screen where anyone can connect to the game.
+#
+#  admin - Separate port allowing only administration to connect through.
+#
+#   http - Supports HTML 1.0 requests.
+#
+#   mesg - Prints a message at login and disconnects user.
+#
+# Each uncommented line contains two words separated by whitespace indicating
+# a service specifier and a port number. Services can be any of three types
+# (listed above) that determine how new connections to the port should behave.
+# The port number is any number from 1024 to 9999 (or 1 to 1023 if running the
+# server as root). If the port number contains the word 'default', then the
+# configured variable TINYPORT is to be used. If no entry below contains the
+# default port, then it will default to 'game'.  Example entries:
+#
+# game		default
+# admin		23
+# http		7350
+# mesg		6666	msgs/noentry.txt
+
+# End of portmap.

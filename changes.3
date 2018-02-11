@@ -1,0 +1,448 @@
+A Backlog of Hardcode Changes in TinyMARE v1.0.6400-v1.0.6888, Winds Year 0007.
+
+----May 26, 1998
+ 1. @digging a room with automatic exit creation now checks if you have enough
+     money to create those additional exits too.
+ 2. Added two new attributes, @ealias (Enter Aliases) and @lalias (Leave
+     Aliases) for objects. Values contain semicolon-separated strings of
+     aliases that mimic the 'enter' and 'leave' commands.
+ 3. Rooms can now be linked as a dropto to any other room, or *HOME*.
+----May 28, 1998
+ 1. Rewrote the helptext index pointers to use a resizable array instead of a
+     linked list.
+ 2. Added support for multiple error messages from the file: typo.txt.
+----May 31, 1998
+ 1. Added possessive support for 'look <player>'s <object>'.
+----June 8, 1998
+ 1. The @ndesc on a dark room is displayed whenever a player can't see inside.
+----June 15, 1998
+ 1. Rewrote the final version of all 18 race descriptions.
+----June 19, 1998
+ 1. Sickness does not affect the player until the variable count reaches 2.
+ 2. Rewrote regeneration, swimming, and condition weakness routines.
+ 3. Forked database saves now send back an exit code instead of a signal to
+     indicate if an error has occured.
+----June 22, 1998
+ 1. Enabled support for multiple +languages in the realm.
+ 2. Maximum Open Files count is now done accurately via getrlimit() instead of
+     sysconf().
+----June 23, 1998
+ 1. Completely rewrote the boolean expression lock parser code for efficiency.
+----June 25, 1998
+ 1. New 'Wander' flag added, moving objects around once every ATIME_INTERVAL
+     seconds.
+----June 26, 1998
+ 1. Fixed minor list-checking bugs in @set and @setcond.
+ 2. Fixed a swimming bug that wrongly checked Mastery % to not succeed.
+ 3. Implemented 60 special race/relic effects, some given to a player depending
+     on the race selected at creation time.
+ 4. Added the relics() function, which displays the effects given to a player.
+ 5. Moved the haspow() function from hardcode to softcode using powers().
+ 6. Renamed @alter_magic to @advance and fixed the bugs regarding new skills.
+ 7. Renamed @addmagic/@delmagic to @addtech/@deltech, and can now be used for
+     any of the 15+ technique lists available on players. A technique list can
+     also be accessed by word now instead of just by number.
+ 8. Added '@list types' to display all valid item types known by the game.
+ 9. New @console command, used for setting/unsetting connection flags such as
+     Input, Output, and Status Bar updates.
+10. New power added, POW_CONSOLE, used to authorize redirection of a player's
+     commands to an object or for changing the flags on a player's connection.
+----July 5, 1998
+ 1. Added @amoon attribute, executed on every object at the moon phase change.
+ 2. Added @prefix and @suffix attributes for robots. These display messages
+     before and after the output from each command typed in by a player.
+ 3. Added the @output command (used with POW_CONSOLE), which allows objects to
+     send high-priority messages to connected players bypassing the gamedriver.
+ 4. Fixed some bugs in the HTML version of 'who' to display the @doing
+     correctly, parsing the text against the owner.
+ 5. Made atr_parse() into a macro for greater internal efficiency.
+ 6. Fixed a serious bug in @defattr which let people define attributes on any
+     unowned object.
+ 7. Coded in the @input command, which allows objects to prompt players for
+     additional input, whose reply is redirected at a specific object/attribute 
+     instead of the game driver.
+ 8. Completely removed the parse_attrib() code and rewrote @defattr, @redef,
+     @undef, @trigger, @cycle, @input, get(), and v() for efficiency.
+----July 6, 1998
+ 1. Modified @list races and @list guilds for extra options, including viewing
+     of the race/guild descriptions, stats, and current members of each.
+----July 7, 1998
+ 1. Fixed a bug in the function parser that converted {} to }.
+----July 31, 1998
+ 1. Changed the internal infinite_loop timer to a virtual profiler which counts
+     the amount of time spent in an execution loop and decreated the time from
+     2-minute intervals to 20 seconds.
+----August 1, 1998
+ 1. Implemented nonblocking domain name server lookup routines for hostnames.
+     This gets rid of all remaining procedures on TinyMare which lag down the
+     system. In this way, a player will not be shown the login: prompt until
+     his hostname is correctly resolved, but all other normal game activity
+     will proceed fine.
+----August 3, 1998
+ 1. Entered in the new +/- status modifications for races using a scale from
+     1 to 9 to ensure fair balancing for each attribute.
+----August 12, 1998
+ 1. Modified the existing experience chart to conclude level 100 at 150M exp.
+----August 13, 1998
+ 1. Added an old wizard command back into the game: @pcreate.
+ 2. Added the power which goes with that command, POW_PCREATE.
+ 3. Added dataflags for Light and Dark intensity spells.
+ 4. Changed the Light flag to be accepted on any object type except player.
+     Rooms set Light give an intensity so bright that players cannot see except
+     with an item that emits darkness.
+ 5. Fixed a slight bug in @passwd <player> when entering an invalid password.
+ 6. Wimpy command now triggers upon HP% rather than HP value.
+ 7. New command, 'behavior', which sets combat tactics when encountering enemy
+     groups in the wilderness.
+----August 17, 1998
+ 1. Restricted setting droptos on rooms to Builders.
+ 2. Added the @flush command to clear input/output/server text buffers.
+----August 18, 1998
+ 1. Added a check in the lock processing code to keep from referencing database
+     objects that no longer exist.
+----August 28, 1998
+ 1. Made a patch to the DNS code to check /etc/hosts for hostname lookups
+     before sending queries to the local name server.
+----August 30, 1998
+ 1. Fixed a bug in mktm() that marked 1 year as 364 days instead of 365.
+ 2. Raised the limit on @wait values to a maximum of 1 year.
+----September 1, 1998
+ 1. Races in captions are no longer displayed if no race is set on a player.
+ 2. Race selection screen is disabled if combat configuration is turned off.
+----September 3, 1998
+ 1. Fixed 'announce' and @inactivity sequence for games with COMBAT turned off.
+ 2. Aligned allowance checks according to midnight with the correct timezone.
+----September 4, 1998
+ 1. Fixed several fighting system bugs that appear when @config combat=0.
+ 2. Added the command '@boot all' to boot all non-administration from the game.
+ 3. Restricted the player name 'All' to be created for security reasons.
+----September 5, 1998
+ 1. The server no longer gives random error messages for objects.
+ 2. Fixed a bug in the function parser when bad function names are used as
+     arguments to other functions, thus blanking out the rest of the command.
+ 3. Concentrator logins now correctly display a user's origin hostname.
+----September 6, 1998
+ 1. Environment variable USER_LIMIT now added for regular player login control.
+ 2. Various changes to the login initialization timer for session timeouts.
+ 3. Moved the server information messages to textblocks in 'msgs/server.txt'.
+----September 7, 1998
+ 1. Removed the '- Sensing Protocol' messages during login.
+----September 8, 1998
+ 1. Rewrote the username identification routines to run in non-blocking mode.
+ 2. Nameserver failures for a specific address no longer query requests
+     multiple times.
+----September 9, 1998
+ 1. Fixed a bug in file descriptor counting when querying domain name servers.
+----September 10, 1998
+ 1. Added the 'Address' option to the list of who flags available.
+----September 29, 1998
+ 1. ANSI escape sequence 'Character set select' is now only sent if you have
+     either highfont or graphics terminal settings turned on.
+----October 1, 1998
+ 1. Slight modification made to the 'who' list under the Concid column.
+ 2. Fixed stack memory allocations in several functions, keeping the game from
+     crashing when executing high numbers of commands.
+ 3. Removed the TOWNS environment configuration variable.
+ 4. Added a separate linked list of town information, changable via @town.
+ 5. Opened a new logfile, logs/resolv, which uses _log_resolv channel for
+     recording all dns resolver and username identification information.
+----October 2, 1998
+ 1. Added the @list options: Chapters and Towns.
+ 2. Added the @chapter command to configure the list of chapters.
+ 3. Created the chapter() function to return the name of a particular chapter.
+ 4. Removed the CHAPTERS environment configuration variable.
+----October 3, 1998
+ 1. Fixed a bug in weather effects (Poison and Sickness) when combat is off.
+ 2. @passwd now displays a text message when you type in an invalid password.
+----October 5, 1998
+ 1. Fixed a major bug in the @wait command that caused crashes every sunrise.
+----October 7, 1998
+ 1. Fixed a major bug in the @destroy timer when accessing multiple objects.
+----October 9, 1998
+ 1. Added in the new scalable equipment types for all items, range [0..144].
+ 2. Improved efficiency in the lookup of the builtin attribute structure.
+ 3. Fixed bugs with the Oceanic flag and the @damage attribute on exits when
+     combat is turned off.
+----October 19, 1998
+ 1. Limited world & dungeon map screen view to 50 rows and 160 columns.
+----October 20, 1998
+ 1. Fixed environment variables %0 through %9 to reset properly after each
+     immediate command.
+----October 24, 1998
+ 1. Implemented the Levelquest(tm) system. See 'help quests' and '@list quest'
+     for details.
+ 2. Coded the @levelquest command for wizards to add/modify/delete quests.
+ 3. Rewrote '@list flags' to display in column-oriented format.
+----October 25, 1998
+ 1. New database format written to shrink null object lists down to 1 byte.
+ 2. Rewrote putnum and getnum functions as macros accepting length in bytes.
+----October 29, 1998
+ 1. Modified the display for attribute option 'bitmap' to be more compact.
+----November 13, 1998
+ 1. The @reboot command now takes a space-separated list of options.
+----November 16, 1998
+ 1. Fixed a bug in the domain name service lookup that caused an infinite loop
+     when trying to read from the socket and no data was available.
+ 2. +dbinfo now displays cache/queue size readouts for the DNS subsystem.
+----November 17, 1998
+ 1. Added new wholist flag defaults for when Combat is turned off.
+----November 20, 1998
+ 1. Added a new control command: @iterate.
+----December 4, 1998
+ 1. Added the %A absolute possessive pronoun substitution.
+ 2. Fixed a compilation fault with 'restrict' being defined as a keyword on
+     some old Linux Slackware systems.
+----December 14, 1998
+ 1. Torches and poisonous swamps are no longer made active when Combat is off.
+----January 7, 1999
+ 1. Fixed a problem in the mailfile containing illegal recipient values.
+ 2. Characters online during a reboot with a blank database or with a previous
+     file where the character doesn't exist will switch to the login prompt.
+ 3. @trigger, @force, and #dbref now preserve the environment %# cause.
+ 4. New power POW_CONFIG defined for the @config command. @config is restricted
+     to direct mode, allowing only some game directors to use this command.
+ 5. A message is displayed for any objects trying to use direct mode commands.
+ 6. Fixed a bug in [v(someword)] printing '0' for no apparent reason.
+ 7. [soul(newplayer,iscombat)] no longer crashes (due to a bitmap length of 0).
+ 8. Released TinyMARE +Mail Version 2.2. Supports 64-bit date stamps and is
+     *incompatible* with the previous version of the mailfile.
+----January 8, 1999
+ 1. Major crashes to the game now correctly unset signal catching and no longer
+     print an infinite amount of 'spam' to users online.
+ 2. Fixed security problems in the functions con(), exit(), next(), and
+     objlist().
+ 3. Fixed a parameter bug in the round() function.
+ 4. Floating-point mathematical functions now display up to 9 decimal digits of
+     precision and have all trailing zeroes removed.
+ 5. The lag() and cpu() functions are now truncated to three decimal places.
+ 6. 'run' and randexit() no longer choose exits hidden to the player.
+ 7. Added a new function, setr() which works like setq() but responds with the
+     new value set to the environment register.
+----January 9, 1999
+ 1. Extended the number of arguments allowed in functions infinitely beyond
+     10 for softcode purposes. Switch() gets the most benefit from this.
+ 2. Hardcoded the functions neg(), dist2d(), dist3d(), rtime(), iftrue(),
+     dayofyear(), season(), hasattr(), left(), right(), bnand(), s_as_with(),
+     rloc(), hasflag(), haspow(), attropts(), capstr(), nearby().
+ 3. Modified the owner() function to find the object that a particular local
+     attribute is defined on.
+ 4. The third argument can now be omitted in the controls() function.
+ 5. Softcoded $-commands defined on a universal zone now take precedence over
+     any player-defined commands on a local zone or nearby object.
+ 6. The exits command now shows all aliases for each visible exit in the room.
+ 7. New fullname() function displays name + aliases when used on any exit.
+ 8. New html-based parser functions include html_escape(), html_unescape(),
+     url_escape(), and url_unescape().
+ 9. Modified the hasflag() function to check options on object/attr as well.
+10. New wizard command '@terminate' which cancels the @input prompt on a
+     player.
+11. Game commands may continue to be entered in input mode by prefixing them
+     with a ! character.
+12. Readded POW_FUNCTIONS for use with all functions that get database values
+     and not actually examine any particular attribute string.
+----January 11, 1999
+ 1. Added a new function ansi_strip() to remove stray ANSI escape sequences.
+----January 14, 1999
+ 1. Modified the add(), mul(), fadd(), and fmul() functions to accept any
+     number of list arguments, either space-separated or comma-separated.
+ 2. Added the regmatch() function to get environment variables much easier.
+ 3. Compatibility differences: match() now works like strmatch() in TinyMUSH,
+     and wmatch() now works like match() in TinyMUSH. Match() also has
+     additional boolean variable checking.
+ 4. Added matchall() to work with the same syntax as in TinyMUSH.
+----January 15, 1999
+ 1. Rewrote most string functions to accept additional arguments to set list
+     delimiters in processing.
+ 2. Finished rewriting all functions for efficiency with the new system.
+ 3. Added several functions dealing with player login sessions: last(),
+     lastoff(), rows(), cols().
+----January 23, 1999
+ 1. Completely rewrote the database routines to load and save configuration
+     variables for the 64-bit Alpha architecture.
+ 2. Added the lpos() string function.
+ 3. Fixed bugs in all other functions for 64-bit architecture.
+ 4. Improved class ranks to be starting upward from 0 instead of 1, and they
+     are now more easily configurable in the code.
+ 5. Rewrote auto-deletion of player characters away from the combat system by
+     judging if the last connect time is valid or set to zero. In addition,
+     players whose characters are already registered will have their +laston
+     time updated upon login to prevent accidental erasure.
+ 6. Dropping objects in other players' rooms or @forcing objects to move
+     through exits into other rooms is now a function of RESTRICT_BUILDER.
+ 7. Added an isattr() function to accompany hasattr().
+ 8. Coded around a C Library error where the time() function is used with a
+     year larger than 2^31-1.
+ 9. Reinstated the @sex attribute to set genders on non-player objects.
+----January 31, 1999
+ 1. Fixed a bug that kept non-builders from setting locks on exits.
+ 2. Fixed a bug in @search that reported locations of objects that you could
+     not examine properly. @search now entirely uses POW_STATS.
+ 3. Added Sessions and Steps display to the 'examine' command.
+ 4. Added variability to the INACTIVENUKE environment variable. This can be
+     set to the number of days before a player should become inactive, or if
+     set to 1, relies on variability on combat levels and experience. Default
+     number of days is 180.
+ 5. Added the sessions(), steps(), and age() functions.
+ 6. Implemented HOURS_PER_DAY as a modifier to wtime() and now has precision to
+     1 microsecond when calculating current game time.
+ 7. Switched object type 'Garbage' from slot 5 to 7.
+ 8. Implemented the randword() function in hardcode.
+ 9. POW_CONFIG is now required to view wizard-restricted configuration options.
+----February 2, 1999
+ 1. Fixed a bug in the 'whereis' command not checking if players are locatable.
+ 2. The Plan instead of the Desc of a player is displayed when someone uses the
+     'examine' command.
+----February 3, 1999
+ 1. Added the command category '@search inzone=zone#' to the list.
+----February 7, 1999
+ 1. Rewrote combat system bitmap code to support 64-bit quadword integers.
+ 2. Experience values reach a maximum of 48 bits instead of 32.
+ 3. Fixed a bug involving @destroying objects twice with a delay specified.
+----February 14, 1999
+ 1. Items are no longer displayed in the room when COMBAT is turned off and the
+     enactor does not have POW_COMBAT.
+----February 15, 1999
+ 1. Fixed the bug where previously existing players were automatically nuked if
+     they exited the login process before registering their character.
+ 2. Fixed a bug in @email attribute not getting set during registration.
+ 3. If the game cannot save the latest database during a reboot, all players
+     that have been created during that time get pushed back to the login
+     screen.
+----February 16, 1999
+ 1. Fixed off-by-1 problems in @empower, haspow(), and controls(). Powerlists
+     now start with the value 0 instead of 1.
+ 2. Players reconnecting to the game through a different connection now retain
+     their position on the wholist as well as total online time.
+ 3. Fixed a bug in the RECONNECT command where it does not reset your online
+     time until you connect as a valid character.
+ 4. RECONNECT correctly disables output from the screen during login process.
+ 5. Types and Classes in '+db database' now respect different names and numbers
+     for defined classes.
+ 6. The ' character can be used to direct a message to another player through
+     the +com system now.
+ 7. The Autosave..! message now only appears if DB_FORK is set to 0 to warn
+     players that the game will be halted for a few seconds to save the
+     database file.
+ 8. RESTRICT_BUILD and RESTRICT_TELEPORT environment variables are cancelled
+     when a player is set with the Builder flag. Builder is no longer implied
+     by POW_FREE, but instead correctly by POW_BUILD.
+ 9. New zone flag Restrict for restricting players from being able to lock or
+     unlock exits in a particular zone. Builders can bypass this restriction.
+----February 17, 1999
+ 1. Fixed a bug in the @town command removing defined towns from the database.
+----February 20, 1999
+ 1. Fixed a bug in running an infinite amount of nested @switch, @redirect,
+     @time, @iterate, or instant-force commands, overflowing the stack.
+ 2. Added malloc accounting information to the display in +db cpu.
+ 3. The function upfront() now returns the #dbref of the next created object.
+----February 24, 1999
+ 1. New support for embedded ANSI color and default colors stored in the @color
+     attribute. Accepts both numerical color values and case-sensitive letter
+     combinations to determine color for night, day, and multiple seasons.
+ 2. Added the public ansi() function which replaces the old rainbow() function.
+ 3. Fixed several bugs in routines that used unparse_object() and did not have
+     enough buffer space for long object names with a rainbow color.
+----February 25, 1999
+ 1. Added additive ansi color %-substitutions %x?, where ? is the color flag to
+     add, and %|...|, where ... is any number of flags for the following text.
+     The %| substitution may contain numbers and is processed just like the
+     @color attribute, only the currently existing color is first applied. A
+     %xn sequence returns text back to normal color.
+----February 27, 1999
+ 1. Fixed a crash problem in @nuking connected players with the new data field.
+----March 1, 1999
+ 1. Fixed a bug in setting WIZLOCK_LEVEL to -1 and locking everyone out, seen
+     only with some old versions of gcc.
+----March 4, 1999
+ 1. Added a function restarts() to track the number of reboots in one session.
+ 2. Added function sees(obj1,obj2) which returns 1 if <obj1> can see <obj2>.
+ 3. Fixed a bug in typing 'look here' inside an object, not showing the @idesc.
+ 4. Typing 'look here' won't show AF_OSEE attributes unless you own the room.
+----March 5, 1999
+ 1. Added a function netstat() to display internal runtime statistics from
+     global variables saved over @reboots.
+ 2. Coded in a new control command, @while, which works like @switch but
+     executes the @while command over until no expression match is found.
+----March 7, 1999
+ 1. Reconnecting to the game now preserves your position on the who list.
+ 2. Another database format change to support 16 +config options and to allow
+     money values stored on rooms and some objects.
+----March 19, 1999
+ 1. Implemented the +term wordwrap option for server-side wrapping. This choice
+     is automatically set on new character registrations who use telnet instead
+     of tinyfugue to access the game.
+----March 20, 1999
+ 1. Added the insert() function.
+ 2. Coded in new ^-event constructs for command-matching on objects. Example:
+     @va great book=^read:@pemit %#=You flip through the pages of the book.
+     >> read book
+ 3. In a restricted zone, players can now only go through exits that have a
+     return exit pointing back to the source room.
+----March 21, 1999
+ 1. Added LOGINS and DBSAVE to the list of variables in netstat(). Removed the
+     hardcoded 'epoch' and 'newconc' global variables that they replaced.
+----March 23, 1999
+ 1. Added genders to objects through the @sex attribute by the first letter,
+     which can be M, F, W, or P, indicating Male, Female, or Plural, and Neuter
+     if anything else is specified.
+ 2. Added the gender(), subj(), objn(), poss(), and aposs() functions to do a
+     %s, %o, %p, and %a substitution on a specific object respectively.
+ 3. Added CONNECTS to the list of netstat variables to log the number of
+     successful connections. Renamed the variable FCONNECT to FAILED.
+----March 25, 1999
+ 1. Fixed a major crash bug in the @halt command when used on objects.
+ 2. Fixed several bugs in loading player-only attributes from a MUSE-style
+     database.
+ 3. Rewrote @destroy and @purge to use a new free-list structure that speeds up
+     object recycling at database load by a landslide. This is very useful for
+     databases with thousands of destroyed objects.
+----March 26, 1999
+ 1. Shrunk the output of +db cpu down to print only fields with valid values.
+ 2. Fixed a number of configuration bugs in porting to other operating systems.
+----April 1, 1999
+ 1. TinyMARE Version 1.0.6812 released.
+----April 11, 1999
+ 1. @notify unidle players now prints the amount of time they've been idle.
+ 2. Added support for any number of game sockets, services, HTML ports, and
+     domain name service connections via the descriptor list.
+ 3. @ctrace now displays status of all used file descriptors in a colored
+     hierarchy, showing sockets, services, and players.
+----April 17, 1999
+ 1. New command, @paste, for pasting text to other players in a room.
+----April 18, 1999
+ 1. Fixed a bug that displays all logfile text to everyone online if nobody has
+     entered a command into the game since the last reboot.
+ 2. Added support for multiple login ports via the configuration file
+     'run/etc/portmap'. Three types of ports added: Game port for all users to
+     connect to, an Admin port for administrators only, and a Web Server port
+     for viewing HTML documents sent by the server itself. The branch here is
+     to later enable ports with a separate list of file descriptors for
+     communicating with the game server in multiple threads of execution.
+----May 13, 1999
+ 1. Added support for a fourth type of port, 'mesg', to display a quick message
+     to the screen and disconnect the user whenever a player telnets to a port.
+----May 16, 1999
+ 1. #0 is no longer ever reported as a disconnected room, even if PLAYER_START
+     is set to something else.
+----May 20, 1999
+ 1. Fixed a bug in legally setting a few flags, most commonly Dark, on objects
+     and getting back the message saying "Permission denied."
+----May 21, 1999
+ 1. Action response messages, normally sent only if an object is set Quiet, are
+     now only sent to either players or objects who are set Puppet and !Quiet.
+ 2. New @print <message> command, automatically sends a message to the cause
+     (%#) if and only if the cause is in the same room as the enactor.
+ 3. @upfront is no longer restricted to players with POW_DB.
+ 4. Rewrote command parsing to accept {} around 1-Argument commands.
+----May 22, 1999
+ 1. File reading routines now correctly parse texts written in MS-DOS. This
+     also fixes load errors with TinyMUSE databases in Windows.
+ 2. Changed the @atime structure to trigger standard guard resurrection and
+     automatic object moving (Wander flag) to operate on only a fraction of
+     objects per minute.
+ 3. New @config variables RESURRECT_LOOP and WANDER_LOOP for the maximum time
+     delay (minutes) between two consecutive loops for the same object number.
+ 4. It is now possible to @trigger attributes that have !, $, or ^ Events
+     embedded onto them. The triggering just skips the event and a possible
+     /Lock/ and begins at the first command it finds.
+ 5. Fixed a bug in @oemit %# and spoofing the player's name in the message.

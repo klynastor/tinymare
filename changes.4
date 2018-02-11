@@ -1,0 +1,419 @@
+A Backlog of Hardcode Changes in TinyMARE v1.0.6889-v1.0.7307, Winds Year 0008.
+
+----June 26, 1999
+ 1. Released TinyMARE Weather System version 2.0.  New features:
+     Configurable climate on individual sectors, zones, and rooms.
+     Allows individual rooms to be marked "Inside" for no weather messages.
+     New data for underground currents such as air type and wind flow velocity.
+     Includes realistic formulas implemented using climatology patterns.
+     Supports freezing, frostbite, and heat exhaustion with the combat system.
+----July 11, 1999
+ 1. Weather System now keeps tracked of record high/low temperatures, monthly
+     rainfall, and top windspeed using Configuration Environment variables.
+----July 12, 1999
+    Began preparatory work for combat system revision 3.
+
+ 1. New +party formation system supports 8 different party formation types
+     for up to 20 party members per formation. A grid-like display shows the
+     current party formation with the leader marked in Yellow, players with
+     less than 1/4th MaxHP marked in Red, and those with ailments such as
+     Poison marked in Green.
+ 2. Modified the database loader to support new party formation data to be
+     saved during reboots, unfortunately breaking older versions of the
+     loader. Fortunately, a stable +party system never existed before so the
+     loader should pass right by without a complaint.
+ 3. Restored the 'save' and 'quests' commands.
+----July 13, 1999
+ 1. New condition subsystem using the built-in technique tables (slot 6) that
+     exist on every database object. This allows for a dynamic system of 1,024
+     separate conditions with several properties (Limited Wish, Innate Racial
+     Abilities, Protect Against X, Inflict X, Remedy X) on each player and
+     enemy. Since it is technique based, conditions can also be stored on
+     rooms, thus dropping the need for "Temporary Unsaved Dataflags" (DFlags).
+     Also, the different types allow conditions with higher priority (Wishes,
+     for example) to mask out those of lower priority.
+ 2. Coded a new @setcond command which supports hash-table condition lookups
+     and the ability to set or clear conditions of various types on objects.
+ 3. Restored the ability to view severe ailments in the captions of players
+     when looking in the room, prioritized by showing the most severe first.
+----July 14, 1999
+ 1. Fixed several old problems with '+party leader/rank/row'. Now players may
+     fall back to lower rank at any time during a party, and only the party
+     leaders may move someone up in rank or promote another to leadership
+     status. Also, switching to a new rank slides everyone up in place rather
+     than just switching the ranks of players 1 and 2.
+ 2. New condition-checking system implemented with the routine bad_cond().
+     This routine is assigned a structure of fatal conditions for various
+     activities independently (Move, Fight, Skills, Spells, etc). It should
+     make new code much more reliable in figuring out which command allows
+     which conditions to persist.
+----July 16, 1999
+ 1. New selectable Experience Point system that takes one of three values:
+     0: All experience points are cumulative, even over levelups.
+     1: Experience points are reset to zero at time of levelup.
+     2: No automatic levelups. Levels are bought according to EXP accumulated.
+ 2. Rewrote experience point tables to force Level 100 to require 150,000,000
+     Total EXP, and match with the amount needed from Level 99: 7,500,000 EXP.
+ 3. Integrated the Levelquest subsystem into the new status levelup routines
+     in order to block entrance to certain levels that have not been completed
+     by required levelquests.
+----July 17, 1999
+ 1. Finished work on the new Race Selection and Status Levelup implementation.
+ 2. Restored the @levelquest, @exp_raise, and @init commands.
+----July 18, 1999
+ 1. Restored the behavior, wimpy, and +language commands.
+----July 22, 1999
+ 1. Added a new switch to the 'examine' command, /tech, which allows those
+     with POW_COMBAT to examine the full technique lists stored on any player
+     or object. Example: ex/tech me
+----July 23, 1999
+ 1. Completely rewrote the condition system to support a number of new query
+     options, including C_NOEQUIP, C_ANYTYPE, C_ANYLEVEL, and C_ANY. The size
+     of the condition table is now allocated during runtime instead of at
+     compile time, thus allowing for a much smaller executable. Maximum number
+     of conditions is fixed at 1024.
+ 2. Fixed several bugs in condition reporting and in @list items, which had an
+     off-by-one error.
+----July 24, 1999
+ 1. Changed around the language list a little, and fixed percentage ranges at
+     which known languages have different abilities and effects in the game.
+ 2. Finished technique list manipulation and restored the @addtech & @deltech
+     commands.
+ 3. Added support for the Cygwin developer tools package for compiling TinyMARE
+     on Windows 95/98/NT.
+----July 25, 1999
+ 1. Implemented a new Real-Time Battle Speed control, based on your Agility
+     versus everyone elses in the room. Duration between two attacks can never
+     exceed 6 seconds and is never faster than 3 seconds (with the exception of
+     wielding special race weapons).
+----August 11, 1999
+ 1. Removed the unnecessary fcntl() to set all active connections Non-Blocking.
+----August 14, 1999
+ 1. Reinstated the @oconnect, @odisconnect, and @weight object attributes.
+----August 15, 1999
+ 1. Fixed a problem with @purge not displaying currently disconnected rooms.
+     This fix also correctly counts disconnected rooms at startup now.
+ 2. Rewrote the disconnected rooms check using a much quicker stack-based
+     algorithm instead of a function-intensive recursive one.
+----August 22, 1999
+ 1. Matched weather query routines to display night and day based on the value
+     of the environment configuration variable TIMEOFDAY and not based on the
+     current time in relation to sunrise and sunset. This fixes all problems
+     concerning testing different cases of weather by temporarily modifing
+     TIMEOFDAY. Note that changing the game clock without manually setting the
+     TIMEOFDAY might have the wrong value for at most 12 hours.
+----August 23, 1999
+ 1. Fixed @vlock to block being able to match exits even under MATCH_INVIS.
+     MATCH_INVIS no longer matches disconnected players either.
+----August 26, 1999
+ 1. Version and copyright information is now actually compiled into the
+     executable (the right way) instead of being stored in a easy-accessible,
+     modifyable sysinfo/ directory (the wrong way).
+ 2. Completely rewrote the 'configure' script to set up a 'config.in' file
+     from which all Makefiles get their information from. Thus, makefiles
+     themselves no longer created via 'configure'.
+----August 28, 1999
+ 1. Fixed an error in unparse_color() for type 8, filtering color from pages
+     and +com through geographic flags (dark room, nighttime sector, etc).
+----September 2, 1999
+ 1. Added full support for 11 total status attributes, adding CON and WIL to
+     the list. @list race/guild now print out each attribute column selectively
+     based on a nonzero race modification value set for Humans.
+ 2. Added two new races, Satyr and Drow.
+ 3. Added the feature '@list race=scale' for wizards to see the direct scale
+     of racial modifications used in determining +/-'s.
+----September 6, 1999
+ 1. Implemented an easy index into status attributes for equip modifications
+     and use in offensive spells.
+----September 8, 1999
+ 1. Expanded the total number of enemy families possible from 15 to 255.
+----September 23, 1999
+ 1. Rewrote race selection to grab only those races that are valid for the
+     player.
+----September 25, 1999
+ 1. Finalized a database of 128+ minerals available for use in forging.
+----September 26, 1999
+ 1. Added a new flag to a levelquest, LockEXP, which keeps a player's EXP from
+     going over the amount needed to levelup until the levelquest is completed.
+ 2. Added a new flag to the @reboot command, Validate, which keeps the game
+     from saving temporary configuration such as +party data and semaphores.
+ 3. The DB loader now correctly preserves town/chapter/levelquest data over
+     games that don't have the combat system compiled in.
+----September 27, 1999
+ 1. TinyMARE now supports non-GNU 'make' and FreeBSD in its configure scripts.
+----October 9, 1999
+ 1. Fixed a buffer-overflow bug in @paste with over 8k of text at once.
+----October 10, 1999
+ 1. Fixed an error in verifying passwords over 8 characters in length.
+----October 21, 1999
+ 1. Added a third argument to the lnum() function to specify stepping.
+ 2. Built-in lock attributes now inherit @locks from parented objects.
+----October 24, 1999
+ 1. Fixed a bug in being able to spoof messages with players' first names in
+     rooms players are located in.
+----October 26, 1999
+ 1. Fixed a bug in allowing extra unnecessary parameters to a function.
+----November 5, 1999
+ 1. Timezones are now set correctly by default during MUSE database conversion
+     where the @tz attribute is not set.
+ 2. Fixed an infinite loop with compressing crypted passwords for libc5 users.
+----November 6, 1999
+ 1. Merged the time format procedures together into 1 code function.
+----November 12, 1999
+ 1. Fixed a bug in '@list players' not listing anyone without a combat status.
+----November 30, 1999
+ 1. Removed the System Timer error messages when the system clock is adjusted.
+----December 1, 1999
+    TinyMARE Version 1.0.7101 released.
+
+ 1. Added support for a new MAILHOST environment variable to specify a server
+     to use for outgoing email other than "localhost". The original MAILHOST
+     was renamed to SMTP_SERVER to specify the smtp-mode server name.
+----December 2, 1999
+ 1. Wizards @chowning objects that do not have the Chown_Ok flag will no longer
+     automatically set the object Haven.
+ 2. Fixed several crash problems in objects referencing a command with the 'me'
+     argument on player-only commands such as +last, @chownall, @stats, etc.
+     Functions were also fixed in this manner.
+ 3. The ' token when used with talking on a +com channel will no longer expand
+     to a [to Playername] block if the name doesn't match a connected player.
+ 4. Rewrote the way @nuke performs on a player currently logged in. The server
+     now waits until the player is properly booted before destroying his char.
+     This fixes some odd crash bugs under the Windows port.
+----December 4, 1999
+ 1. New bitrange() wizard-combat function to print the number of bits set to 1
+     in a certain range of a player's bitmap.
+ 2. Fixed a buffer overflow error in strcat(). Expanded the use of strcat() to
+     more than 2 arguments maximum.
+----December 5, 1999
+ 1. User-defined attributes set with the 'function' type can no longer be
+     @triggered.
+ 2. Fixed a fatal crash error in using wordflip() with a delimiter.
+ 3. Fixed a bug in player reinitialization that did not remove all old race
+     channels before switching races.
+ 4. Fixed a buffer overflow in adding infinite +channels in the +com system.
+ 5. Added a term() function to retrieve +term configuration data on players.
+ 6. Terminal settings "Status Bar" and "Protocol" can now be set using +term.
+----December 7, 1999
+ 1. HTML Requests now time-out after 5 minutes of inactivity.
+----December 9, 1999
+ 1. @flush <player>=input now flushes all unread data from the connection.
+----December 11, 1999
+ 1. Fixed a problem in the @lock mechanism with multiple [function()] terms
+     stacked inside of each other.
+----December 12, 1999
+ 1. Rewrote the boolean grammar parser for the @lock mechanism. Added several
+     new lock types to conform with TinyMUSH's standard. Old locks remain
+     compatible across prior versions of TinyMARE.
+ 2. Wildcard-pattern matching with >string or <string is now case-insensitive.
+ 3. Fixed a bug in comp() returning weird numeric values.
+----December 14, 1999
+ 1. A warning message is now emitted when a Wizard tries to set an Indirect-
+     lock on an object that the Wizard can read, but the object cannot.
+----December 18, 1999
+ 1. Efficiency fix in evaluating foreach() and oper() that go past the defined
+     value MAX_FUNCTIONS.
+----December 19, 1999
+ 1. Restricted flag on zones is now only wizard-settable.
+ 2. @list powers now takes the name or number of a power as an argument.
+----December 20, 1999
+ 1. Added support for configuration variable DB_LIMIT to limit the number of
+     objects that can be created in the database.
+ 2. Added additional protection against @clone/@aclone recursion.
+ 3. Fixed an interesting problem in @inactivity nuking players. The game would
+     correctly detect the last login time of the player to be more than 30
+     days ago, but automatically @nuke this person even if he/she was still
+     logged in after 30 days. :-)
+ 4. Added support for Guest character classes. Player ranks are now pushed up
+     by 1 in the database save file. Guests cannot be created yet.
+----December 23, 1999
+ 1. Fixed a bug in +sbar not turning off the background color during writes to
+     the fixed scroll region.
+ 2. Fixed a problem with @sbar <player>=off|on not updating itself correctly.
+----December 24, 1999
+ 1. @paste now takes <playername> as an argument. The player must be connected,
+     in the same room, and not locked against pages for messages to be sent.
+----December 27, 1999
+ 1. Fixed a bug in @levelquest wrongly setting the bitmap variable on the
+     player who issued the command rather than on the target.
+----December 29, 1999
+ 1. Fixed a user-defined attribute problem while copying attributes in @clone.
+----December 30, 1999
+ 1. Added a new time conversion routine for arguments to the time(), date(),
+     rtime(), and xtime() functions. This allows the user to type in a specific
+     time in many string formats: mm/dd/yyyy hh:mm:ss, using the output format
+     of time(), or word phrases such as '4 score and 7 years ago'. It retains
+     the compatibility of using a single integer to represent the number of
+     seconds that have elapsed since the epoch: January 1, 1970.
+ 2. Extended the time conversion format to the @destroy obj=<delay> command.
+----January 6, 2000
+ 1. Added min() and max() functions that take up to 100 arguments.
+----January 9, 2000
+ 1. The function parser now checks function names for spaces or symbols before
+     in commands before testing for user-defined functions.
+ 2. +finger information no longer prints the Level of a player if there are no
+     combat attributes stored.
+----January 17, 2000
+ 1. Fixed a bug in removing race channels during an @init if the player has no
+     other channels turned on.
+----January 18, 2000
+ 1. The database incremental resize of 1000 objects is now protected from out-
+     of-memory errors. A bug has been fixed that also prevents the db_top from
+     increasing by 1 each time a @create attempt fails.
+----January 22, 2000
+ 1. New spell database subsystem implemented! This system allows game creators
+     to define their own spells in a static database with item numbers ranging
+     from 0 to 9999. Spells can take on one of 80 types and be set with as many
+     as 50 attributes, referenced by item number. A binary search algorithm is
+     implemented on a resizable array for maximum efficiency. Commands added:
+
+      @addspell <number>=<spell name>	- Adds a spell to the database.
+      @delspell <number>		- Removes a spell.
+      $name <number>=<new name>		- Renames an existing spell.
+      $<attr> <number>=<value>		- Sets or clears a spell attribute.
+      @list spells			- Shows all spells defined in database.
+      @list spells=<name/number>	- Views spell attributes.
+      @list spellattr			- Lists attrs one can use with spells.
+
+    Spell attributes 0-127 take integer values while 128-255 take text strings.
+     One may use the findsp(name) and sprslt(player, num, attr#) functions to
+     return the spell number when given a name, or get the result of an
+     attribute# on a particular spell <num> respectively.
+----January 23, 2000
+ 1. Fixed a bug in swapping @ause and @ouse attributes while converting from a
+     TinyMUSE database.
+----January 28, 2000
+ 1. Fixed a bug in viewing idle() and onfor() functions for hidden players.
+----January 29, 2000
+ 1. The number of rows and columns on the screen is now automatically detected
+     at login time, if supported by the player's telnet program. Players may
+     still use +term to set their default rows and columns in case the game
+     cannot set them appropriately.
+----February 3, 2000
+ 1. Fixed a bug that swapped rows & columns during @reboots.
+----February 4, 2000
+ 1. Netmare can now correctly read textfiles in Macintosh format.
+ 2. Fixed a buffer overrun while adding text to a @paste during @reboot.
+----February 7, 2000
+ 1. Files etc/condition.db and etc/plants.db are now loaded at game startup.
+----February 8, 2000
+ 1. Added a new function, factor(), which does prime factorization of a number.
+----February 9, 2000
+ 1. Reworked Telnet Is-A-Command characters into macros for most prompts at the
+     server level.
+----February 12, 2000
+ 1. New condition module subsystem created for handling saving throws against
+     ailment/status-changing levels on players.
+ 2. Added the hascond() function to match for ailments or relics on a player.
+ 3. Modified the log() function to take a second argument as the base.
+----February 17, 2000
+ 1. Added multi-dimensional plane support, including the @plane and plane()
+     commands to set and retrieve values.
+----February 19, 2000
+ 1. Removed the Key and Marked object flags.
+ 2. Restored the @unlock command to what it was originally designed to do:
+     remove the lock on an object.
+ 3. Added the Transparent flag for locked exits.
+ 4. @ufail is no longer reported for messages that don't pass the @ulock for
+     !-Events.
+ 5. Fixed a memory leak in the @destroy command not removing techniques when
+     compiled without the Combat System module.
+ 6. You are now able to @delparent from an object you don't own that is not set
+     Bearing.
+ 7. New configuration variable, MAIL_EXPIRE, sets the number of days after
+     reading a +mail message that the message is automatically deleted.
+----February 20, 2000
+ 1. Fixed a bug in @destroying objects with players inside them.
+ 2. Fixed a bug in setting the dropto of a room to itself.
+ 3. God is now automatically added to the common log channels on a new game.
+ 4. Fixed a major bug in the command queue parser with ANSI escape sequences.
+ 5. @pemit,@remit,etc. no longer notify the player that the message was sent.
+----February 23, 2000
+ 1. Redefined all attributes as enum's to conserve space and make some arrays
+     compile correctly.
+----February 24, 2000
+ 1. Separated the original db/load.c into two files: db/load.c and db/convert.c
+ 2. TinyMare can now load the TinyMush-3 database format.
+ 3. Added the @lparent @addparent-lock for Bearing objects.
+ 4. Rewrote the entire database object loader and rule information. Each DB
+     type now looks at the entire set of available post-load fixups and
+     individually determines if it needs to run each one.
+ 5. Added several speedups to I/O initialization & compression routines.
+ 6. Implemented the [-t dbfile] command-line option to test-load the specified
+     database file. It reads the file, does general post-load fixups and
+     destroys invalid objects, and dumps the contents in plain-text to stdout.
+ 7. Removed the restrictions on ANSI color in the unparse() function.
+ 8. The "Recycling Old Objects" database rule has been made much faster.
+----February 25, 2000
+ 1. "File not found" messages in io/file.c are now printed correctly.
+----February 27, 2000
+ 1. Added the function zoneattr() which acts like get(), but scans the zones a
+     player is inside of and returns the first matching attribute.
+----March 2, 2000
+ 1. TinyMare can now convert color codes specified by the | symbol from
+     different MUSE databases (versions 11, 14, and 15).
+----March 3, 2000
+ 1. Fixed a buffer overwrite while using the unparse() function on an object
+     with a valid @color attribute.
+ 2. Objects with $-Events and a failed @ulock will now display the default
+     'Unrecognizable Command' message if no @ufail and @aufail are set.
+----March 4, 2000
+ 1. Added the Destroy_Ok flag for objects. Such objects must be carried in
+     order to be destroyed.
+ 2. TinyMARE Version 1.0.7251 released.
+----March 5, 2000
+ 1. Added support for compiling under HP-UX.
+ 2. Corrected the 'dirsize' script for old versions of 'awk' and 'size'.
+ 3. Fixed a bug in incorrectly reporting the size of the mailfile if it does
+     not exist.
+----March 9, 2000
+ 1. Examining objects owned by Wizards will no longer tell you who owns them
+     when the config variable HIDDEN_ADMIN is set.
+ 2. Fixed a bug in allowing execution of commands restricted to POW_ANIMATION.
+----March 10, 2000
+ 1. Fixed several buffer overruns in commands when a player's +term Columns
+     value is extended to 500.
+ 2. @list now only shows the options available based on the player's powers
+     and the combat system configuration.
+----March 14, 2000
+ 1. @list players no longer displays levels unless Combat is turned on.
+----March 30, 2000
+ 1. Fixed a mysterious background database dump problem on HP-UX v11.
+----April 9, 2000
+ 1. New document explaining how to set up TinyMare inbound/outbound email using
+     sendmail 8.10.1.
+ 2. Fixed a buffer overrun in running incoming SMTP mode during a @reboot.
+ 3. Changed the format of newline characters stored in the mailfile.
+ 4. Released TinyMARE +Mail Version 2.2.1.
+----April 15, 2000
+ 1. Optimized in-memory text compression routines to go twice as fast, and to
+     offer more compression for repeated symbols and patterns.
+----April 18, 2000
+ 1. Dropping objects into a room now triggers that room's @drop/odrop/adrop no
+     matter if it has a Dropto set or not.
+----April 19, 2000
+ 1. The wholist no longer prints the number of administrators when the config
+     variable HIDDEN_ADMIN is set.
+----April 21, 2000
+ 1. Fixed a bug in parsing user identification from a remote host.
+ 2. Added optimization to the strncpy() function by not padding strings with
+     null bytes anymore. This speeds up output-intensive commands by about 25%.
+----April 29, 2000
+ 1. Added support for optimization on the IA64 architecture.
+ 2. The configure script now prompts you for any extra libraries or flags to
+     pass to the GCC compiler.
+ 3. Rewrote big-endian parsing and sped up database loading and saving by 60%.
+----April 30, 2000
+ 1. Fixed math functions asin(), acos(), and abs() to use the floating-point
+     versions of abs().
+----May 1, 2000
+ 1. TinyMARE Version 1.0.7300 released.
+----May 6, 2000
+ 1. Fixed a bug in typing a command beginning with # and no number after it.
+ 2. Optimized the ctype functions (isdigit,tolower,etc.) to bypass locale.
+----May 16, 2000
+ 1. Fixed a bug in matching for "localhost" on machines that remap the IP
+     address "127.0.0.1" to a different name than "localhost".
+----May 17, 2000
+ 1. Fixed a segmentation fault while trying to view the wholist on the http
+     port before the first user is created in the database.

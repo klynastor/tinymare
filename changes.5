@@ -1,0 +1,365 @@
+A Backlog of Hardcode Changes in TinyMARE v1.0.7308-v1.0.7880, Winds Year 0009.
+
+----May 27, 2000
+ 1. Rewrote regular expression (wildcard) matching to fix problems with \'s.
+ 2. Fixed MATCH_FULLNAME to match the first non-player object if a player's
+     name was not typed out in full.
+----May 28, 2000
+ 1. Revised the list of database object flags based on bit values instead of
+     hexadecimal numbers.
+----May 29, 2000
+ 1. Random target selection is no longer limited to 15 objects maximum.
+ 2. Fixed a segfault when @triggering attributes that begin with ! $ or ^.
+----June 1, 2000
+ 1. +motd now displays 'There is no message of the day.' if the page is blank.
+ 2. Fixed a bug in giving money when the recipient has no combat status.
+----June 21, 2000
+ 1. More default @whoflags settings have been added to the list depending on
+     the number of columns on the player's screen.
+----July 20, 2000
+ 1. Fixed the restarts() function to return the correct number of @reboots
+     since the game first booted up.
+----July 24, 2000
+ 1. Fixed several problems with space-delimiters in string functions when a
+     space appears at the beginning of the string.
+ 2. Removed the 100-argument limit in functions.
+----July 29, 2000
+ 1. Renamed create() and modify() to createtime() and modtime(), respectively.
+ 2. Fixed a problem with extracting ANSI escape codes in string functions.
+ 3. Fixed a lethal bug in spc() when used with negative numbers.
+ 4. All floating-point functions now successfully strip exponent characters
+     during conversion.
+ 5. Added the avg() and ffs() functions.
+----July 30, 2000
+ 1. Added the replace() and swap() functions.
+ 2. Function fill() now defaults to filling with spaces.
+----August 4, 2000
+ 1. Fixed an error in specifying multiple options with @console.
+----August 5, 2000
+ 1. Removed the soul() function and replaced it with a variant of bitmap().
+ 2. Added a bitcount() function to count the number of bits set to 1 in a
+     number.
+ 3. Fixed a bug in modifying existing Key Items with the @eventitem command.
+----August 8, 2000
+ 1. Changed the syntax of specifying an object# with a function as follows:
+     [#123.func()]. This works around a feature in the parser that skips over
+     function names with bad symbols in them, such as a ':' character.
+----August 14, 2000
+ 1. Quell message of the day when the file is either missing or of zero length.
+ 2. Repositioned messages above the room description when a player connects.
+----August 15, 2000
+ 1. Finished rewriting the new softcodable player-death sequences.
+ 2. Reworked the functionality of +term, @console, and @flush.
+----August 24, 2000
+ 1. Added a new memory allocation utility, stralloc(), that reduces the number
+     of malloc() calls when initializing constant strings from configuration
+     files. Such strings are assumed never to be changed or freed once created.
+----August 25, 2000
+ 1. Added new database information to the +info command, and reorganized the
+     I/O screen.
+ 2. Readjusted attribute counts in mem_usage() to get closer-to-truth results.
+----August 26, 2000
+ 1. God now has the ability to use @wipeout on wizards and himself.
+ 2. Fixed yet another bug in @nuke, where a player owns PLAYER_START and it is
+     not #0. Players would have been moved to that room even after it was
+     destroyed.
+ 3. +party data is now saved in the temporary socket file during reboots,
+     instead of in the database.
+ 4. Fixed a bug in running terminal emulation on socket output before the
+     database is fully loaded.
+ 5. Made more optimizations to the socket I/O queue. Increases game performance
+     dramatically!
+----August 27, 2000
+ 1. Rewrote the 'page' command for future RWHO development.
+ 2. Added new @console commands 'Reconnect' and 'Fade'.
+ 3. Added Guest Login Support!
+----September 3, 2000
+ 1. Cleaned up attribute-caching code, especially with large numbers of object
+     parents strung together. Parent-tree searching is now implemented using a
+     stack instead of a recursive function.
+ 2. Fixed a memory leak in the atr_match() function.
+ 3. Fixed built-in attribute #255 not showing up in attribute lists.
+----September 4, 2000
+ 1. Zones are no longer able to @create an object, because that would force the
+     object to appear in the zone object (which is illegal).
+----September 5, 2000
+ 1. Removed the restriction on setting the Jump_Ok flag while RESTRICT_TELEPORT
+     is in effect.
+----September 8, 2000
+ 1. Added a new environment configuration variable, LOCK_LIMIT, that specifies
+     the maximum number of locks that can be referenced in a single function.
+ 2. Split the MAX_WAIT_COMMANDS config variable into MAX_PLAYER_WAIT and
+     MAX_WIZARD_WAIT giving a secure buffer for Wizards to use legit @waits
+     even if hackers have flooded the queue.
+ 3. The 'page' command can now be used with a blank list of players. It will
+     automatically send the message to the last person(s) paged.
+     Syntax: page =<message>
+ 4. Players cannot create party names with ANSI characters in them anymore.
+ 5. Using @paste with a specific player will now inform them that the text is
+     being sent only to them, and not to anyone else in the room.
+----September 9, 2000
+ 1. Fixed formatting problems with tables and uniform lists in displaying HTML
+     files (such as the Helptext).
+ 2. Added GCC-dependent checks to the code to restrict compiling with old
+     versions of GCC (older than 2.8.0) and enable space-saving features with
+     new versions (2.96).
+----September 10, 2000
+ 1. Significantly reduced the number of malloc() calls while queueing commands
+     and @waits.
+ 2. Added 'type=wiz' to HTML-parsed <a name=...> entries for the Helptext. Only
+     Immortals will be able to view these help topics.
+ 3. Fixed triggering attributes with events, \:'s, and multiple-level function
+     locks with /'s in them. For instance, the following now @triggers
+     correctly:
+
+    $event *\:*,*:/[oper(get(me/vz),v(1),[add(v(0),v(1))])]/say Commands..
+
+ 4. Players with POW_MEMBER can change their @sex like they can their @name.
+ 5. Added the system configuration variable GUEST_BONUS to define the amount of
+     money players have when they sign in as Guest.
+----September 15, 2000
+ 1. The 'exits' command now accepts 1 argument for a remote room, assuming you
+     own the room.
+----September 16, 2000
+ 1. Fixed a potential buffer overrun in using @lock with functions and no ].
+ 2. Fixed a wizard security hole when using the internal boolexp lock function
+     with several functions inside that call parse_lock(). Because boolexp uses
+     global variables, the arguments to parse_lock() replace the %!, %#, and
+     ultimately the privs for the function. This fix was accomplished by saving
+     the %! and %# on the stack during boolexp() and restoring the globals from
+     the stack upon the function's exit.
+ 3. Keys with functions in them are now parsed individually rather than the
+     entire string as a whole. This prevents locks like [get(me/vm)] from
+     modifying the flow of the lock (i.e. @vm me=1&0. While the string '1&0'
+     is true because it is nonzero, the phrase '1 AND 0' is not).
+----September 17, 2000
+ 1. Fixed improper usage of pronoun_substitute() in many C files, placing
+     restrictions on the buffers with which it can be used. This fixes side-
+     effect problems in over 8 different cases where references to other
+     attributes using [get()] will overwrite the original string being parsed.
+----September 20, 2000
+ 1. Fixed a fatal crash problem when players attempt to log in as 'me'.
+----September 21, 2000
+ 1. Reinstated the LF to CRLF conversion and fixed up concentrator support.
+----September 22, 2000
+ 1. Fixed logging off during the creation of the God(#1) character, which left
+     God with an undefined password.
+ 2. Fixed @trigger to preserve the cause (%#) during a $ event.
+----September 26, 2000
+ 1. Fixed a bug in @clone that was moving objects to the wrong container. Zones
+     cloning objects will now put the clone in the same location as the object.
+----September 27, 2000
+ 1. Fixed a bug in '@search flags' that matched objects with any flag specified
+     instead of all flags specified.
+----September 28, 2000
+ 1. Fixed a bug during the creation of a database from scratch, where recycle()
+     tried to access the contents list of object #-1.
+ 2. Added support for unlimited socket connections for the Windows port of
+     TinyMARE.
+----September 29, 2000
+ 1. Added the justify() softcode function.
+----September 30, 2000
+ 1. Added helptext entries for all non-combat system @config variables.
+----October 1, 2000
+ 1. TinyMARE Version 1.0.7518 released.
+ 2. Guests can now choose their character's sex at login.
+ 3. Added support for automatic terminal-type detection at login.
+ 4. Spell attributes can now be set using either @attr $spell=<text> or
+     $attr spell=<text>.
+ 5. Added the splist() function to list all defined spells in the database.
+ 6. Renamed the sprslt() function to spattr().
+----October 2, 2000
+ 1. Added the ability to @decompile $spell.
+----October 4, 2000
+ 1. Optimized the internal wordlist and exit-matching routines.
+----October 7, 2000
+ 1. TinyMARE watchdog program 'wd' now successfully disassociates from the tty.
+ 2. Revised the stralloc() function to minimize fragmentation.
+ 3. Fixed a security hole in allowing anyone without POW_SECURITY to set the
+     $action attribute on a spell.
+----October 9, 2000
+ 1. Removed the @aopen attribute and respective 'open' command. The same thing
+     can now be accomplished in softcode with a ^ event.
+----October 13, 2000
+ 1. Reading strings larger than 8000 bytes from a database file used to corrupt
+     the file pointer. Now, it advances the pointer to the end of the string
+     correctly and has added protection against encountering EOF.
+ 2. Fixed a 8000-character buffer overrun during +mail forward and +mail reply.
+ 3. Fixed the catching of multiple Infinite Loops in the same Tinymare session.
+ 4. The database will now save timestamps using 32-bits until the UNSIGNED
+     32-bit limit is exceeded, which will happen on Sun Feb  7 01:28:16 2106.
+ 5. Added a new +mail command syntax: +mail forward <message#>=<player>,<text>
+     for sending text along with forwarding a message.
+ 6. Released TinyMARE +Mail Version 2.2.2.
+----October 15, 2000
+ 1. Added helptext for all Spell Attributes. See 'help spell attributes' for
+     the index page.
+ 2. Wizards are no longer able to invite a normal player to a +party when
+     combat is turned off.
+----October 25, 2000
+ 1. Dark objects with no caption set will no longer show the name of the object
+     when a player looks at it.
+----October 26, 2000
+ 1. Fixed another bug in @clone in which attribute definitions were being
+     copied with the source obj# instead of the new destination obj#.
+----October 28, 2000
+ 1. Players are now able to @decompile a Visible object that they don't own.
+----October 29, 2000
+ 1. Rewrote the command and function parsers. The command parser now routes
+     everything through the function parser for arg1, arg2, and argv, fixing
+     the problem with @triggering functions with commas in them, such as:
+       @tr me/vb=6,add(2,4),8
+     
+    The function parser now correctly handles when a unknown function is used
+     within a function, such as [add(2,test(6,2,4))], or when text appears
+     after the function, as in [s(add(6,2,4)text)].
+     
+    This also fixes space-stripping problems in functions. The functions
+     [s( a b  c d )] and [s({ a b  c d })] now behave correctly. The first
+     strips out the leading and following spaces, the second keeps them.
+----October 30, 2000
+ 1. Moved the last() function to laston() and created a new last() to be
+     compatible with TinyMUSH.
+----November 1, 2000
+ 1. Fixed a bug in the function parser thinking func(arg1,) was one argument.
+----November 4, 2000
+ 1. Optimized most areas of the code when checking for whitespace.
+----November 5, 2000
+ 1. New TinyMARE Helptext System Version 3.0. Includes a new manual format,
+    colorized 'help' screens, and a built-in pager for long texts.
+----November 6, 2000
+ 1. Fixed a buffer initialization problem in certain string functions when
+     <length> is specified as 2147483647 or greater.
+ 2. Removed the redundant function fill().
+----November 9, 2000
+ 1. Fixed a bug in the time() function that didn't accept xtime() values with a
+     period in them.
+----November 11, 2000
+ 1. Timers on @destroyed objects now have a resolution of 1 second, and thus
+     the @purge command has been removed.
+ 2. Wizards can now use '@search discon' to scan for all disconnected rooms.
+ 3. Bytecount displays on +info and @memory now round to the most significant
+     metric unit.
+ 4. Rewritten the timer on the @wait queue, such that the queue will not be
+     scanned once per second but instead only when the command with the least
+     amount of time remaining reaches 0 seconds.
+ 5. Rewritten mare/timer.c according to the new specifications for strict
+     0.1-second time-slices for I/O and Queue.
+----November 12, 2000
+ 1. Fixed the error with 10 automatic failed database saves. The game now
+     correctly attempts to save the database "manually", without forking,
+     and prints to log_err the system error message given when saving.
+
+    Warning: If the game cannot save its database and the Game Driver announces
+     the failure to all players online, then there is usually a good reason for
+     it. Do NOT attempt a @reboot until a save is successful or you can lose
+     all changes made to the database.
+ 2. Rewrote text justification to fix some extra spacing at strange times.
+----November 26, 2000
+ 1. Helptext entries can be prefixed with && for immortal-only viewing.
+----December 2, 2000
+ 1. Fixed the inheritance number shown when examining attributes on a
+     'grandchild' of a database object.
+----December 3, 2000
+ 1. Installed a new I/O timer designed to maintain a execution resolution of
+     100 milliseconds per time-slice. It allows player input and combat
+     techniques to run even when the queue is flooded with commands.
+----January 7, 2001
+ 1. Sped up the game in various loops by placing loop-independent checks
+     outside of the loop.
+ 2. Rewrote spell events to accept up to 1024 arguments, including combat
+     equations (stored as postfix integers) and event-specific options.
+ 3. Removed the bug-laden @while command from the game. It could be used to
+     continually bloat the queue and nobody knows much about it anyway.
+----January 8, 2001
+ 1. Fixed 'whereis' to see the location of players if you can see it on the
+     'who' list. Not locatable() just means you can't use a function to get the
+     location dbref#.
+ 2. Made a major optimization to the internal function strmaxcpy(), making all
+     string copies twice as fast.
+ 3. A default @whoflags listing can be set on object #0, which will be shown to
+     all players who do not have a @whoflags set or who do not specify any
+     flags on the 'who' command line.
+----January 20, 2001
+ 1. Removed compiler warnings in the nonblocking-DNS library for GCC 2.97.
+----January 24, 2001
+ 1. Fixed a bug in restoring %0-%9 environment during a series of immediate
+     commands such as the contents of a @switch or executing @startups.
+----January 25, 2001
+ 1. Added a new feature to +info cpu for Linux systems--the screen now displays
+     the number of CPUs on the machine, their speeds in MHz, and the CPU model.
+----February 4, 2001
+ 1. Fixed small problems with various functions, including changing the syntax
+     for degrees() to make Cartesian<->Polar Coordinate conversions simple.
+----February 10, 2001
+ 1. Removed the Fishable room flag and replaced it with the @Fish attribute.
+ 2. Added room flags Fog (f) and Sanctuary (Y). Players cannot be attacked in a
+     Sanctuary.
+----February 27, 2001
+ 1. Help topics can now be individually restricted to having a specific power
+     or to all immortals.
+----March 3, 2001
+ 1. Fixed color bleeding on the room contents list for objects with combat
+     conditions set on them.
+----March 5, 2001
+ 1. Added two new runtime options to 'netmare':
+     -r: Loads the database in readonly mode. Database saves will not occur and
+         @dump will return with an error message.
+     -f: Force loads the database. This is required for trying to load a Combat
+         database when the server was compiled without combat extensions.
+ 2. The game will no longer create a new database when using the -r or -t
+     options, or if the user has no permission to read the database file.
+----March 6, 2001
+ 1. New TinyMare Compressed RAM database version 2. Supports conversion between
+     combat and non-combat databases, plus a way to allow future enhancements
+     of key structures to be completely backward compatible with current
+     versions of TinyMare.
+----March 17, 2001
+ 1. Only players of class 2 and up (immortals) are now allowed to join channels
+     that begin with a _ symbol.
+----March 20, 2001
+ 1. Changed the database-load progress meter to print one line every 10,000
+     objects are loaded when there are 10,000 or more objects in the database.
+ 2. Optimized bitmap loading/saving routines for the database.
+----March 21, 2001
+ 1. Fixed a bug in a normal @shutdown saving the database during readonly mode.
+----March 25, 2001
+ 1. Fixed a syntax error in getting the 'w' and 'wh' aliases to work for the
+     whisper command.
+----March 27, 2001
+ 1. Fixed a problem in counting the number of open files when the maximum
+     number of files on the operating system is unlimited.
+----March 28, 2001
+ 1. Fixed a bug with @setcond setting conditions on the user instead of the
+     target.
+----March 30, 2001
+ 1. Fixed a bug with not obeying parentheses in /lock/ constructs after $ or
+     ! Events.
+----April 1, 2001
+ 1. TinyMARE Version 1.0.7860 released.
+----April 4, 2001
+ 1. The @input command now takes a blank arg2 to turn off input processing from
+     a particular player.
+----April 14, 2001
+ 1. Extended @input to take multiple arguments for passing environment %1-%9.
+ 2. The 'help' command no longer enters pager-mode if the player has an input
+     prompt activated.
+ 3. @input now redisplays the player's prompt while typing commands prefixed by
+     a !.
+----May 7, 2001
+ 1. Fixed a bug in determining where an integer begins in the inc() and dec()
+     functions.
+ 2. Added the number of minerals mined to the '+info fights' screen.
+----May 8, 2001
+ 1. Capped the long time format on the 'who' list at 999 days.
+ 2. Fixed missing permission-checking on the restricted wholist functions.
+----May 10, 2001
+ 1. Fixed room() and rloc() to return the right values in the case the depth
+     limit of 100 is exceeded.
+----May 12, 2001
+ 1. 'help ?' now shows the last time the Helptext file was updated.
+----May 15, 2001
+ 1. Hostnames are appearing on the internet with Unicode characters that are
+     sometimes unprintable in 8 bits. The domain name lookup routine was
+     modified to ignore all unprintable results and show the numeric IP address
+     instead.

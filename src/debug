@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Updated August 20 1995  Gandalf
+#
+# Debugging Program for TinyMare. If TinyMare ever crashes unexpectedly, it
+# might be a  good idea to inform the developers that there  is a glitch in
+# the program.
+#
+# To store debugging output to a unix file, type:   debug > filename
+#
+# Please send file to gandalf@chezmoto.ai.mit.edu, with a brief description
+# of the problem,  or how you think the problem occured, or a possible list
+# of commands that one may type to reproduce the problem,  if decipherable.
+#
+# Thank you for your cooperation in making TinyMare the greatest it can be.
+
+cd ..
+
+date
+echo "Version Reference: `grep mud_version mare/version.c | cut -d '"' -f 2`."
+uname -a
+gcc -v 2>&1
+echo
+tail -5 run/logs/error
+echo
+echo "Last 5 Commands Executed:"
+tail -5 run/cmd_crash
+echo "---"
+gdb -v
+
+echo "where" > .debugexec
+gdb -n -batch -x .debugexec -d src/comm -d src/db -d src/io -d src/fight -d src/world -d src/prog -d src/game -d src/mare bin/netmare run/core
+rm -f .debugexec

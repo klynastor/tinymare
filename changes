@@ -1,0 +1,37 @@
+Changes since TinyMARE v1.0.10316:
+vim:tw=79:inde=5
+
+----August 19, 2005
+ 1. Corrected the problem where +channel names could be set with non-printable
+     characters.
+ 2. Rewrote random dungeon messages and room dressings code.
+ 3. Removed the shadowed plants and materials databases.
+ 4. Readded random plants to the game, utilizing the @plants room/zone
+     attribute.
+----January 10, 2005
+ 1. Added spoof-checking to 'page' and +com. Messages beginning with a [
+     character (as in channels) are now considered a spoof.
+----February 11, 2006
+ 1. Worked around a compiler bug when showing the 'map' display in a dungeon.
+----February 12, 2006
+ 1. Removed the AI (Artificial Intelligence) enemy condition.
+ 2. Removed references to $combo and the partially coded combo-attack mode.
+ 3. Fixed a crash bug when typing $skill spell=<invalid skill type>.
+ 4. Added new combat functions skcost(), sector(), ltowns(), town(), and
+     fightque().
+----February 13, 2006
+ 1. Fix a parser recursion bug where cname() returned strange values on
+     variably-linked exits.
+----April 29, 2006
+ 1. Added configuration variable FORCE_UC_NAMES to force the capitalization of
+     the first letter of a playername. With this set to 0 (the new default),
+     players can choose all lowercase names.
+ 2. Added functions parents_r() and children_r() to get a recursive list of
+     parents and children for an object.
+ 3. The term() function now takes +config arguments in addition to +term.
+----April 10, 2015
+ 1. Added keyword "Single" to @whoflags, to show only one column of WHO output.
+----February 20, 2017
+ 1. Prevent GCC 5.1.0 and above from optimizing away the alloca() calls in
+     hdrs/stack.h.
+ 2. Fix the check for a valid #dbref in resolve_link().

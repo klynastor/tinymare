@@ -1,0 +1,259 @@
+# Standard
+Unrecognizable command. Type 'help' for help.
+This is a plain typo message. If you see this, you made a typo.
+Sorry. That is an invalid command.
+I'm sorry, but I don't understand you.
+Syntax error.
+
+# Game Driver
+Game Driver slaps you.
+Game Driver swings around a butcher knife and mumbles "Und der bling der swing der floot!"
+Game Driver pages: HAHA!!! Now that was a funny typo! *giggle*
+Game Driver pages: Are you mocking me?!
+Game Driver pages: If you can typo, I can too.
+Game Driver pages: Stop this game, I wanna get off!
+Game Driver pages: Koodi koodi.. vakten... We have a loose typo here.
+Game Driver pages: Thank you. Your typo has been logged and stored.
+Official broadcast from Game Driver: Rebooting in 5 typos.
+Game Driver announces: Hey, everybody! Guess what %n just typed!!
+[typo] Game Driver: I think we have a problem here..
+Nyaa, zis is Vito, ze Gamedriver just put a contract on you and your typos.
+The Game Driver feels sorry for your keyboard.
+
+# Players & Administration
+Allen chops off your fingers, one-by-one.
+Your typo falls into a pit dug by Ardhen and dies.
+Bluepuff hangs from the roof head down and chants 'O typo domine.'
+Thinking of Bounty_Hunter, you are too TERRIFIED to typo again!
+You think that is far out, wait till you hear what Bruno typed.
+Is that YOU, DreamGazer?!
+DreamGazer places your typo on the 'Top 100' typos list.
+Did you look at Gandalf's code when you learned how to type?
+Gandalf has awarded you %0 Task Points for completing the 'MAJOR typos' event.
+Is Macro walking on your keyboard again?
+Macro tells you the story of "Snow Stupid and the Seven Typos".
+I'm gunna tell Merlin you typed that!
+You chant your typo and Shadow disappears into thin air.
+Talon sticks his head out of your monitor and looks at your keyboard.
+Zythis's name is easier to pronounce than that!
+Zythis votes you the lagmonster of the year for your superfluous typos.
+That sounds almost as good as Arren's research proposal.
+What in the name of Alice's mouse does that mean?
+
+# Game messages
+Netmare chooses to ignore your command.
+Netmare pretends it didn't receive that.
+Netmare Runtine Malfunction - Typographical fault%RSystem shutting down..Bye!
+Garbage collecting... Done.
+Usage: @nuke <password>
+Stop or I'll @boot!!
+Ok, deleting your playerfile..........Done.
+We are too busy to process this command.
+That command hasn't yet been invented.
+Permission denied.
+Interesting concept.
+Do you mean, 'QUIT'?
+Process priority override; please wait.
+Use your fingers to type, the sword is sort of clumsy.
+That's laughable.
+
+# Combat system
+Tiring, isn't it?
+Typo is disturbed by spellcasting!
+Your typo prevents you from using that technique.
+You sizzle with magical typos.
+You are now hunting your typo.
+You are hunted by your typo.
+Thou art typoed.
+Scary Typo has knocked your weapon from your hand!
+You drop your wielded typo!
+You engage in typos.
+Your typo decides that lying here is too boring, and walks away!
+You break your typo attempt.
+A BIG punishment-typo hits your command HARD.
+The nupers are coming! The nupers are coming!
+Zombie typo ahead. Prepare to use cross and holy water.
+A beautiful typo appears before your eyes.
+Lag-Monster eats your command.
+Ambush!! A typo drops down in front of you!
+You chant the Spell of Typo.%R[chr(196)][chr(196)]Not Enough MP.
+You aren't allowed to perform that technique.
+%N's Intelligence suddenly falls by [ansi(13,25)] points!
+Barok has arrived.
+You vanish!
+
+# UNIX
+Usage: kill <pid>
+Usage: fdisk <device>
+error: no space left on device /dev/null
+sh: (pid=%0): too many typos%RCore dumped.%R%R$
+NFS getattr failed for server winds: RPC: Typoed out
+Talk request from root@microsoft.com (The Root of All Evil)
+No such file or directory.
+Invalid command.
+Out of memory.
+NO CARRIER
+Connection closed by remote host.
+Segmentation fault (core dumped)
+
+# Typo counts
+Typo count is now %0: thank you for contributing.
+That makes you caller number %0!
+Your typo has been sent to the typo hall of fame.
+At the moment, we have enough typos, please submit yours next year.
+Congratulations! You have been selected to receive the Typo-of-the-Year award!
+Your typo limit has been exceeded. Next one will terminate your keyboard.
+If you do that again, I'll shoot you.
+
+# Foreign
+Hey! No norwegian allowed here!
+Und der vernden frinden vring der bling der floop! *swing* ;)
+Ex-scuse-Moi?
+Bleek yadda goot?
+Fleergl brak gloop!
+No habila typo!
+Entschuldigen Sie?
+Typo wakarimasen!!
+Toffo, Toffoilemaaaaaaan!!!!
+Glitt-glort Bleeble-durb?!?
+Perunoita, perunoita, perunoita, ..
+Arglebargle Glop-Glyf?!?
+Ne me typo facias. 
+Anata wa baka desu. (Nyaoo!)
+
+# Literature quotes
+I don't think we're in Kansas anymore, Toto!
+Hasta la vista, baby..
+It's dead, Jim.
+Kupi! Kupoppo!
+I thought you were feeding the worms! Kupo!
+You blocks, you stones, you worse then senseless things!
+Don't that just beat all.
+
+# Ascii Art
+                       _%R  ___   ___  _ __  ___| |%R / _ \\ / _ \\| '_ \\/ __| |%R| (_) | (_) | |_) \\__ \\_|%R \\___/ \\___/| .__/|___(_)%R            |_| a typo!%R
+
+# Gibberish
+Ffgfd jioerjg v}i9r8u 9v898grj 4ffy984f89uifuv| hvrr 58v89g5555hvf.
+fad4pol6s+kjd5f=hljd10s|fh?
+
+# Insults
+Come on butterfingers! Show the keyboard who is WHO!
+Your fingers are like a bunch of bananas!!!
+In the name of all things that don't suck! Stop typing that!
+Typing lessons on Tuesdays at classroom 5A.
+Get outta here!
+This really isn't your day, now is it?
+Get a life, dude!
+How DARE you type things like that??
+There isn't much I can do about that.
+You must be paranoid.
+Unreal, man!
+I wouldn't enter any typing contest if I were you.
+Thinking of you, your keyboard is too terrified to act.
+You see little TYPOS dancing all around you.
+Never leave your typo alone like that!
+Nitwit!
+Sure, sure.. (hey bob, call the shrinks!!).
+You wouldn't do well in the 'Wheel of Fortune' with those typos.
+Is this how you normally behave, or did you leave your brains at home?
+a) Remove your tongue from keyboard, and b) stuff it in to your mouth.
+You imbecile!
+You eeeeediot!
+Puh-Leeeezzze.
+Are you a commie mutant traitor, or is your typing just terrible?
+You and What army?
+Bad user. No biscuit.
+Not bloody likely!
+What are ya, deaf? I said no!
+\[ifelse(player(typo(1)),idiot,almost an idiot)]
+Press Ctrl-Alt-Del now for IQ test.
+No, your other left!
+The number of things that you know absolutely nothing about has increased dramatically.
+
+# Pearls of Wisdom
+A little typo is better than a big one.
+Typos destroy the space-time continuum.
+Real mudders never make typos.
+Just say no to typos!
+It helps to type with your gloves off.
+Excessive typos can be hazardous for your health.
+Call the keyboard repair service at.. 1-800-555-TYPO
+That wasn't a very nice thing to say.
+No, not that command.
+Wrong again. That command over there.
+Don't use your tongue while typing!!
+Life is a beach, then you learn to type.
+You can eat a typo but can you marry it?
+Typos are every mortal's best friend.
+No typo is impossible.
+Typos, typos everywhere.. but not a one can type.
+A typo a day keeps the commands away.
+A typo a day keeps the brain cells away.
+
+# Questions
+Pardon?
+Ahem?
+Waht?
+You would, wouldn't you?
+Bzzzrrrrr-Klonk, Poink poink poink POINK!
+Do you know how much lag these typos you make produce?
+Have you hugged your keyboard today?
+But, Sir, wouldn't that be wrong?
+Can't you do anything right?
+Are you using styrofoam coating on your fingers huh?
+Oink?? OINK??
+You want boilt mushrooms on sour milk sauce?
+Would you like fries with that?
+
+# Misc
+Your keyboard melts to organic slush!
+Aaahh... I want more.
+Ahh that's REALLY interesting..
+This is your big chance! Do it right the second time!
+Watch your language, there are ladies present.
+BZZZT! A typo.
+Meep meep.
+Line noise is getting to you.
+Sorry, but that is not allowed.
+I hate it when you type that.
+Don't bang your head on the keyboard.
+Zat, my friend, was a typo.
+Yes, I know about that problem.
+Get real man!
+You feel fully typoed.
+Wow! What an accomplishment!
+You asked for it, but won't get it.
+Try using the webster server for a correct spelling.
+Repeat, please!
+No one has ever seen a better Typo Galore before!! Hehehe!
+Your sensitive mind notices a TYPO in the fabric of space.
+But you don't even have one?!!..
+You feel something probing your typos.
+Winners don't do typos.
+One more typo and yer dead.
+You fail to invent a new command.
+How exciting!!
+Not a chance.
+That's like, cool or something.
+Wrong answer, try again!
+Ugh! Gack! Typo!  Ptooie!
+I weep for the youth of this typo filled society.
+What? I REFUSE to eat that!!
+Typo, ypot, poyt, yopt, no matter how you spell it, you still made one.
+Typo, typo, typo, typo, typo, typo, typo, typo, typo, typo, typo, typo, typo.
+No dice!
+One more typo and I'll give you to a typing school!
+No, no no, it's not called in yet!
+Enchanting!!
+Buzz. Buzz. ZAP! Buzz.
+An unidentified flying typo approaches the area.
+Interesting, veeeeery interesting indeed....
+I can't really comment on that one.
+Too much codeine again, eh?
+How do you want to crash today?
+Your wish is my command, but that's just TOO much!
+I am Naaaaall and I love fiiiiish.
+I think I'll get back to you on that.
+Perhaps you meant 'usufruct'?
+You are not l33t enough to use that command.

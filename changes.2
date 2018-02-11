@@ -1,0 +1,661 @@
+A Backlog of Hardcode Changes in TinyMARE v1.0.5600-v1.0.6400, Winds Year 0006.
+
+----May 26, 1997
+ 1. Added color to the (Condition) modifier for a player's caption.
+ 2. All condition ailments rewritten and successfully completed.
+----May 27, 1997
+ 1. House of Healing completely recoded.
+ 2. Rewrote Nuper Bait.
+----May 28, 1997
+ 1. Further improved efficiency in user i/o socket handling lists.
+ 2. Rewrote the User Limit algorithms in connection handling.
+----May 29, 1997
+ 1. Enabled HTTP support on port 7348. Still buggy, but it prints out the who
+     list very nicely in HTML.
+----May 31, 1997
+ 1. Added new attack type: Gravity.  Counteracts Condition `Flight.'
+ 2. Implemented Equipment Destruction.
+     Rate of destruction of armor and weapons depends on type of weapon used
+     (Stick to Sword) or density of armor (Silk to Astral). All conditions are
+     stored in the database for each quantity of equipment with a precision of
+     64 points per 1 percent. Maximum percentage on equipment: 1024%.
+ 3. Bug fix: Knocking weapons out of enemy's hands isn't acceptable.
+ 4. String_match now uses the - character as a delimiter in object/item names.
+ 5. Successfully implemented the Skill: Bargain.
+----June 1, 1997
+ 1. Others in room are now informed when a player types 'stop'.
+ 2. Fixed a bug in the equipment array: some wear types were out of place.
+ 3. Monsie familiars now disappear from the game randomly 1 in 10 minutes.
+----June 2, 1997
+ 1. @text no longer displays spammy binary files to players on request.
+ 2. You cannot display a @text file which consists of 256k bytes.
+ 3. Fixed a bug in the display of a target after using an item in battle.
+ 4. Fixed a glitch where accidental hits try to strike disconnected players.
+ 5. Coded in the special 100% procedure for the Tactics skill.
+ 6. Fixed a bug in trying to 'run' while not fighting and an enemy attacks.
+ 7. Added messages to 'run' telling others in room what you are about to do.
+----June 3, 1997
+ 1. Added race-based weapon vigor bonuses.
+ 2. Rewrote the procedures for allowing 2-hand weapons equipped in both hands.
+----June 4, 1997
+ 1. Fixed a bug in rate of damage taken by lack of swimming ability in water.
+ 2. Installed the entire set of special effects for races.
+ 3. Fixed a bug in the inflict_poison event when a player has no poison degree.
+ 4. Fixed a bug that let people status *<playername> from anywhere in the game.
+----June 5, 1997
+ 1. Completely added an improved plant database with 28 different effects.
+----June 6, 1997
+ 1. Fixed a bug that did not show the complete caption when looking at players.
+ 2. Rewrote the 'inventory' command to imitate a 'look me' without @odesc.
+ 3. Fixed a bug in unparse_object that did not print color for puppets.
+----June 7, 1997
+ 1. Fixed several bugs in 'give' and 'grab'. Enabled giving items to chests.
+ 2. Added the attributes @grab, @agrab, and @ograb, effective on container.
+ 3. Fixed various bugs in vigor settings and Nuper condition.
+ 4. Added the items() function to list event inventory of player or container.
+ 5. Fixed a bug in @clone that did not copy over attribute definitions.
+----June 8, 1997
+ 1. Improved the efficiency even further in checking for $ and ! events.
+----June 11, 1997
+ 1. Added the new item type 'Plants', using slots 9000 through 9149.
+----June 12, 1997
+ 1. Rewrote the entire +Party Driver. Various bugs have been fixed, and players
+     may now invite more than one person at a time or join parties while being
+     in another party.
+ 2. Parties are now saved in the database during reboots.
+----June 13, 1997
+ 1. Rewrote the database algorithm for easy adding of configuration settings.
+----June 15, 1997
+ 1. Elf's Infrared shows enemies brightly if EnemyHP >= MAXHP/2, dimly if less.
+----June 17, 1997
+ 1. Fixed a bug in the color output of the Idle Timeclock in the page command.
+ 2. Fixed a bug in the Input Bytes count on children of concentrators.
+----June 18, 1997
+ 1. Fixed a bug in the daily allowance procedure.
+----June 20, 1997
+ 1. Added color to all of the money-handling messages.
+ 2. Fixed a bug in becoming unconscious for special damage types.
+----June 21, 1997
+ 1. Removed the automatic treasure gain from an enemy's inventory list when
+     defeated. It caused some serious bugs with rate of equipment destruction
+     when items were given to Amorphic Figurines.
+ 2. Fixed a bug in semaphore queue that overwrote delayed messages to players.
+----June 23, 1997
+ 1. Enhanced another routine in reading input from all users online.
+ 2. Removed a myriad of unnecessary 'depth' markers in the source code.
+ 3. Added <cause> triggering of the @redirect and @time commands to flow
+     through.
+----June 24, 1997
+ 1. Added an automatic display of when a person unidles from 1 hour or longer.
+----June 27, 1997
+ 1. Added the pnum() function.
+ 2. Fixed a potentially dangerous bug in Wizards setting themselves Going and
+     setting God slave.
+ 3. When a player's torch blows out, the room description is only redrawn if
+     the player cannot see inside.
+ 4. Rewrote the Enemy Encounter Generator. Old rooms are now saved when the
+     player leaves them instead of when entering them. Also, tracking
+     information (which exit the player takes) is now also saved.
+----June 28, 1997
+ 1. Several internal object list counts are now displayed on +dbinfo fights.
+----June 29, 1997
+ 1. Fixed two bugs that hindered the loading of a TinyMuse database.
+ 2. Fixed a recursion error in functions that printed permission denied msgs.
+ 3. Sped up the memory management of database loading and destroying objects.
+----June 30, 1997
+ 1. Restricted the @hlock attribute to Wizards.
+ 2. Scaled the list of attribute options into an array for easy access.
+----July 1, 1997
+ 1. Fixed a hidden/disconnected check in 'whereis'.
+----July 2, 1997
+ 1. The mglvl() function now accepts technique names instead of only numbers.
+----July 5, 1997
+ 1. Rewrote error messages in all functions to begin with the string #-1.
+ 2. @wait 0 now executes its command immediately instead of waiting one second.
+ 3. lnum() now takes an optional second argument, which determines the number
+     position to begin the count on.
+ 4. Added the functions shl() and shr() for binary shift operations.
+ 5. Added dec() and inc() for compatibility with PennMUSH.
+ 6. The substitution %? returns the current function invocation count and
+     recursion depth as two space-separated numbers.
+ 7. Forking during database dumps now lowers the background process' priority.
+ 8. Fixed a bug in repeat() so that it doesn't work with a null string, thus
+     preventing the game from going into a massive loop.
+ 9. Removed the redundant function string().
+10. Modified the @wipe command to remove only those attributes specified, or if
+     none: all attributes on the object.
+11. Wildcards are now accepted for the attribute name when setting attribute
+     flags using @defattr.
+12. New function powers() added to show space-separated powers list of player.
+13. New configuation variable RESTRICT_HASPOW. This affects if mortals have
+     the ability to use haspow(), controls(), and powers() on immortals.
+14. Command queue counts and @purge global statistics are now represented on
+     +dbinfo game.
+15. The helptext.html file is now brought up to date, including help for the
+     entire list of hardcoded functions in the game.
+16. Added '&attr obj=value' compatibility with TinyMush.
+----July 7, 1997
+ 1. New configuration variable RESTRICT_HIDDEN. If this is set to 1, the @hlock
+     attribute will be restricted to Wizards carrying Pow_Wizattr, and the
+     hidden player count will be subtracted from the total number of users
+     online and not appear on the wholist.
+ 2. Rewrote the flags layout and made those functions using the flag database,
+     @search, @set, and flags() more efficient.
+----July 8, 1997
+ 1. Completely removed the inefficient SET() set-string macro in the hardcode.
+ 2. Coded the 6th object type: TYPE_GARBAGE, used for destroyed objects.
+ 3. The backslash character may now be used to escape out a : symbol in the
+     part of the string to be matched in ! and $ Attribute Events.
+ 4. Removed the 'nomod' attribute option and put 'hidden' in its place.
+----July 9, 1997
+ 1. You can now 'ex me=*pattern*' to display all attributes whose values match
+     'pattern'.
+ 2. Destroying an object already set GOING now destroys it immediately.
+ 3. Removed the really unnecessary @maiden attribute.
+----July 10, 1997
+ 1. Fixed a bug that checked the @ulock for every attribute matching the $
+     Event on an object.
+ 2. Rewrote the tprintf() internal function as an inline macro.
+----July 13, 1997
+ 1. Beta version of the new helptext.html decoder is now available. Ordered
+     list and table support has not yet been added.
+ 2. New date() function. Returns date in the form of: Sunday, July 13, 1997.
+ 3. Fixed a bug in the resetting of race values during character reselection.
+ 4. Fixed the bug in a distorted screen while being nuked online.
+ 5. Fixed a bug that drew the status bar twice when connecting.
+----July 14, 1997
+ 1. Objects without Pow_Build may no longer join/summon other objects/players.
+ 2. Modified the behavior of the @tel command due to a change in Pow_Teleport.
+----July 15, 1997
+ 1. When a player's torch blows out, the room is redrawn for everyone inside.
+ 2. Enemies inside themselves will now only reset if they are Condition: Dead.
+ 3. Typing in the name of an exit with spaces in it no longer works. You must
+     use the go/move command instead.
+ 4. @elock now blocks immortals from entering an object.
+----July 16, 1997
+ 1. Rebound and On-Death attacks now do proper automatic target selection.
+ 2. The wholist is shortened to show name and level by default if more than 175
+     users are online at once. Also a bigger wholist is available for wizards
+     with Pow_Who that have a 132-column screen size or higher.
+ 3. Invisibility condition now halts combat rounds until the very moment the
+     player becomes visible, counting down until 0.1 seconds.
+ 4. Fixed infravision to not view exit barriers with a combat status.
+ 5. Removed 'dflag' unsaved data register from the #dbref structure.
+ 6. Rewrote zone initialization from previous versions of TinyMuse db v6+.
+ 7. Fixed a memory leakage in reusable pointer macros in sending messages to
+     multiple players in the room.
+ 8. Fixed a bug in checking the type of invalid #dbref objects in match utils.
+----July 17, 1997
+ 1. Fixed a bug in the command buffer overflow check of 8000 characters.
+ 2. Fixed editing a string to not produce a result over 8000 characters long.
+ 3. Rewrote AF_LOCK and AF_DBREF database number parsing for 'examine'.
+ 4. Fixed a bug in the function invocation count and recursion depth resetting.
+----July 19, 1997
+ 1. Non-Magic techniques can no longer strike invisible targets.
+----July 20, 1997
+ 1. Rewrote the 2nd argument in oper() to be the opening %1 for processing.
+ 2. Rewrote plcon() to display a list of all players in <container>.
+ 3. Disabled @defattr/@undefattr/@redefattr of hidden attributes if not God.
+ 4. Supressed Flag Set/Locked messages in @set if player is set Quiet.
+ 5. Extra special check in database saving routine for out-of-space error.
+----August 3, 1997
+ 1. Game driver now removes excess spaces from server inputted text.
+ 2. Players may now only use the RECONNECT command when logged on the game.
+----August 4, 1997
+ 1. Fixed a code typo in +party captions not being displayed.
+----August 5, 1997
+ 1. Added categories Bytes, Inzone, Relays, and Zones to the @dbtop list.
+----August 7, 1997
+ 1. Rewrote the death sequence to process after all attacks have been made.
+ 2. Fixed bugs in the cause of poison/unconsciousness/illness deaths during
+     battles, giving the correct victor the experience.
+ 3. Rewrote the boss explosion routine. It's now more fierce. :)
+ 4. Fixed the column spanning in @list flags.
+ 5. Added a new room wizard flag: Arena.
+ 6. Mare now prints less errors when attempting to load an unknown database.
+ 7. Added a new condition 'Life3' for automatic resurrection at death's door.
+----August 8, 1997
+ 1. Fixed a counting error in displaying the name of the chapter in 'lore'.
+----August 9, 1997
+ 1. Added a <delimiter> argument to the first(), rest(), remove(), extract(),
+     and wcount() functions.
+ 2. Rewrote the delete() function.
+ 3. Database now saves the proper TinyMare Mudname as config environment.
+ 4. Renamed lnot() as not() for compatibility with TinyMush.
+ 5. Removed the unnecessary field(), justify(), nstat(), opponent(), and
+     sector() functions.
+----August 10, 1997
+ 1. Removed the +cmdav command, adding command averages to +dbinfo game.
+ 2. Fixed a bug in separating server commands from queue commands.
+----August 11, 1997
+ 1. Race selection info is now copied along with the TinyMare release.
+----August 13, 1997
+ 1. I/O Driver modified. Executes at most 1 command from each user per
+     timeslice and up to 50 commands from each wizard.
+ 2. If you own the room that you @create an object in, it is now automatically
+     @linked to that room.
+ 3. Made recovery after segmentation faults a config variable, ERR_SIGNAL.
+ 4. Safeguard against crashing loops, limit 128 total crashes per reboot.
+ 5. Removed 'read' as a command alias to 'look', allowing use of the $read
+     command event to be used in softcoded objects.
+----August 15, 1997
+ 1. Enemy encounter data now checks the @encounters attribute on rooms.
+----August 16, 1997
+ 1. Added a count of the current number of Monster Familiars to +dbinfo fights.
+ 2. The @treasure attribute is now automatically parsed upon enemy defeat.
+ 3. New formula for calculating experience points from monster familiars.
+----August 19, 1997
+ 1. Fixed a bug in @adisconnects triggering on players being nuked.
+ 2. Extended @init to allow setting a new race or rerolling stats on a player.
+ 3. Race Selection now automatically rerolls stats to current experience level.
+ 4. Enemies no longer randomly appear in wilderness rooms marked Healing.
+ 5. Fixed a bug in using @addmagic/etc on objects with no fight status.
+ 6. Special precaution added for newbies in Chapter 1. The game will no longer
+     let newbies fight players more than 5 levels above their own.
+ 7. Added a default message for players without a description. "You see someone
+     special and unique."
+ 8. Fixed a major bug in being able to set yourself Connected or !Connected.
+----August 20, 1997
+ 1. New netmare command line option '-s' to disable startups on boot.
+ 2. Fixed bug in immediate_que mode during @startup/@asunrise/@asunset that
+     creates another object with another @startup/etc causing an infinite loop.
+ 3. New check to make sure 'netmare' is run in the correct runtime directory.
+ 4. Rewrote the +com driver for effeciency.
+ 5. Added a welcome.txt file that gets displayed after the title screen the
+     first time a player logs into the game.
+----August 21, 1997
+ 1. @attr obj=value now reads Unrecognizable Command for all wizard attributes
+     if the player does not have Pow_Wizattr.
+----August 22, 1997
+ 1. New session flags, C_OUTPUTONLY to temporarily block input from a user,
+     and C_NOUPDATE to temporarily block status bar updates.
+----August 23, 1997
+ 1. Removed the unnecessary Guildmaster bitmap position.
+----August 24, 1997
+ 1. Implementation of new zone definitions, deletion of old sector-based
+     structures and arrays.
+ 2. Added the @map attribute for zones.
+----August 27, 1997
+ 1. Added a new +term configuration variable: Beeps On/Off.
+ 2. New @aunidle attribute that gets triggered when you unidle after 1h time.
+----August 28, 1997
+ 1. Fixed a bug in concentrator service not accepting blank lines at prompts.
+ 2. Fixed a bug in @dbtop Gold/Inactivity representation.
+ 3. Fixed a bug where disconnecting players stayed in battle mode.
+ 4. Edited the default @omove messages for players/enemies with condition Dead.
+ 5. Fixed a security precaution in setting the configuration variables
+     PLAYER_START or GAME_DRIVER to an invalid database reference number.
+----August 31, 1997
+ 1. Rewrote the 'slay' command to conform to the new death sequence routine.
+ 2. Completely rewrote the @search command for efficiency.
+----September 1, 1997
+ 1. Added an 'Experience' column to the list of valid @whoflags.
+ 2. Fixed a bug in fumbling attacks that fail to target an enemy (barriers).
+ 3. Fixed a bug with not being able to see items in a dark room without torch.
+----September 2, 1997
+ 1. Rewrote the base() function to add support for 32-bit unsigned integers.
+----September 3, 1997
+ 1. Fixed a bug dealing with Fruit of Power/Laurel Plants wrongly increasing
+     your MP/EN less than 10 if your current MP/EN is less than 10.
+ 2. Fixed a bug that kept a person Condition:Dead when reconnecting while the
+     death screen was currently running.
+----September 7, 1997
+ 1. Fixed a bug in that 'pose' acted like the macro ; instead of :.
+----September 13, 1997
+ 1. Added a feature which keeps players from typing prefixes such as 'fight r'
+     which targets a player who happens to wander into the room rather than the
+     expected enemy. In player fighting, the playername must be typed in full.
+ 2. Removed the %/<attribute>/ pronoun from the function parser.
+ 3. Added a feature to @notify that displays when players unidle after 1 hour.
+ 4. Fixed a bug in God being able to force destroyed objects to do commands.
+ 5. Rewrote the attribute structure to include text in a sizable array rather
+     than an extra pointer (saves 4 bytes per attribute on each object).
+----September 15, 1997
+ 1. Fixed capitalization in a player's name when loading a converted database.
+ 2. Fixed a bug with bleeding colors in room descriptions when the Terse flag
+     is set.
+----September 16, 1997
+ 1. Made the @destroy/fix_free_list functions more efficient during startup,
+     and purges, especially when a game is loaded with over 30,000 destroyed
+     objects in its database.
+ 2. Removed the @doomsday attribute and the @protect and @unprotect commands.
+----September 21, 1997
+ 1. Rewrote the hash table functions for efficiency.
+ 2. Fixed several grammatical errors in combat messages.
+ 3. Added a few new items to the equipment database.
+ 4. Added three new conditions: Invulnerable, Barrier, and MBarrier.
+----September 23, 1997
+ 1. Fixed a bug involving the creation of duplicate party names.
+----September 25, 1997
+ 1. Added a gender() function which returns 0 for male and 1 for female.
+ 2. Fixed a pointer mismatch in the rest() function.
+ 3. Rewrite the playername lookup tables as an entry to a hash function.
+ 4. Switched the arguments around in the pos() function.
+ 5. Shortened buffers in object-creation commands.
+----September 30, 1997
+ 1. Fixed a bug with transferring money to yourself yielded in doubling your
+     account at the vault.
+----October 4, 1997
+ 1. Removed the 'Timer' report in +dbinfo.
+ 2. Increased efficiency in loading the database by allocating the entire array
+     as the first object is created.
+----October 8, 1997
+ 1. The @encounters attribute now performs function parsing.
+----October 9, 1997
+ 1. Rewrote player-inactivity processing. Inactive count now shows up on
+     +dbinfo game.
+ 2. Hardcoded a default prompt, accessible when you type @prompt me=on.
+----October 17, 1997
+ 1. Fixed a bug in doing a 'whereis' on disconnected/hidden players.
+ 2. Fixed the X-Zone flag in terms of combat, dropping items, and timer stats.
+ 3. Fixed a bug in selecting a race where critrate and levelups interfere.
+----October 18, 1997
+ 1. Rewrote the combat system queue handler, including several new options.
+ 2. Added a new event to inflict a fraction of physical damage on the target.
+ 3. Fixed several bugs in the fight queue target selection.
+ 4. Rewrote global death messages for efficiency.
+ 5. Fixed a glitch in 'slay' command that used previous LASTKILL amount.
+----October 20, 1997
+ 1. Disallowed the use of 'me' in the pnum() function producing bad results.
+ 2. Fixed a bug in 'use' that printed the @ufail if no @use/@ause were set.
+ 3. Fixed bugs in combat over Oceanic rooms if you are a Sprite.
+----October 21, 1997
+ 1. Players/monsters can no longer regenerate in a room set Arena.
+ 2. Fixed a bug that resulted in fighting yourself on accidental hit.
+----October 22, 1997
+ 1. Fixed a bug in picking a lethal plant that didn't set B_LASTKILL.
+----October 25, 1997
+ 1. Added the @oclone attribute for alternate messages that players will see
+     when enemies are randomly created in the wilderness from their `nests'.
+----October 26, 1997
+ 1. Added an @enemycond command, much like @setcond, which alters the list of
+     enemy-specific conditions that a monster can possess.
+----October 27, 1997
+ 1. Fixed a bug in faulty @ahear triggering on a @destroyed object.
+ 2. Fixed a bug on description display when looking through exits.
+----October 28, 1997
+ 1. Added a new specifier * in @setcond and @enemycond which clears condition
+     list before adding new conditions.
+----November 1, 1997
+ 1. Renovated the condition display unit, added displays for Dead if HP < 1,
+     Stone if PETRIFY >= 15, and Psyche for both Confused and Berserk set.
+----November 2, 1997
+ 1. Reconfigured the spell & item database for clarity and efficiency.
+----November 6, 1997
+ 1. Fixed a bug in being able to run with a harmfil ailment set.
+ 2. Fixed a bug in wizards giving negative gold pieces to players.
+----November 7, 1997
+ 1. Added a fourth layer of compression to the database which stores DB
+     Reference Numbers smaller than 4 bytes of data. This essentially reduced
+     a 11,000-object database filesize by 200kb.
+----November 8, 1997
+ 1. Fixed a bug in reconnecting as a player without the ISCOMBAT bit set.
+----November 9, 1997
+ 1. Modified the 'slay' command to support a list of natural causes of death.
+ 2. Items can no longer be used on exits.
+----November 10, 1997
+ 1. Elemental types are now specified in damage messages.
+ 2. Entire fight queue processing has been rewritten for efficiency.
+----November 15, 1997
+ 1. The @color attribute now performs function parsing on rooms and exits.
+ 2. Fixed bugs in multiple condition unsetting messages when an enemy dies.
+ 3. Added level select to techniques and skills in the fight queue.
+----November 16, 1997
+ 1. Added the +party list=[party name] feature for wizards.
+ 2. When +party is typed by itself, it prints '+party list' if you're not in a
+     party and '+party status' if you are.
+ 3. Added a configuaration option COMBAT to select whether the Combat System
+     should be disabled or enabled while the game is running.
+ 4. Fixed a crashing bug in 'sector' if too many @encounters were specified on
+     the zone object.
+ 5. Fixed a bug in deallocating zone objects from old contents lists of players
+     and rooms during conversion of a database from TinyMUSE.
+ 6. Added the filesize count to helptext.html when a player types 'help ?'.
+----November 17, 1997
+ 1. Fixed a combat glitch so that any attacks against yourself never miss.
+----November 21, 1997
+ 1. Now allowing the - character in player names.
+----November 22, 1997
+ 1. Fixed object name length to check up to 50 characters before the first ;.
+ 2. Fixed a bug in naming an object ;, which blanked the object's name.
+ 3. Reimplemented finding random gold pieces on the ground in the wilderness.
+ 4. Hardcoded the @task command.
+ 5. Added further improvements to combat system messages.
+ 6. Added 3 netstat variables, NS_ALMANAC, NS_CASTROD, and NS_FISH. Type
+     +dbinfo fights to see their display.
+ 7. Rewrote the summary screen to include individual elemental damages.
+----November 23, 1997
+ 1. Added carry weight to all usable items in the database.
+ 2. Added 32 fish entries to the item database.
+ 3. Fixed a bug in Life 3 revivify sequences.
+ 4. Fixed a security problem in @classing yourself or other wizards down.
+----November 24, 1997
+ 1. Fixed the problem concerning @init not deleting old race/guild channels.
+ 2. Exits set opaque now prevents looking through into the next room.
+ 3. Put restrictions on 'open'ing treasure chests during battle.
+ 4. Fixed a bug on exit barriers evading attacks.
+----November 27, 1997
+ 1. Added categories 'armor' and 'weapons' to the @list command.
+----November 28, 1997
+ 1. Successfully rewrote the function parser, at long last.
+ 2. Added an enemy condition Random for always targeting random opponents.
+ 3. Fixed a bug in death sequence. It now correctly cancels all fights
+     associated with the player when he/she dies.
+ 4. Fixed a bug in Chaos Wing triggering party members to attack the caster.
+----December 13, 1997
+ 1. Completely hardcoded the 'wish' command.
+ 2. Renovated positions in the item database one last time.
+ 3. Edited out extraneous Sage guild level classifiers in status.
+ 4. Fixed a bug in being able to leave the room with a non-haltable technique.
+ 5. Fixed the bugs concerning escaping from battle.
+ 6. Fixed a problem in allowing matching of dark exits in hidden rooms.
+ 7. Edited the login process to support longer-sized character names.
+ 8. Increased efficiency using completely buffered network output.
+----December 14, 1997
+ 1. Allowed the powers table to be sizable (up to 255) in the database.
+ 2. Rewrote powers algorithm to store in the database as a set of 2-bit values.
+ 3. Provided further encryption of the password in the database file.
+ 4. Removed @newpass and added the more secure @passwd <player> in its place.
+----December 15, 1997
+ 1. Renamed @wipe as @wipeattr and added @wipe as an alias.
+----December 17, 1997
+ 1. Added messages for the total depletion of MP and EN.
+----December 18, 1997
+ 1. @list items now accepts an argument for either the item number or name.
+----December 19, 1997
+ 1. Function parser fully rewritten and in perfect working order.
+ 2. Rewrote boolean expressions to use the new function parser efficiently.
+----December 30, 1997
+ 1. Fixed a bug in logging 'give' commands in objects owned by high-level
+     players.
+----December 31, 1997
+ 1. Fixed a bug in specifying negative amounts in @exp_raise.
+----January 4, 1998
+ 1. Disallowed object names to be marked as 'Quit'.
+ 2. Fixed a bug which got around object name restrictions using a semicolon.
+----January 6, 1998
+ 1. Added a fix for closing all file descriptors during background dumping.
+----January 8, 1998
+ 1. Rewrote the Condemnation condition drivers to work with enemies as well
+     as players. Also, two levels of condemnation have been added; one
+     involving storyline and another involving combat.
+----January 11, 1998
+ 1. Rewrote the +term command to accept a sizable array of options.
+ 2. Added +term reginfo to choose the display of Email/Rlname on +finger.
+ 3. Readded 'DFLAG' temporary unsaved dataflag bitmap support.
+ 4. Completely converted all bitmaps to the latest format. Positions above
+     512 are inherited from parents, and player-only are 1024 and above.
+ 5. Soul attributes can now be set using @<soulattr> <object>=<value>.
+ 6. The 'where' command now searches for players and enemies in the wilderness.
+----January 17, 1998
+ 1. Disabled the 'announce' command for newbies with 0 Experience points.
+ 2. Rewrote justification routines for +mail, description wordwrap, and
+     descriptions for spells and skills.
+ 3. When selecting attacks on a +party, all members now get equal weight.
+ 4. Added the Fishable room flag to accomodate the Fishing technique.
+ 5. Removed the 'Fall' exit flag. Damage is now solely indicated by @damage.
+ 6. Wizards with Pow_Wizattr now have the ability to @edit attribute locks.
+ 7. Moved storyline bitmap attributes from 4096-4315 to 2048-2267, and set the
+     upper limit to bit positions at 4096. This reduces the size of each
+     player's status by 256 bytes in total.
+----January 18, 1998
+ 1. Created the @dflag wizard command and dflag() function to go along with
+     the background implementation of temporary unsaved data flags.
+ 2. Added color to regeneration messages.
+ 3. Created a new attribute @shop for the transition to hardcoded shops, such
+     as the Inn, Items, Equipment, Vault, and even Forge. '@list shops' is
+     coded to display the available types.
+ 4. Food consumption during regeneration now displays if you are hungry or no
+     longer satiated.
+----January 19, 1998
+ 1. Added inventory and owned-object price counts to the 'money' command.
+ 2. Hardcoded the @capture and @uncapture commands, along with POW_CAPTURE
+     and DUNGEON_CELL configuration variables.
+ 3. Added a <message> argument to the @boot command to give players a reason
+     for being booted.
+ 4. Treasure chests from random enemies might now contain food in them.
+ 5. Monster familiars will now drop all carried items when defeated.
+ 6. Implemented enemy family classifications.
+----January 26, 1998
+ 1. Fixed the setting of numerical @aliases.
+----January 31, 1998
+ 1. Added hardcode for changes in weather messages based on the current season
+     of the year and time of day. Color of messages is also dependent on these
+     factors. Messages are read into memory upon first almanac update to
+     conserve disk I/O.
+ 2. Enhanced a routine in the Status Bar that gives a workable screen even if
+     you specify the wrong number of rows on your terminal using +term.
+ 3. +term now displays if a user has the Status Bar set on or off.
+----February 4, 1998
+ 1. @init saves the last logon date during character recreation now.
+----February 6, 1998
+ 1. Created a new etc/services file for the maintainence of concentrators,
+     remote-who services, and the simple-mail-telnet-protocol service.
+     Each can be independently configured for any number of remote hostnames
+     and passwords.
+ 2. Rewrote the concentrator service manipulation and released mareport 1.4.1.
+----February 7, 1998
+
+  TinyMARE +Mail Version 2.1 released.
+
+ 1. Added support for sending outgoing E-Mail.
+ 2. +mail <playerlist> now supports space-separated list of playernames,
+     player@mudname, or email addresses.
+ 3. Added environment configuration variables MAILHOST and EMAIL_COST.
+ 4. Mailfile is now protected against 'no space left on device' errors.
+ 5. Coded a front-end '@dbtop mail' command. Beware, it is very cpu intensive.
+ 6. Added SMTP service support for incoming E-Mail.
+ 7. Fixed several security bugs in sending E-Mail to failed users on localhost.
+----February 10, 1998
+ 1. Hardcoded House of Healing, Vault Keeper, and Inn.
+ 2. Vault now logs all monetary transfers between players.
+----February 14, 1998
+ 1. Added a +mail check command option to see if you have new mail. Recommended
+     for use with the @aunidle attribute.
+ 2. Fixed fatal buffer overflow in @enemy command. Code is now more efficient.
+ 3. Rewrote @inactivity routines.
+----February 15, 1998
+ 1. Added the 'Families' option to the @list command.
+ 2. @purge command now reports list of disconnected rooms.
+----February 18, 1998
+ 1. Added files 'etc/services' and 'etc/lockout' for rules regarding which
+     services to allow and which sites to lock out from getting access to the
+     game. This includes a more lenient whitespace-delimited format.
+----February 25, 1998
+ 1. Fixed a bug in truncating incoming E-mail over 8000 characters long.
+----March 6, 1998
+ 1. Fixed a bug where typing +mail clear=0 deletes part or all of the mailfile.
+----March 22, 1998
+ 1. Experience points gained by parties are now only shared with players in the
+     same room.
+ 2. The 'where' command now only shows monsters for which you are able to see.
+ 3. Inactive_Ok flag now keeps players from becoming deleted by inactivity
+     without any time limit.
+ 4. Completely removed the buggy antiquated $programming code from the game.
+----March 24, 1998
+ 1. Added a +mail version command for accounting purposes.
+----March 25, 1998
+ 1. Semaphore names are now visible on the @ps list.
+ 2. Number of escapes and enemies slain are now recorded in a player's bitmap.
+ 3. Added 4 new internal enemy settings: AI, Crystal Orb, Horse, and Ship.
+----March 29, 1998
+ 1. You can't see the World or Dungeon Map in a dark room without a torch.
+ 2. Fixed another bug in +mail deleting messages marked New at odd intervals.
+----March 30, 1998
+ 1. Fixed command parsing for getting rid of spaces leading arg1 and arg2.
+----April 1, 1998
+ 1. Added '+mail read' and '+mail next' commands to view next unread message.
+----April 2, 1998
+ 1. Fixed an exit bug where people going through exits linked to *HOME*
+     succeeded even if the exit was @locked against the person.
+----April 4, 1998
+ 1. Now allowing people to drop someone's objects in rooms with same owner.
+ 2. 1000 grams of weight is added for each non-item carried in inventory.
+----April 10, 1998
+ 1. Bug fix in the display of multiple elementals in an attacking message.
+ 2. Added special vigor values for agility lower than 7.
+ 3. Game version handling now performed at the start of initialization.
+ 4. @akill now correctly triggers when an enemy kills a player.
+----April 11, 1998
+ 1. New format for 'look' and 'inventory' displaying items and equipment.
+----April 18, 1998
+ 1. Administrators cannot give objects negative amounts of money anymore.
+ 2. Added configuration variable FIRST_YEAR for setting the game time year.
+----April 20, 1998
+ 1. Mare now only specifies database save options if they contain any data
+     to be loaded.
+----April 21, 1998
+ 1. Fixed a bug in @addparent that did not check for recursion in parenting
+     two objects in both directions.
+ 2. Fixed a bug letting players whisper to disconnected people in the room.
+ 3. Fixed a bug that let players avoid battles by entering and leaving objects.
+----April 22, 1998
+ 1. Fixed a bug that erases the Protected flag in a +mail message when you
+     reply to it or forward it to someone else.
+----April 24, 1998
+ 1. Added new configuration variable VISIBLE_ADMIN. If set to 0, all traces of
+     who the administration players are on the game will be gone from
+     informational commands.
+ 2. The God(#1) character's status is now automatically initialized with
+     100,000 HP/MP/EN and 65535 of the other stats on Level 1000.
+ 3. +Mail doesn't get automatically deleted in 30 days if you have POW_MEMBER.
+----April 25, 1998
+ 1. Zones can now @pemit to objects in rooms in their zone with MATCH_INZONE.
+ 2. @wait commands are now added to the tail of the queue, resulting in correct
+     order of commands with the same number of seconds waiting period.
+ 3. When the number of wait commands in the queue exceeds maximum, wizards'
+     commands are now placed directly into the Command Queue without waiting
+     instead of being deleted from execution. Could be a major security breach
+     if played right.
+ 4. The @omove/@oleave attributes are no longer shown when a person or enemy
+     dies and leaves the room.
+ 5. Havened objects with the @shop attribute no longer service anyone.
+ 6. Fixed a bug in routine processes, such as food consumption and sickness,
+     when COMBAT is turned off.
+ 7. Added a third argument to the @enemy command to initialize a combat target.
+----May 2, 1998
+ 1. Parties and semaphores are not saved in the database during a @shutdown.
+----May 5, 1998
+ 1. Exits in a residential area can no longer be set dark.
+ 2. Added a second argument to the round() function to round to a fraction.
+----May 7, 1998
+ 1. @caption output limited to 80 characters for players without POW_SPOOF.
+ 2. New wizard feature, `look <room#>=<player#>' prints a remote room
+     description to another player.
+----May 8, 1998
+ 1. New party leader command, +party reset, which clears the Total Exp/Min and
+     updates the creation time of the party.
+----May 13, 1998
+ 1. Added a new Transparent flag for things, enabling inner contents to be
+     automatically displayed during a 'look' in a room. Players within the
+     object may use directional commands as normal to control the container.
+ 2. New '@list players' option added to display all characters registered on
+     the game. An optional argument does a prefix restriction on the names.
+ 3. @list guilds/players/races is now printed out in alphabetical order.
+----May 17, 1998
+ 1. Added a new Wander flag for things, enabling them to move through a random
+     exit every Atime Interval.
+----May 20, 1998
+ 1. New +mail file format records the time a message is first read. Messages
+     are now automatically deleted about 5 weeks after they are first read
+     instead of when they were sent.

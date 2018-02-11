@@ -1,0 +1,781 @@
+A Backlog of Hardcode Changes in TinyMARE v1.0.9557-v1.0.10214, Winds Year 0012.
+
+----May 22, 2003
+ 1. TinyMARE Version 1.0.9557 released.
+ 2. '@list explore' now takes an additional <player> or !<player> argument to
+     show a player's explored (or unexplored) rooms, respectively.
+ 3. Combat item matching is now performed only after room contents or inventory
+     objects.
+ 4. Fixed an error in @event setting the wrong text field as a spell target.
+ 5. @lfight now locks off all fighting triggered by aggressive monsters and
+     auto target selection.
+ 6. @vlock can now be set on rooms to function as a variable Dark flag.
+----May 24, 2003
+ 1. Added the conditions MeatEater, VegEater, FruitEater, GrainEater,
+     DairyEater, CandyEater, and FleshEater for variable affinity to food
+     dropped in the room, from 1-7.
+ 2. Also added the $foodgroup spell attribute for setting the food type, from 1
+     to 7.
+ 3. Added an $itemtype3 attribute to list more types allowed in an item
+     container.
+ 4. Added a @plants attribute for specifying types of plants on a per-zone or
+     room basis.
+ 5. Added a @laggr attribute (aggression-lock) for controlling automatic
+     fighting against monsters as well as players.
+ 6. Added the Ambush condition to hide attackers, only seen with the Alert
+     condition. Attackers who break their ambush put others Offguard for 4
+     seconds.
+ 7. Message spoofing now checks that the first word after every %R doesn't
+     match a playername, stripping out %G's and ANSI escape codes.
+ 8. Casting a spell now triggers monsters with the Aggrmagic condition set to
+     fight back.
+----May 26, 2003
+ 1. Monster aggression was rewritten for correctness, and players will now
+     engage in battle with aggressive monsters first and non-aggressive ones
+     last.
+ 2. Added a @minerals attribute for specifying ore to be found on a per-zone or
+     room basis.
+----May 29, 2003
+ 1. Changed the syntax of the @damage attribute to include 4 optional messages:
+     <damage amt>:<death type>:<succ>:<osucc>:<death>:<odeath>. <damage amt>
+     can be the symbol * for instant death. If not specified, random messages
+     will be given for <succ> and <osucc>.
+ 2. Aggressive enemies with the Hearing condition will now attack even if they
+     don't see the player.
+ 3. Coded the Preempt condition, which has a chance of catching enemies off-
+     guard.
+ 4. MaxHP is now taken away when a player is Wounded instead of when he dies.
+ 5. Added a Sneak condition to allow players to enter a room unnoticed for
+     several seconds.
+ 6. Added the @block/@ablock/@oblock attribute triplet to trigger when an enemy
+     ambushes a player or otherwise blocks an exit.
+ 7. Coded the Ambush and Block conditions.
+ 8. Monsters with the Leader bitmap set will now follow their leaders around.
+ 9. Enemies with the Minion condition now die when their leaders die.
+10. The game now updates LastRoom, LastUse, and LastSpell on players.
+----May 30, 2003
+ 1. Infinite Loops now correctly abort the game when the number of crashes have
+     exceeded 127.
+ 2. Sped up @vlock checking in various loops that look up the same attribute on
+     <player>.
+ 3. Implemented a new architecture-independent stack API with better function-
+     ality.
+----June 2, 2003
+ 1. Rand() in combat equations now returns the same result when the equation is
+     evaluated twice: once for LO and once for HI.
+----June 3, 2003
+ 1. Redesigned enemy aggression to focus attacks only on those entering the
+     room and to be more efficient with large numbers of enemies present.
+ 2. Added the timefmt(format,[optional xtime]) function for specifying the date
+     or time in a user-defined format.
+----June 8, 2003
+ 1. The 'equip' command now matches combat items in a player's inventory first
+     over examining other objects in the room.
+ 2. Fixed a bug that set Quantity of items to 65535 during an 'unequip all'.
+----June 15, 2003
+ 1. Fixed a major crash bug when an On-Death tactic kills an enemy in the room.
+----June 23, 2003
+ 1. Activated the Sanctuary flag to prohibit players from fighting or using
+     attack spells/techniques in the room.
+----June 26, 2003
+ 1. Fixed a crash bug parsing the $areaatk spell attribute when it is set to 9.
+----June 29, 2003
+ 1. The say, pose, whisper, and @emit-family of commands now parse %# correctly
+     as the cause of the command and not the executor himself.
+----June 30, 2003
+ 1. Fixed the @teleport command to keep exits from being teleported inside
+     objects.
+----July 1, 2003
+ 1. TinyMARE Version 1.0.9616 released.
+----July 2, 2003
+ 1. NPCs set with the Familiar condition can now get treasure just like normal
+     players.
+ 2. The Expxfer condition now awards GP, Techpts, and Treasure to their owners.
+----July 3, 2003
+ 1. Added the 20th Technique Type, "Prayers", along with the 'prayers' and
+     'recite' commands.
+ 2. The 'cast' and 'recite' commands now display a different message if you
+     don't have any spells to cast or prayers to recite.
+ 3. Treasure System type 2 now shows '%N drops a treasure chest!' in bold and
+     triggers @aclone on the Treasure Chest object.
+----July 6, 2003
+ 1. Added a new function, path(obj1,obj2,max steps), to determine the exits for
+     object1 to take to reach object2, up to <max steps>. Variable exits and
+     multiple planes are checked accordingly. Highest max steps allowed is 100.
+----July 11, 2003
+ 1. '@set <player>=slave' no longer requires POW_MODIFY on <player> to operate.
+ 2. The Knight class now gets POW_SLAVE by default.
+----July 15, 2003
+ 1. Added the condition category 'Fatal' for marking conditions that will kill
+     the player if the condition status (set or unset) is changed.
+ 2. Added the combat attributes "Current IP", "Drain %", "Current Moves", and
+     "Maximum Moves". Each can be retrieved in combat equations.
+----July 16, 2003
+ 1. The "Damage=" option in the Attack Event now takes equations that end in a
+     % to damage a percentage of the target's base stat value. Equations like
+     "25%" or "40%|60%" are acceptable.
+ 2. Added the 'Energy' combat variable for recording how much damage is
+     received during a Store Energy / Boost-up spell.
+ 3. Added the @dbtop category 'Totalexp', used for when the Experience System
+     setting is chosen to deplete a player's EXP value for every level.
+----July 26, 2003
+ 1. +mail now reports a message if players do not have enough GP remaining.
+----August 7, 2003
+ 1. Fixed a problem with 'drop' that let you drop any object# in the database
+     if you had POW_REMOTE.
+ 2. Added the 'Decay' flag for the Attack Event to taper off successive status
+     changes in a row.
+----August 9, 2003
+ 1. Specifying the #dbref of an object in another plane can no longer be
+     matched unless the MATCH_ABS flag is used in match_thing().
+ 2. Added game configuration variables HP_REGEN_DIVISOR, MP_REGEN_DIVISOR, and
+     EN_REGEN_DIVISOR to control the speed of HP/MP/EN regeneration. Higher
+     numbers give a lower regen rate.
+ 3. Added the configuration variable PYRAMID_RANGE, which defines a range in
+     percent from which the Pyramid attack event flag expands a fixed result.
+ 4. Added the rdiv(x,y) function, which returns the result of "x / y" plus 1
+     randomly depending on how much is left over in the remainder.
+----August 10, 2003
+ 1. Added the Mobile condition to single-out players who can move during a
+     Timestop placed on the room.
+ 2. Fixed a crash error dealing with the miscompile of skip_whitespace() when
+     parsing combat equations and @lock attributes.
+----August 11, 2003
+ 1. Added a new item type, Prayer, which has different properties apart from
+     Magic and Special.
+ 2. Added EQFX Element to the game, for changing the base elemental damage
+     properties for all elements, Physical, and Magical attacks.
+ 3. @o* attributes can now be masked silent by using a @ symbol as the first
+     character of the attribute text.
+ 4. +com =who now shows you how many people are hidden on the channel.
+ 5. New game configuration variable ALLOW_COMTITLES to globally turn on & off
+     the support for player @comtitles on +com channels.
+----August 16, 2003
+ 1. Fixed a overused buffer when parsing the @damage attribute.
+ 2. Moved $cost and $chantrate to text-based attributes so they can accept
+     functions.
+ 3. Rearranged spell attribute numbers for better clarity (requires a database
+     rebuild).
+----August 17, 2003
+ 1. Spell/item levels are now correctly set for the spell Captions in the
+     'spells' and 'items' screens. Also, the correct level is now chosen for
+     spells enabled through EQFX Teaching.
+ 2. Added the new $recharge attribute for specifying a minimum amount of time
+     between spell casts.
+ 3. Added the new $battles attribute for specifying a number of enemies to
+     defeat before the spell can be used again.
+----August 21, 2003
+ 1. Fixed combat round numbers to only increment with each new technique cast
+     instead of per event or attack.
+ 2. Absorbing magic spells with the "Runic" condition now picks a random object
+     in the room to receive the MP.
+----August 23, 2003
+ 1. Added a new function damage(atk,def) to calculate an attack's damage as if
+     it were passed through the Battle Curve.
+ 2. Wizards with POW_PLANE can now see the plane of a player's Save Point using
+     the 'examine' command (combat mode only).
+----August 26, 2003
+ 1. Recoded the default 'status' screen to the original TinyMare layout.
+----August 28, 2003
+ 1. Added the @ltalk lock for talking to NPC objects, as well as the @ftalk,
+     @oftalk, and @aftalk "failed-talk" action set.
+----September 3, 2003
+ 1. Added a new bitmap, Guildprof, which stores the total number of guild-based
+     proficiencies a player can attain, across all guilds joined.
+ 2. Added Status Screen #5 for players using MareTerm to display a race
+     portrait icon in the upper-left corner.
+----September 5, 2003
+ 1. Rewrote combat equation parsing in $event attributes. The Attack Event can
+     now take 4 combat equations per Condition= option. Also opens the avenue
+     for other events to take combat equations as values.
+ 2. Added the Drain=<Equation> Attack Event option.
+ 3. Changed the syntax around for %1-%9 environment variables in $captions on
+     spells with Attack Events.
+----September 7, 2003
+ 1. Expanded the number of $foodgroups and respective conditions from 7 to 11.
+ 2. Added a new 'conditions' command (abbreviated 'cond') to list your current
+     conditions and innate race abilities.
+ 3. Softcode commands that modify bitmap values by name, such as '@bitmap
+     %#=Health,...' and '@magic %#=...', now automatically update that player's
+     Status Bar fields.
+----September 8, 2003
+ 1. The @wipeattr command now accepts spell names & numbers beginning with $ as
+     valid arguments.
+ 2. Fixed a file-descriptor leak while loading combat messages from damage.txt.
+----September 9, 2003
+ 1. @elock is now checked on destination rooms during a 'move'.
+----September 11, 2003
+ 1. Fixed a bug in being able to repeatedly use items before all events on the
+     spell are exhausted.
+----September 12, 2003
+ 1. Added a new bitmap, Impact, which holds the amount of Impact Points
+     accumulated during battle (out of 1,000,000 total). This value shows up as
+     "Impact %" on the status screen.
+ 2. The Limit Attacks spell screen now shows IP% costs.
+ 3. Added new spell attributes $charges and $maxcharge for Wands.
+ 4. Slain enemies now unset LastKill from players in the room who have been
+     attacked by the enemy. This prevents slow-kill conditions like Wounded
+     from killing players with bad LastKill dbref#s.
+ 5. Implemented combination attacks through the use of $combo.
+ 6. New event flag 'Combo' that cycles to the next attacker in the combo list
+     for the upcoming event. This only has effect when a $combo spell is used.
+ 7. Added a new Damage Type flag to [Arg0] of the Attack Event: Combo. Combo
+     allows all casters to participate in the attack at once, summing Damage=
+     equations and combining weapon elements for all involved.
+ 8. EQFX Apply "Random" now takes numbers out of 1000 instead of 1 in 'x'.
+ 9. Combat globals such as num_targets and current_level now get reset to
+     default values in the case of an Infinite Loop.
+10. Added the Charges=<Equation> Attack Event option.
+----September 13, 2003
+ 1. Enlarged the size of the Condition/Status technique type's 'value' field to
+     27 bits.
+----September 14, 2003
+ 1. Fixed crash log reporting so that old command log data is not saved during
+     internal TinyMare timers long after the command had finished executing.
+----September 24, 2003
+ 1. Attack Event now checks the HP/MP/EN limits on all targets or attackers
+     during a Cure or Drain.
+ 2. The 'status' command now shows two values for Attack Power if the player
+     has two weapons equipped.
+----September 25, 2003
+ 1. Added the "Hit=" combat equation to specify a +/- Hit % adjustment on a
+     per-attack basis.
+ 2. Renamed the "Nomiss" damage type flag to "Fixedhit", which uses the "Hit="
+     equation to determine a constant hit rate from 0 to 100%.
+ 3. Fixed a bug in lsema() that kept all the words from being displayed.
+ 4. Fixed a bug in 'grab' that displayed '%N doesn't have that object.' after
+     successfully taking a combat item from a NPC.
+ 5. Added CARRY_RATIO configuration variable to specify how many grams per
+     Strength point a player can carry. This also sets the default weight for
+     normal database objects.
+ 6. Fixed the isnumber() macro to return false if given a blank string. This
+     makes commands such as 'ex $' report "No such spell" now.
+----October 8, 2003
+ 1. Added a 3rd argument to the enabled() function. If it begins with 'm', it
+     will return the failure message of the bad condition instead of 0 or 1.
+----October 9, 2003
+ 1. Added full icon support to TinyMARE! If +term icons is on, the server will
+     send binary icon data that can be reassembled by the MareTerm client for
+     full-color graphics. TinyFugue requires a patch to ignore icon definitions
+     in /recall and logging.
+ 2. Fixed a crash bug when the Attack Event is used via the @event command.
+----October 10, 2003
+ 1. Fixed a crash bug when using the '@list skills' command.
+----October 11, 2003
+ 1. Added support for temporary status attacks.
+ 2. Permanent status attacks (other than HP/MP/EN) now silently switch to type
+     ST:Inn when used on non-player objects, exits, and rooms.
+ 3. Fixed a long-standing bug in @trigger that passed along whatever was in
+     %0-%9 even if no arguments were given.
+----October 12, 2003
+ 1. Optimized match_thing() when searching lists of contents/exits. Also fixes
+     the problem where objects in a different plane could be matched using
+     #dbref, and fixes a problem where match numbers (i.e. the 2 in 'look sign
+     2') wouldn't always work.
+ 2. Added the configuration variable EVADE_RATE to specify a base Evade% rate
+     when the enemy's Luck is equal to the attacker's Dexterity.
+ 3. Added the Pyramid(x,y) combat equation function, which returns a random
+     number between 'x' and 'y' weighted towards the center.
+----October 13, 2003
+ 1. Finished recoding the Attack Event. This event now handles multiple targets
+     internally and has preliminary support for combo attacks built-in. Also
+     handles death after all damage has been dealt to the targets, and also
+     tallies up all drain amounts for one final message at the end.
+ 2. Added a new Longrange relic condition for melee combat.
+----October 14, 2003
+ 1. The command '@list spells=*' now displays decompile output for all spells
+     and forged equipment in the item database.
+ 2. Implemented the CurePoison condition for non-players.
+----October 15, 2003
+ 1. Implemented ST:Gradual temporary status attacks.
+ 2. Spells now accept random MP/EN $cost values, which are calculated at cast
+     time. The system remembers the initial cost value until the round expires.
+----October 16, 2003
+ 1. You can now target yourself with any technique regardless of your @lfight.
+ 2. Fixed Haste/Slow conditions to operate normally.
+ 3. Added the Abs(x) combat equation function.
+----October 17, 2003
+ 1. Reimplemented the $action spell attribute.
+ 2. The Unconscious condition now blocks out game messages, much like Asleep.
+----October 20, 2003
+ 1. Swimming now sets physical attack damage to 50%-100% depending on the Swim
+     skill mastery.
+ 2. Implemented the Flooded and Shallow room conditions.
+ 3. Temporary stat modifications now use only the current stat type (Inn, Room,
+     Gradual, etc.) for computing Decay and Limit options.
+ 4. Fight queue now saves all fight-entry parameters over reboots.
+ 5. Stop_fight() now correctly removes fallen foes from the spell's multiple-
+     target list.
+ 6. Using items now checks all spell targets with the Attack Event's Limit
+     option.
+----October 21, 2003
+ 1. Fixed a crash bug when @copybitmap is used with both source and destination
+     as the same object.
+----October 22, 2003
+ 1. Fixed a problem where combat semaphores (such as the Divine condition)
+     would crash the game.
+----October 27, 2003
+ 1. Fixed a bug in the combat queue where the timer would not restart when
+     executing a technique after the first hit of a multi-attack fight.
+ 2. Status Bar updates are now queued internally and displayed right before the
+     output buffer for each player is transmitted.
+ 3. Added a set of icons for floor changes in the Status Bar.
+ 4. Added flags Physical, Magical, and Mental for condition.db definitions.
+----October 28, 2003
+ 1. Group targetting for NPCs now classifies groups according to enemies having
+     the same first parent object with a combat status.
+ 2. Fixed being able to equip weapons when enemies are attacking other players
+     or parties in the room.
+ 3. Added game configuration variable ESCAPE_DELAY, which defines the longest
+     *additional* delay an escape from the room could take in 0.1-second units.
+ 4. Escaping now guages an enemy's agility from 50% to 150% of the player's
+     agility and maps it from 0 to 100% of the ESCAPE_DELAY variable. A random
+     value between 50% and 100% is taken from that. This should fix the delay
+     from being too low and too high most of the time.
+ 5. Added game configuration variable ESCAPE_TYPE, which can be 0 to block all
+     escapes, 1 to use the "Escape" spell in the database, or 2-9999 which
+     selects a preconfigured spell to use as Escape.
+----October 29, 2003
+ 1. Typing in an exit name during battle will now attempt to escape in that
+     direction.
+ 2. Added a new Levelup event.
+ 3. Rewrote the Escape event to handle multiple targets with fear attacks.
+----October 30, 2003
+ 1. Implemented the Fog room flag & condition.
+ 2. Implemented the Barefist skill for fighting left-hand without a weapon
+     equipped.
+ 3. Disconnected players can no longer use Runic to absorb MP.
+----November 1, 2003
+ 1. Fixed a problem when unparsing combat equations in the Attack Event where
+     any equation with a function showed '<Invalid equation>'.
+ 2. %R can now be used as a delimiter character in list functions.
+ 3. Added the @spinfo command to display a spell/item status screen to another
+     player.
+ 4. Added the ^ exponent operator to the combat equation parser.
+----November 4, 2003
+ 1. $action now initially returns Fail by default when no targets are present.
+ 2. @event's syntax changed to require : instead of , after the event name.
+ 3. @event can now target non-living things and inventory items (from the
+     caster's point of view) based on the type of event chosen.
+ 4. Fixed a division-by-zero error when using the Decay attack-event flag and
+     the enemy's status target is 0.
+----November 6, 2003
+ 1. Added game configuration variable MIN_SPELL_LEVEL which sets the minimum
+     level of spells in the fight queue for calculation purposes (i.e. SPLV).
+     This value can only be 0 or 1.
+ 2. Rewrote the target handling portion of combat where a multi-event attack is
+     being executed and the target disappears due to death or woundedness. The
+     attacker now correctly stops and turns attention to the next threat.
+----November 7, 2003
+ 1. Fixed a problem with losing Endurance points after using the 'stop' command
+     to halt a technique/spell cast.
+ 2. Added a new event flag "Force", which, when encountered as an upcoming
+     event, makes the technique unstoppable.
+----November 10, 2003
+ 1. Fixed a problem where the combat target list was not being cleared out when
+     casting a new spell during an existing spell execution (aka. Leftwield).
+ 2. Added a new spell attribute, $master, that sets the mastery level of a
+     spell to something lower than its default.
+ 3. Fixed a problem where functions in @vlock turned off quiet matching and
+     displayed an extra 'I don't see X here.' to the player.
+ 4. The items/spells info screen now show spell-specific variables.
+ 5. Added new game configuration variable ITEM_MODE, which contains flag bits,
+     each which disable a portion of the items/spells screen. Bit definitions
+     are: 1=No variables shown, 2=GP Value, 4=Weight, 8=Damage %, 16=Material,
+     32=Item Type.
+----November 11, 2003
+ 1. Added a new function spvar(player, enemy, spell, variable [,level]), which
+     evaluates the %0-%9 environment variables and returns the requested
+     <variable> number for <player> vs. <enemy>. These are the same variables
+     that are parsed for a spell's $desc or $caption. <variable> can only be
+     from 0 to 9. If no <level> is specified, it defaults to <player>'s current
+     spell level.
+ 2. The lnum() function now takes floating point values for args 2 and 3.
+ 3. The function parser now closes arguments surrounded by {}'s only if the }
+     is the last character of the argument. This also keeps }'s inside the
+     argument from being stripped.
+----November 12, 2003
+ 1. Fixed a crash problem with @event not setting the target text correctly.
+----November 17, 2003
+ 1. Changed the syntax of the Stat=<Attr>:<Limit> combat equation. <Limit> is
+     now a number of maximum points the spell can increase/decrease beyond the
+     target's Base status value. <Limit> can contain a % at the end to use a
+     percentage of the target's Base value instead of a number of points.
+ 2. Fixed the bug where if <Limit> was much lower than player's current stat,
+     casting the spell to cure the stat will not decrease it anymore.
+ 3. @addtech can now be used with Status values using the '<Stat>:<Type>'
+     format. Type defaults to 'Normal' if unspecified (equivalent to ST:Inn).
+ 4. Fixed a bug where stopping a player's battle on the last event consumed 2
+     items instead of 1.
+ 5. The path() function and random exits now check @elock/@llock's on zones.
+----November 18, 2003
+ 1. Added a new function, nearest(list,number[,how]), which returns the value
+     in <list> closest to <number>. [how] can be L for Less-than matches, G for
+     Greater-than matches, or anything else for Both.
+ 2. Fixed a bug where only 1 enemy with the Leader bitmap set would follow its
+     leader.
+ 3. Fixed a bug that prohibited more than one event flag from being set with
+     the $event command.
+ 4. Ambidexterity skill now maps Lefthand Attack Power from 75% to 100% based
+     on skill mastery.
+----November 19, 2003
+ 1. Players can no longer 'stop' an active item usage.
+ 2. Fixed a bug in 'stop' where the fight entry didn't get completely reset.
+ 3. Added the @addwish, @delwish, and @list wishes commands.
+----November 20, 2003
+ 1. +com channels now only let you use ' to direct a message to a player
+     currently online AND on the channel.
+ 2. Leftwield now checks the % to determine how often the left hand is used in
+     combat.
+ 3. Added support to compile under the QNX operating system.
+ 4. Corrected a problem with skills not charging any Endurance points when
+     $cost was set.
+ 5. Combat equations now take a % directly after an expression in ()'s.
+ 6. Wizards can now examine spell events using 'ex $spell/event1', etc.
+ 7. Added a new command, 'wish', which uses Task Points to cast a spell.
+ 8. @enter/@aenter/@oenter now set %0 as the previous room of the enactor.
+ 9. Enemies once again counterattack during a Miss.
+10. $ufail now sets %0 as the number of the spell being called.
+----November 21, 2003
+ 1. Rooms now display their @caption after the room name (with the same color
+     intensity).
+ 2. @lcost, @cost, @cfail, @ocfail, and @acfail now set %0 as the amount of
+     money actually given to the object.
+ 3. @tactics entries for deleted spells can now be removed via spell number.
+ 4. Shadowed spell lists (Minerals, Plants, etc) are now background objects.
+     Spells can be defined on top of them rather than be obstructed by them.
+ 5. Softcode function parse_lock() now preserves environment variables %0-%9
+     across calls.
+----November 22, 2003
+ 1. Added new function hasexplored(<player>, <bit# | room-dbref#>).
+ 2. 'items' now shows Technique/Teach/Tactics EQFX information on individual
+     equipment.
+ 3. Fixed a bug in the monster 'status' screen where large technique names in
+     an enemy's @tactics list would corrupt the display.
+----November 23, 2003
+ 1. Leftwield and Ambidexterity skills can now charge Endurance per use.
+ 2. Added two new bitmap variables, @mprate and @enrate, along with their
+     respective status values MPRATE and ENRATE. These determine the percent
+     of MP or EN Cost charged per spell/technique/skill use.
+ 3. Fixed the setting of status values for @addtech Levelup.
+----November 24, 2003
+ 1. Internal parsing of $cost and $charge spell values now preserve %0-%9
+     across calls.
+----November 29, 2003
+ 1. Added a new attribute option, 'privs', which when used with 'function'
+     makes a user-defined function operate with the privileges of the object it
+     was @defattr'd on. This lets children with lesser privileges operate with
+     some of the capabilities of the parents. 'privs' cannot be set on an
+     existing attribute if a child had overridden the attribute text.
+ 2. Added a new spell $flag, 'FracCost', which makes the $cost value on spells
+     and skills to require 1/x MP/EN instead of x. Players must have at least 1
+     MP or EN to operate the technique.
+ 3. The 'privs' attribute option is now removed from @defattrs during a @chown.
+----December 3, 2003
+ 1. Fixed a bug in charging MP/EN where the wrong variable was used to set the
+     player's remaining points.
+----December 9, 2003
+ 1. Fixed a bug in not being able to escape through a dark exit during battle.
+ 2. Added the ability to taper race levelup stats to a maximum player level
+     using game configuration variable STAT_TAPER_LEVEL.
+----December 10, 2003
+ 1. Fixed a whitespace parse error while reading status values from class.db.
+ 2. Added new game configuration variable STAT_ROLL_TYPE to specify how race
+     stats are rolled during player creation. 0=Fixed value (based on racial
+     strengths), 1=Random value between Lo & Hi, and 2=Weighted random stat
+     bonus across all values.
+ 3. Rewrote the Race Selection Screen to display all 12 initial stats and fixed
+     up screen positioning for both with and without ANSI support.
+ 4. Fixed a problem where the game doesn't think a player is logged in if he is
+     on a character initialization screen over a @reboot.
+ 5. Added the @mlock, @mfail, @amfail, and @omfail combat action attributes to
+     replace the inflexible Wall flag. Removed the Wall flag.
+ 6. @o* attributes can now display a message not prefixed by the enactor's name
+     using @ as the first character of the message. Normal spoofing rules
+     apply.
+ 7. Added a temporary Attack/Defense Power display line on the equipment info
+     screen.
+ 8. The @notify attribute can be set on #0 to change the default "Welcome %N to
+     our realm!" message. Set the attribute to % to disable it completely.
+----December 11, 2003
+ 1. Fixed a bug in the $ and ! Event command parser to recognize \\ as a
+     literal \ instead of requiring \\\\.
+----December 13, 2003
+ 1. Fixed a bug where the execution of tactics would not tell the combat system
+     a new round was started.
+----December 28, 2003
+ 1. Objects speaking messages will no longer show the message to its container
+     if @vlock'd, or if the container is Asleep or Unconscious.
+----December 29, 2003
+ 1. Fixed a bug where @addexplore is automatically called during a @dig and the
+     digger does not own the current room.
+----January 1, 2004
+ 1. TinyMARE Version 1.0.9957 released.
+ 2. Willpower now keeps players alive when the attack would barely kill them.
+ 3. Implemented the @auncon attribute.
+ 4. LastKill now only sets on bosses when players attack them; enemies can no
+     longer kill a boss and get EXP.
+----January 2, 2004
+ 1. Added 6 new conditions to redirect damage to HP/MP/EN to a different
+     HP/MP/EN stat.
+ 2. Added game configuration option ALLOW_WOUNDED to turn on/off the Wounded
+     condition. 1=on, 2=even in rooms set Arena or Nest.
+ 3. Monsters with the M flag will no longer auto-@destroy when killed.
+ 4. Enemies will no longer strike Dead +party members waiting in the room.
+ 5. At death, the highest-ranking player in a +party in the same room as the
+     fallen leader will now become the new leader, otherwise no change is made.
+ 6. Fixed group attacks to correctly bypass dead targets in the room.
+ 7. An object @destroying something during immediate-queue execution will now
+     postpone the @destroy until the next queue run.
+----January 3, 2004
+ 1. Added game configuration MULTIPLR_BOSSES, which allows entire +party groups
+     to fight bosses in Nest rooms at once. When on, a +party is not defeated
+     until all members have fallen. When the boss is defeated, EXP is given to
+     all living members and slain comrades are restored with 1 HP.
+ 2. Arena now teleports fallen players to the room's Dropto and sets HP to 1 if
+     no @akill is set on the room.
+ 3. You can no longer speak when Dead or use the 'to' command with a speech
+     ailment.
+ 4. Added support for using Limit Attacks.
+----January 4, 2004
+ 1. Battle damage now increases your Impact % counter.
+----January 5, 2004
+ 1. Fixed combat miss messages that displayed both @emit and @oemit versions of
+     the message to the room.
+----January 6, 2004
+ 1. Only enemy types Normal and Horse can become wounded now.
+----January 7, 2004
+ 1. Added a new function family(#obj) to return the name of an object's family.
+----January 9, 2004
+ 1. Fixed an error in @ps where the report of total number of queued commands
+     is incorrect if the player does not have POW_QUEUE.
+----January 16, 2004
+ 1. Ambush/Block conditions no longer stop a player if either are @vlock'd
+     against each other.
+ 2. Element names are now taken from conditions 224-239 to aid configurability.
+     If the condition index does not exist, default names are used.
+ 3. Sector types are now loaded from the etc/sector.db configuration file.
+ 4. Rewrote '@list sectors' to show more information about each type.
+ 5. Added a new sector flag, 'Vacuum', which instantly kills if a player is not
+     wearing a spacesuit.
+----January 17, 2004
+ 1. Removed the 'sector' command, as it gives away too much information.
+ 2. Staying overnight at an Inn now clears Impact Points to 0.
+ 3. Hardcoded the 'suicide' command for when a player is mortally wounded.
+ 4. Added game configuration variable STAT_MAX_LEVEL, which sets the maximum
+     level for receiving any stat levelups or for tapering stats. STAT_TAPER
+     was also altered to accept only a 0 or 1 value.
+----January 23, 2004
+ 1. Fixed a problem where the Attack Event no longer took integers for element
+     names.
+----January 24, 2004
+ 1. Logging player-kills now shows the room where the attack occurred.
+ 2. You can no longer target enemies @vlock'd from or against you.
+ 3. Fixed a problem where spells and events with automatic target selection
+     would attempt to target inventory items.
+ 4. The 'run' command now escapes through the exit the player entered in when
+     being attacked in battle.
+ 5. Renamed the 'wimpy' command and bitmap attribute to 'morale'.
+ 6. Players following a +party leader no longer perform a Morale check. It's
+     the leader's job to escape the battle.
+ 7. Implemented the Garlic condition, and etc/class.db now selects which enemy
+     families are susceptible.
+ 8. Fixed a major bug where the combat subsystems (conditions, plants, sectors,
+     etc.) were getting loaded after @startups executed.
+ 9. A +party's combat formation now reverts back to Standard when changing
+     leaders.
+----January 26, 2004
+ 1. Implemented the Skin relic condition.
+ 2. Physical weaknesses to Blunt, Piercing, or Slashing attacks now decrease
+     the target's Defense Power rather than increase attacker's Attack Power.
+ 3. Added the ST:Round temporary status attack type. This makes status attacks
+     last for X rounds or until the player's battle ends. Use the "Charges="
+     equation to set the number of rounds.
+ 4. Fixed temporary status attacks involving duration or charges to not reset
+     the counter if 0 damage points were inflicted (as when a status limit was
+     reached).
+ 5. ST:Duration attacks marked with the Quiet flag no longer show "Player's
+     Stat has returned to normal".
+----January 27, 2004
+ 1. Cleaned up ST:Gradual, ST:Charges, and ST:Round removals. They also now
+     update the Status Bar during HP/MP/EN changes.
+ 2. Changes to Maximum HP/MP/EN now make sure Current HP/MP/EN values never go
+     over when ST:Gradual decreases or a statmod is removed.
+ 3. Implemented the Teach Event.
+ 4. Fixed too many bugs to count in the TechPt-rewarding system for spells and
+     skills.
+----January 28, 2004
+ 1. Added combat-status restriction flags to the $areaatk spell attribute. New
+     flags are Player, NPC, and Familiar. See 'help $areaatk' for details.
+----January 30, 2004
+ 1. Fixed a bug with skills not leveling when only obtaining Technique Points.
+----February 5, 2004
+ 1. Added support for loading Pennmush-style database files.
+ 2. Loading Tinymush and Pennmush databases now correctly sets the parents on
+     objects.
+----February 8, 2004
+ 1. Removed the restriction that God has to connect from 'localhost'.
+ 2. Added technique types: Powers, Ailment Causes, Defeats, and Recharge.
+ 3. Fixed a crash bug in @movesp when no wishes are defined.
+ 4. Removed the $bitpos spell attribute as it is replaced by Recharge techlist.
+----February 9, 2004
+ 1. Turned on condition timers for Poisoned, Petrified, and Wounded.
+ 2. Reenabled the Food timer based on the FOOD_TIMER configuration
+     variable.
+ 3. Implemented the @aouncon attribute.
+----February 20, 2004
+ 1. @aclone now sets %0 as the enemy that died when dropping treasure chests.
+----February 21, 2004
+ 1. Hardcoded the spcname() function, which displays a spell using its $cname
+     color.
+ 2. Fixed the function parser so that beginning and ending {}'s are extracted
+     out only when there is no }{ in the middle in the string, as in
+     "{test} {test}".
+----March 1, 2004
+ 1. Fixed a division-by-zero error in the Pyramid() combat-equation function.
+----March 2, 2004
+ 1. Fixed a bug where 'run' or the Wander flag passing through a variably-
+     linked exit can sometimes check #-1 for zones.
+ 2. Fixed a parsing bug when %|color codes| are used in a oper/foreach() loop.
+----March 4, 2004
+ 1. TinyMare compiled for Cygwin (Windows) systems now defaults DB_FORK to 0
+     for new databases.
+ 2. Added game configuration variable DB_NOTIFY to control whether players see
+     the "Mudname Autosave..!" message with each DB save.
+ 3. Fixed a major bug in @reboot/@shutdown which could hang if some connected
+     players had a slow connection and a lot of output remaining in the buffer.
+ 4. @reboots now save a player's pending command-line input in the case of a
+     direct telnet session to the Mare.
+----March 5, 2004
+ 1. The CRC-32 table used for icon-name checksums is now calculated at first
+     use rather than stored in the executable.
+----March 8, 2004
+ 1. @copytech now allows specific technique slots for both <dest> and <source>.
+----March 9, 2004
+ 1. Added a Training flag to spell-style technique slots to hide them until
+     they level-up after receiving enough Technique Points.
+----March 10, 2004
+ 1. Rewrote the Advance Event with new syntax and functionality. See the help
+     page for more information.
+ 2. Introduced Guild Specialties to the codebase as fight/guild.c.
+ 3. Added a new command called '@checkguild <player>', which forces the combat
+     system to perform a check for mastered Guild Specialties.
+----March 13, 2004
+ 1. The Limit Attacks page-list once again displays the correct percentages.
+----March 15, 2004
+ 1. Fixed a bug in clearing an integer spell attribute, which mistakeningly set
+     its value to the spell number instead of 0.
+----March 19, 2004
+ 1. Added new @config variable TRAIN_SPELLS. When set to 1, this forces all
+     spell levels to be at 1 or higher. When a spell is on level 0, its mastery
+     percentage determines the rate of success or failure as if the player was
+     training his spell and did not have enough experience to use it perfectly
+     every time.
+ 2. Added new @config variable COMBAT_IDLELOCK, which specifies the number of
+     seconds a player can go idle before he stops receiving EXP, GP, TechPts,
+     AP, and Treasure from a defeated enemy. This also locks players from
+     initiating fights or casting spells by command (not by behavior). Set to 0
+     to disable.
+----March 20, 2004
+ 1. Added a new power, POW_COM, for restricting players from speaking on or
+     joining channels.
+----March 27, 2004
+ 1. Added two new commands, @comblock and @comvoice, which give administrators
+     the ability to block channels and/or a player's voice with POW_COM.
+ 2. Added wizard attribute @comlimit which stores the +com restrictions per
+     player.
+----March 31, 2004
+ 1. Fixed a crash bug due to the buffer when examining EQFX-flags not being big
+     enough to display all numerical flags.
+ 2. @comblock and @comvoice now log actions to [_log_main].
+ 3. Added the Taper flag to the Attack Event. Helptext is available.
+----April 1, 2004
+ 1. Implemented the stddev() function.
+----April 2, 2004
+ 1. Integrated the new official race +/- stat chart into TinyMARE.
+----April 4, 2004
+ 1. Fixed a crash bug when moving through an exit linked to Home.
+----April 6, 2004
+ 1. Recompiled a correct list of function declarations for hdrs/defs.h,
+     hdrs/fight.h, and hdrs/world.h.
+----April 10, 2004
+ 1. Dead players are now visible in their Save Point room during the death
+     sequence, marked as (Ghost).
+ 2. Fixed a fatal database corruption problem with @nuke and killing players in
+     a room being destroyed when #0/akill is set.
+----April 19, 2004
+ 1. Fixed an invalid access to #-1 if lattr() or lattrdef() had a null string
+     as their arguments.
+----April 20, 2004
+ 1. Removed several warnings when compiling under GCC 3.4 and above.
+----April 21, 2004
+ 1. Function weapon(player,arg) now takes "left", "num", "leftnum", or
+     "left num" as <arg>.
+----April 23, 2004
+ 1. The @encounters attribute is now scanned for zone objects as well as rooms.
+----April 24, 2004
+ 1. Fixed a possible crash bug in displaying typo messages if realloc() fails.
+ 2. The list of unacceptable playernames is now read from a system file:
+     'msgs/badplayers.txt'.
+----April 25, 2004
+ 1. Per-player encounter data and rooms-visited are now saved over reboots.
+ 2. Completed the new @encounters design. Helptext is available.
+ 3. Added a new combat wizattr for enemies, @adeathseq, triggered when
+     condition Nodeath is set on an enemy and a player kills him.
+ 4. Renamed the condition Deathseq to Nodeathseq.
+ 5. @dbtop once again takes negative ranges to display the bottom-most results.
+ 6. Added new @dbtop Virtue category.
+ 7. Added @config variable UNCON_PERCENT, which sets the percentage of HP a
+     target must have remaining in Wounded-mode. If the player's HP falls below
+     this value at the moment he is wounded, he will also become unconscious.
+ 8. Added the Silent condition, for evading enemies who can hear but can't see.
+----April 27, 2004
+ 1. Fixed a crash bug when dropping items into a room with its dropto (@link)
+     set to *HOME*.
+ 2. MULTIPLR_BOSSES is now permanently set, and the @config variable has been
+     removed.
+----April 28, 2004
+ 1. Added two new options to @console: Reset and Sendoutput. Reset clears a
+     connected player's input processing back to standard-game processing
+     (terminating a helptext or @input prompt, for instance). Sendoutput
+     flushes the current player's output immediately to the socket--useful when
+     @console !output is about to be used.
+----April 29, 2004
+ 1. Finished the new death system. All types of player/enemy death now goes
+     through the same internal procedure, triggering @akill/@adefeat and
+     awarding EXP to the victor. This new system supports enemies dying due to
+     Poison, Sickness, Petrification, and Woundedness, and awards EXP to the
+     player who inflicted the ailment.
+ 2. Fixed a crash bug when targetting inventory items with a combat event.
+ 3. Virtue now appears on the +sbar screen instead of Food if FOOD_TIMER is
+     @configured as 0.
+ 4. Disconnecting in a Nest room now kills you (with the boss as the killer).
+ 5. Rewrote the making of static hash tables, thus drastically reducing the
+     number of malloc() calls per table created.
+ 6. Added new attribute @owound, which displays a message to others when you
+     die from the Wounded condition, for enemies and players alike.
+----May 1, 2004
+ 1. Added the game configuration variable SBAR_MONEY_ABREV to set the
+     abbreviation used in the +sbar for the game's currency.
+ 2. Added the @charge command to charge money from a player to pay to a object.
+     The others in the room view as if the player gave money to the object.
+ 3. Fixed another error that removed spaces inside a {} in the function parser.
+ 4. Players can no longer attack havened combat objects owned by someone with
+     the Combat power.
+----May 5, 2004
+ 1. Fixed a problem in displaying failure messages due to spells being trained
+     on Level 0.
+ 2. Fixed @charge to get it working the right way.
+ 3. @adefeat is now executed before @akill for everything except when players
+     die in Nest rooms.
+----May 9, 2004
+ 1. Fixed a problem with @relay when an object relaying information is
+     @destroyed and teleported into #-1 (*NOTHING*).
+ 2. Fixed a problem with the destroy_old_objs() routine when destroying half-
+     going objects that are still residing in #-1.
+----May 10, 2004
+ 1. Fixed another segfault with @relay and #-1.
+----May 12, 2004
+ 1. Fixed another segfault with unparse_color() and @destroying an object.
+----May 18, 2004
+ 1. rank() no longer shows an administrator's rank if HIDDEN_ADMIN is set to 1.

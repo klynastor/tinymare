@@ -1,0 +1,6 @@
+You may try one of the following other connections to WindsMARE:
+
+ winds.org 7348
+ cyberion.musenet.org 7348
+ musenet.musenet.org 7348
+

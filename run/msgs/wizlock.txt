@@ -1,0 +1,3 @@
+
+% Wizlock mode currently in effect.
+

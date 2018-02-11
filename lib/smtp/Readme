@@ -1,0 +1,218 @@
+
+  TINYMARE SMTP SUPPORT  (TinyMare Mail System Version 2.2)
+
+This text describes how to set up your 'sendmail' mailer to accept mail for
+your mud! To begin, you need a copy of the latest sendmail source (8.10.1
+at the time of this writing), available at the following URL:
+
+  ftp://ftp.sendmail.org/pub/sendmail
+
+If all you want to do is send outgoing email instead of receive email, then
+run these TinyMare commands, replacing the email address with your own:
+
+  @config email_address=windsmare.winds.org
+  @config mailhost=localhost
+
+
+1. Compiling the sendmail.cf file
+---------------------------------
+
+First unpack the sendmail source tarball in a temporary directory. You can do
+this by typing the following commands (replacing the version number with the
+correct one you have).
+
+  cd /tmp
+  tar -xzvvf sendmail-8.10.1.tar.gz
+
+Make a backup of your current sendmail.cf file. For sendmail versions 8.10
+and later, this file will be located in /etc/mail/sendmail.cf. Versions
+prior to 8.10 will be found in /etc/sendmail.cf.
+
+  cp /etc/mail/sendmail.cf /etc/mail/sendmail.cf.preserve
+
+Copy the .mc and .m4 files into the appropriate configuration sections of your
+sendmail source. The file 'tinymare.mc' should be put into the cf/cf directory,
+and the file 'winds.m4' should be placed into the cf/mailer directory.
+
+  cp tinymare.mc /tmp/sendmail-8.10.1/cf/cf
+  cp winds.m4 /tmp/sendmail-8.10.1/cf/mailer
+
+Edit the tinymare.mc file in the cf/cf directory. This file was written
+assuming you run a standard version of Linux, and is NOT customized for any
+particular distribution. If you are not running Linux, chances are you can 
+find a generic .mc file in that same directory to use that matches your
+operating system type. Copy that file to 'tinymare.mc' in the same directory.
+line:  MAILER(mudname)  Replacing 'mudname' with the name of your mud.
+
+If you ARE running Linux, chances are your distribution already has a special
+sendmail.mc file hand-crafted for your system. This can usually be found in
+/etc/sendmail.mc or in the source of your sendmail package. For example, the
+redhat sendmail SRPM uses the file 'sendmail-redhat.mc'.
+
+Append the following line to the end of your 'tinymare.mc' file, replacing the
+word 'mudname' with the name of your mud (without the MARE suffix):
+
+  MAILER(mudname)
+
+Next, cd into the sendmail-8.10.1/cf/mailer directory and replace the name of
+the 'winds.m4' file with the name you chose in the MAILER line:
+
+  cd /tmp/sendmail-8.10.1/cf/mailer
+  mv winds.m4 mudname.m4
+
+By specifing your mudname in these files, you can have sendmail handle mail
+for multiple muds. All you need to do is add a MAILER() directive for each mud
+in your tinymare.mc file!
+
+Next, edit your 'mudname.m4' file. This might be the hardest step to follow.
+The default file that comes with TinyMare was hand-crafted for the mud that
+runs on winds.org port 7348. It listens for mail that gets sent to the address
+user@windsmare.winds.org, and the MAILER(winds) directive was used in the .mc
+file.
+
+First, change the word 'winds' in the Mwinds, and $#winds lines to the new
+mudname you entered as the name of the .m4 file. These two lines must match
+or the redirection will fail (sendmail will not start up).
+
+Next, change the 'redir winds.org' line to the name of the host that your mud
+resides on. This should not be 'redir localhost', for reasons explained below.
+
+Now, change all occurances of 'windsmare.winds.org' to an address that you
+want people to send email to. Be careful--if this address is the same name as
+your host, then all mail sent to your host will be redirected to the mud!
+You'll want to make sure this new email address is fully resolvable, and is
+pointing to your host. This means adding an entry to the /etc/hosts file and
+to your DNS records (see your BIND/NAMED manual for details).
+
+You want to make sure this email address (the one you replaced
+'windsmare.winds.org' with) is fully resolvable, and is pointing to your host.
+This means adding an entry for your new email host to the /etc/hosts file and
+to your DNS records (see your BIND manual for details). Note that your new
+email address can Not be a canonical name for your host. Doing this will force
+external mailers to use your original hostname instead of the new one.
+
+Warning: The winds.m4 file has tabs in certain locations after the R$+ ruleset.
+Sendmail will fail to run if these tabs are removed or replaced with spaces.
+Also be careful: a . must follow the hostname in the < > in the R$+ rule.
+
+Run this command to generate the sendmail.cf file and place it into /etc/mail:
+
+  m4 ../m4/cf.m4 tinymare.mc > /etc/mail/sendmail.cf
+
+If there are no errors, then all has gone well so far.
+
+
+2. Compile sendmail and the redir program
+-----------------------------------------
+
+This is an easy step. Depending on your operating system, this command should
+be all you need to compile and install sendmail:
+
+  cd /tmp/sendmail-8.10.1
+  ./Build
+  ./Build install
+
+The utility program, 'redir', must now also be compiled at this point. You'll
+find this program in the 'mare/src/util' directory of the TinyMare source tree.
+You can compile it using 'make redir', then copy it to /usr/local/bin. You can
+copy it to a different directory as long as you change the path to 'redir' in
+the 'winds.m4' mailer file mentioned in Section 1.
+
+Test redir. Try 'redir localhost 7348'. If you get a login prompt to your mud,
+then it works.
+
+Restart sendmail. For RedHat Linux users, try the following commands:
+
+  /etc/rc.d/init.d/sendmail stop
+  /etc/rc.d/init.d/sendmail start
+
+For others, this should suffice:
+
+  killall -15 sendmail
+  /usr/sbin/sendmail -bd -q15m
+
+
+3. Install mud-specific configuration files
+-------------------------------------------
+
+The file you referenced in your 'winds.m4' mailer file, (by default
+/usr/local/etc/windsmare.smtp), must contain two lines:
+
+SMTP
+password
+
+The password is any 5-8 character password you want for this service, and
+must be duplicated verbatim into the 'run/etc/services' file off of your
+TinyMare source tree. The 'services' file should contain a line that looks
+like this to enable SMTP support:
+
+smtp	winds.org	password
+
+Note: 'winds.org' is the name of your host, and not 'localhost'. These two
+are very different things, and generate two different IP addresses. You CAN
+use 'localhost' if you also change the 'redir' command in 'winds.m4' to use
+localhost as well.
+
+
+4. Give it a test run
+---------------------
+
+Send some email to <your character name>@<your new mud email address>, such
+as: gandalf@windsmare.winds.org  If everything goes well, you should see
+something like the following on the game:
+
+[_log_io] Login 24: root@winds.org. desc->7
+[_log_io] Email Handler 24: root@winds.org. desc->7
+[_log_io] SMTP: Incoming Mail (4 bytes); From <gandalf@winds.org>, To: Gandalf
+You sense that you have new mail, message 123, from gandalf@winds.org.
+[_log_io] Logout 24: root@winds.org. desc->7
+
+If you get a 'Login failed: SMTP', then you do not have your 'run/etc/services'
+file configured for the correct hostname or correct password under the smtp
+entry.
+
+If you get no login at all, then one of several things might be wrong. Is the
+path to 'redir' correct in the 'winds.m4' file? Did you make sure to include
+MAILER(winds) in your tinymare.mc file? Here's how to check.
+
+Edit your /etc/mail/sendmail.cf file and search for your email host R$+ ruleset
+that looks like the following:
+
+R$+ < @ windsmare.winds.org. >	$#winds $@ windsmare.winds.org $: $1
+
+Comment that out with a #, and replace it with this (TAB BEFORE THE $#error):
+
+R$+ < @ windsmare.winds.org. >	$#error $@ 5.1.3 $: "553 No ruleset specified"
+
+Then telnet to localhost 25, and type in the following commands:
+
+  HELO your.hostname.com
+  MAIL FROM: username@your.hostname.com
+  RCPT TO: mudcharacter@chosen.mud.address.com
+
+If this reports a '553' error, then there is a problem with your 'redir'
+command. If it doesn't, then you most likely have a redirection problem or you
+did not include the appropriate features listed in the default 'tinymare.mc'
+or 'winds.m4' files. Be sure that near the top of your sendmail.cf, there are
+two lines that begin with CP and CR that list your mud email address.
+Redirection won't work at all if these two lines are not there.
+
+To test redirection, try telnetting to port 25 from a remote site and replace
+your.hostname.com with the hostname of the remote site. Sometimes sendmail will
+allow redirection for local hosts and not remote hosts. If you get a
+'relaying denied' message here, then you need to apply the following line to
+tinymare.mc, rebuild the sendmail.cf file, and restart sendmail:
+
+  FEATURE(relay_entire_domain)
+
+
+5. Closing remarks
+------------------
+
+If this procedure does not work for your UNIX system, and you have the latest
+version of sendmail, email me and we'll see if we can get something working
+for you. If you happen to come up with a different method to handle incoming
+mail under a different UNIX system, or a different mailer, I'd like to include
+the method in the TinyMare distribution.
+
+	-Gandalf <gandalf@winds.org>		April 9, 2000
