@@ -286,8 +286,8 @@ extern char *mud_compiler_version;
 extern char *mud_compile_date;
 extern char *mud_version;
 
-extern char system_info[64];
-extern char system_version[64];
+extern char system_info[272];
+extern char system_version[272];
 extern char system_model[16];
 extern int  system_ncpu;
 extern int  system_cpu_mhz;

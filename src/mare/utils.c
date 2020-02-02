@@ -98,8 +98,8 @@ static char *gamedays[7]={
 /* Retrieve game (weather) time */
 char *wtime(unsigned long td, int typ)
 {
-  static char buf[40];
-  char temp[10];
+  static char buf[48];
+  char temp[16];
   int sec, day, month, year;
   quad tt;
 

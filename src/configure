@@ -161,6 +161,18 @@ defaultconfig()
     fi
   fi
 
+  # Don't warn about pointer signedness
+  $cc -E -Werror -Wpointer-sign -x c /dev/null &> /dev/null
+  if [ "$?" = "0" ]; then
+    flags="$flags -Wno-pointer-sign"
+  fi
+
+  # Don't warn about snprintf() truncation
+  $cc -E -Werror -Wformat-truncation -x c /dev/null &> /dev/null
+  if [ "$?" = "0" ]; then
+    flags="$flags -Wno-format-truncation"
+  fi
+
   # Include math library
 
   libs="$libs -lm"

@@ -154,7 +154,7 @@ static void list_directory(dbref player, char *name)
   struct dirent *dir;
   struct textlist *dirlist=NULL, *ptr, *newp, *last;
   int a, len, count=0, colsize=4;
-  char buf[256];
+  char buf[528];
 
   /* Open directory for reading */
   if((f=opendir(name)) == NULL) {

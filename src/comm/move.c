@@ -568,7 +568,7 @@ static void show_exitmsg(dbref player, dbref exit, dbref link, int type)
   /* Display @succ/@drop */
   strcpy(env[0], succ);
   if(!type && *msg)
-    sprintf(buf, "You %s %s", succ, msg);
+    snprintf(buf, sizeof(buf), "You %s %s", succ, msg);
   ansi_did_it(player, exit, type?A_DROP:A_SUCC, (!type && *msg)?buf:NULL,
               0, NULL, 0);
 
@@ -591,7 +591,7 @@ static void show_exitmsg(dbref player, dbref exit, dbref link, int type)
 
   /* Display @osucc */
   if(*msg)
-    sprintf(buf, "%s %s", env[0], msg);
+    snprintf(buf, sizeof(buf), "%s %s", env[0], msg);
   ansi_did_it(player, exit, 0, NULL, type?A_ODROP:A_OSUCC, *msg?buf:NULL, 0);
 
   /* Trigger @asucc/@adrop */

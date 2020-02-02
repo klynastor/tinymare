@@ -51,7 +51,7 @@
 /* mare/version.c */
 /* Copyright/Version information for TinyMARE */
 
-char *mud_copyright="Copyright (C) 2017 by Byron Stanoszek";
+char *mud_copyright="Copyright (C) 2020 by Byron Stanoszek";
 char *mud_compiler_version=__VERSION__;
-char *mud_compile_date="02/20/2017";
-char *mud_version="TinyMARE v1.0.10339";
+char *mud_compile_date="02/01/2020";
+char *mud_version="TinyMARE v1.0.10340";

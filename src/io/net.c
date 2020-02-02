@@ -35,8 +35,8 @@ long last_reboot_time;
 long now;
 quad time_slice;
 
-char system_info[64];
-char system_version[64];
+char system_info[272];
+char system_version[272];
 char system_model[16];
 int  system_ncpu;
 int  system_cpu_mhz;
